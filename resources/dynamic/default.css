@@ -1,0 +1,69 @@
+{%
+Dim controlAlign
+If (CurrentADC.PropValue("controlAlign") = "center" ) Then
+    controlAlign = "0 auto"
+ElseIf (CurrentADC.PropValue("controlAlign") = "right" ) Then
+    controlAlign = "0 0 0 auto"
+Else
+    controlAlign = "0 auto 0 0"
+EndIf
+Dim firstColumnWidth = CurrentADC.PropValue("firstColumnWidth")
+%}
+#adc_{%= CurrentADC.InstanceId %} {
+    margin: {%= controlAlign %};
+    max-width: {%= CurrentADC.PropValue("controlWidth") %};
+}
+#adc_{%= CurrentADC.InstanceId %} .adc-sidebyside-table {
+    {% If (CurrentADC.PropValue("sameSize") = "1") Then %}
+        table-layout: fixed;
+    {% EndIf %}
+}
+#adc_{%= CurrentADC.InstanceId %} th.otherColumn {
+	z-index: 3;
+    position: relative;
+    background-color: rgb(255,255,255);
+}
+#adc_{%= CurrentADC.InstanceId %} th.firstColumn {
+	z-index: -1;
+    position: relative;
+    background-color: rgb(255,255,255);
+}
+#adc_{%= CurrentADC.InstanceId %} th:first-child, 
+#adc_{%= CurrentADC.InstanceId %} td:first-child {
+    width: {%= firstColumnWidth + "%" %};
+}
+#adc_{%= CurrentADC.InstanceId %} tbody tr:hover td {
+    {% If (CurrentADC.PropValue("hightlightRowOnHover") = "yes") Then %}
+    background-color: rgba({%= Theme.BlackColor.ToRGB() %},.1);
+    {% EndIf %}
+}
+#adc_{%= CurrentADC.InstanceId %} .aboveLimit {
+    color: rgba({%= CurrentADC.PropValue("maxLimitExceededColor") %},1);
+}
+#adc_{%= CurrentADC.InstanceId %} .equalLimit {
+    color: rgba({%= CurrentADC.PropValue("maxLimReachedColor") %},1);
+}
+#adc_{%= CurrentADC.InstanceId %} .response:hover {
+    background-color: rgba({%= CurrentADC.PropValue("hoverCellColor") %},0.8);
+}
+#adc_{%= CurrentADC.InstanceId %} .cell-selected {
+    background-color: rgba({%= CurrentADC.PropValue("selectedCellColor") %},0.8);
+}
+{% If CurrentADC.PropValue("respOnHeader") = "0" Then %}
+    #adc_{%= CurrentADC.InstanceId %} label.askia-radio{
+        display:none;
+    }
+    #adc_{%= CurrentADC.InstanceId %} label.askia-checkbox{
+        display:none;
+    }
+	#adc_{%= CurrentADC.InstanceId %} label.text{
+        cursor:pointer;
+    }
+    #adc_{%= CurrentADC.InstanceId %} .response {
+        cursor:pointer;
+    }
+    #adc_{%= CurrentADC.InstanceId %} .number-element {
+        display: flex;
+        align-items: baseline;
+    }
+{%EndIf%}

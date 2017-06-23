@@ -1,0 +1,193 @@
+{%
+Dim COLUMN_NUMBER = 5
+Dim inputName
+Dim inputId
+Dim inputCode
+Dim inputValue
+Dim isExclusive
+Dim isAskiaExclusive
+Dim isSelected
+Dim caption
+Dim i
+Dim j
+Dim k
+Dim attrMulti
+Dim attrChecked
+Dim boolColMerge = False
+Dim attrColMerge = ""
+Dim column
+Dim displayRow = ""
+Dim showTotal = (CurrentADC.PropValue("showTotal") = "1")
+Dim totalCaption = CurrentADC.PropValue("totalCaption")
+Dim totalCaptionLeft = On(CurrentADC.PropValue("displayTotalCaption") = "0", totalCaption, "")
+Dim totalCaptionCol  = On(CurrentADC.PropValue("displayTotalCaption") = "1", totalCaption, "")
+
+For i = 1 To COLUMN_NUMBER
+    column = CurrentADC.Var("questionCol"+i).ToQuestion()
+    if ((i = 1) And (column.Id = DK)) Then column = CurrentQuestion EndIf
+
+    boolColMerge = boolColMerge Or (CurrentADC.PropValue("respOnHeader") = "1" And (column.Type = "single" Or column.Type="multiple"))
+Next
+%}
+<div id="adc_{%= CurrentADC.InstanceId %}" class="adc-sidebyside">
+	<table class="adc-sidebyside-table">
+        {%If CurrentADC.PropValue("showTitle") = "1"  Then%}
+    	<thead id="adc_{%= CurrentADC.InstanceId %}_thead">
+            <tr>
+                    <th class="firstColumn">&nbsp;</th>
+            {%
+			For i = 1 to COLUMN_NUMBER
+    			column = CurrentADC.Var("questionCol"+i).ToQuestion()
+    			if ((i = 1) and (column.Id = DK)) Then	column = CurrentQuestion	EndIf
+
+        		attrColMerge = On(((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox"+i) = "0")) or (column.Type = "multiple"), "colspan=" + column.AvailableResponses.Count, "")
+    			If column.Id <> DK then %}
+                	<th class="otherColumn" {%= attrColMerge %}>
+                        {%= column.LongCaption %}
+            		</th>
+            	{% Endif   
+			Next
+			%}
+        	</tr>
+    
+    {%
+		EndIf
+		if boolColMerge Then
+    %}
+            <tr>
+                <th class="firstColumn">&nbsp;</th>
+     {%	  	For i = 1 to COLUMN_NUMBER
+                  	column = CurrentADC.Var("questionCol"+i).ToQuestion()
+    				if ((i = 1) And (column.Id = DK)) Then column = CurrentQuestion EndIf
+                    If column.Id <> DK then %}                        
+                            {% If ((CurrentADC.PropValue("respOnHeader") = "1") and ((column.Type = "multiple") or ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox"+i) = "0")))) Then%}
+                                {% For k = 1 To column.AvailableResponses.Count%}
+                                    <th class="otherColumn">
+                                        {%= column.AvailableResponses[k].Caption %}
+                                    </th>
+                                {% Next %}
+                			{%Else%}
+                					<th class="otherColumn">&nbsp;</th>
+                            {%EndIf%}
+                    {% Endif   
+                Next
+			EndIf
+			%}
+        </tr>
+  		</thead>
+    
+        <tbody>        	            
+           
+            {%For i = 1 To CurrentQuestion.ParentLoop.Answers.Count
+    displayRow = On((CurrentADC.PropValue("stepByStep") = "1" And i>1), "hidden", "" )%}
+    	<tr id="row{%= i%}" {%= displayRow %}>
+            
+            {%Dim select = CurrentQuestion.ParentLoop
+				If select.Id<>DK Then 
+    				attrChecked = On(select.Answers[i].IsSelected, "checked", "") %}
+                <td>
+                    {%:= select.Answers[i].Caption %}
+                </td>
+            {%EndIf  %}
+            
+            {%
+            For k = 1 To COLUMN_NUMBER
+    			column = CurrentADC.Var("questionCol"+k).ToQuestion()
+    			if ((k = 1) And (column.Id = DK)) Then column = CurrentQuestion EndIf
+    			If (column.Id <> DK) then
+        			column = column.Alliterations[i]
+        			If (column.Type = "single") Or (column.Type = "multiple") Then                        			
+            			attrMulti = On((column.Type = "single"), "radio", "checkbox")
+            			attrChecked = On(column.AvailableResponses[i].IsSelected, "checked", "")
+              %}
+                	
+                        {% If (CurrentADC.PropValue("colAsComboBox"+k) > "1") And column.Type = "single" Then 
+            				inputName = column.InputName()
+    						inputId     = (inputName + "_" + k).Replace("U", "askia-input-select")
+            				inputCode = column.inputCode %}
+            			<td class="col{%= k %}">
+                            <select class="askia-question-{%= inputCode %}" id="{%= inputId%}" name="{%:= column.InputName()%}">
+                            <option value="0"></option>
+                            {% For j=1 to column.AvailableResponses.Count
+    							 	Dim attrSelected = On(column.AvailableResponses[j].IsSelected, "selected=\"selected\"", "")%}
+                            		<option {%:= attrSelected %} value="{%:= column.AvailableResponses[j].InputValue() %}">{%= column.AvailableResponses[j].Caption %}</option>
+                    		{% Next %}
+                        </select>
+            			</td>
+                   	{% Else %}
+                        {% For j=1 to column.AvailableResponses.Count 
+                                If (column.Type = "single") Then
+                                    inputName = column.AvailableResponses[j].InputName()
+                                    inputId     = (inputName + "_" + j).Replace("U", "askia-input")
+                                Else
+                                    inputName = column.AvailableResponses[j].InputName()
+                                    inputId     = inputName.Replace(" ", "_").Replace("M", "askia-input")
+                                EndIf
+    							inputCode = column.InputCode
+    							inputValue  = column.AvailableResponses[j].InputValue()
+                                attrChecked = On(column.AvailableResponses[j].IsSelected, "checked=\"checked\"", "")
+                                caption     = column.AvailableResponses[j].Caption
+                                isExclusive = On((column.AvailableResponses[j].IsExclusive) or (column.Type = "single"), " exclusive", "")
+                                isAskiaExclusive = On((column.AvailableResponses[j].IsExclusive) or (column.Type = "single"), "askia-exclusive", "")
+    							isSelected = On(column.Answers.Index Has column.AvailableResponses[j].Index, " selected", "")
+    						%}
+                        	<td class="col{%= k %} response{%:= isExclusive %}{%:= isSelected %}">
+                                    <input type="{%:= attrMulti %}" id="{%:= inputId %}" class="{%:= isAskiaExclusive %} askia-question-{%= inputCode %}" name="{%:= inputName %}" value="{%:= inputValue %}" {%:= attrChecked %}>
+                                    <label for="{%= inputId %}" class="askia-{%:= attrMulti %} askia-question-{%= inputCode %}"></label>
+                                    {% If CurrentADC.PropValue("respOnHeader") = "0" Then %}
+                                        <label for="{%:= inputId %}" class="text" askia-question-{%= inputCode %}>{%= caption %}</label>
+                                    {% EndIf %}
+                    	{% Next %}
+                  	{% EndIf %}
+            		</td>
+            {%		
+					ElseIf (column.Type = "numeric") Then
+                        inputName 	= column.InputName()
+						inputId     	= (inputName + "_" + k).Replace("C", "askia-input-number")
+						inputCode	 = column.InputCode %}
+                            <td class="col{%= k %}">
+                                <span class="askia-question-{%= inputCode %} number-element">
+                                    {%= CurrentADC.PropValue("numBoxPrefix"+k) %}
+                                    <input type ="number" id="{%= inputId %}" name="{%:= inputName %}" value="{%:= column.InputValue() %}">
+                                    {%= CurrentADC.PropValue("numBoxSuffix"+k) %}
+                                </span>
+                            </td>
+                        {%
+					ElseIf (column.Type = "open") Then
+                        inputName = column.InputName()
+						inputId     = (inputName + "_" + k).Replace("S", "askia-input-open")
+						inputCode	 = column.InputCode %}
+                        <td class="col{%= k %}">
+                            <input type ="text" class="askia-question-{%= inputCode %}" id="{%= inputId %}" name="{%:= inputName %}" value="{%:= column.InputValue() %}">
+                        </td>
+				{% Endif 
+    			EndIf
+			Next
+            %}
+            </tr>
+            {%
+	Next 
+%}
+    {% If showTotal Then%}
+        <tr>
+            <th>{%= totalCaptionLeft %}</th>
+                {% For i = 1 to COLUMN_NUMBER
+                    column = CurrentADC.Var("questionCol"+i).ToQuestion()
+    				if ((i = 1) And (column.Id = DK)) Then column = CurrentQuestion EndIf
+                    If column.Id <> DK then %}                        
+                        {% If ((column.Type = "multiple") or ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox"+i) = "0"))) Then%}
+                            {% For k = 1 To column.AvailableResponses.Count%}
+                                <th></th>
+                            {% Next
+                        Elseif column.Type = "numeric" Then %}
+            				<th id="totalCell{%= CurrentADC.InstanceId %}_{%= i %}">{%= totalCaptionCol %}<span id="totalCol{%= CurrentADC.InstanceId %}_{%= i %}">{%= CurrentADC.PropValue("numBoxPrefix"+i)%}<span id="total{%= CurrentADC.InstanceId %}_{%= i %}">0</span>{%= CurrentADC.PropValue("numBoxSuffix"+i)%}</span></th>
+                        {% Else%}
+                            <th>&nbsp;</th>
+                        {%EndIf%}
+                    {% Endif   
+                Next %}
+        </tr>
+	{% EndIf %}
+    </tbody>
+</table>
+</div>
