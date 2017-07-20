@@ -1,2 +1,0 @@
-# adc2-sideBySideTable
-   

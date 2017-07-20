@@ -29,7 +29,13 @@
       <content fileName="SideBySideTable.css" type="css" mode="static" position="head" />
       <content fileName="default.css" type="css" mode="dynamic" position="head" />
       <content fileName="default.html" type="html" mode="dynamic" position="placeholder" />
+      <content fileName="simplbox.js" type="javascript" mode="static" position="foot" />
       <content fileName="SideBySideTable.js" type="javascript" mode="static" position="foot" />
+      <content fileName="time_picker.js" type="javascript" mode="static" position="foot" />
+      <content fileName="magnifyingGlass.png" type="image" mode="static" position="none" />
+      <content fileName="moment.min.js" type="javascript" mode="static" position="foot" />
+      <content fileName="pikaday.js" type="javascript" mode="static" position="head" />
+      <content fileName="date_picker.js" type="javascript" mode="static" position="foot" />
       <content fileName="Initializer.js" type="javascript" mode="dynamic" position="foot" />
     </output>
   </outputs>
@@ -129,6 +135,23 @@
           <option value="1" text="Yes" />
         </options>
       </property>
+      <property xsi:type="standardProperty" id="iterationColumn" name="Iteration column display" type="string" require="false" visible="true">
+        <description><![CDATA[]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="0" text="Just text" />
+          <option value="1" text="Just image" />
+          <option value="2" text="Image and text" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="imgZoom" name="Image Zoom" type="string" require="false" visible="true">
+        <description><![CDATA[]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="0" text="No" />
+          <option value="1" text="Yes" />
+        </options>
+      </property>
     </category>
     <category id="numeric" name="Numeric">
       <property xsi:type="standardProperty" id="showTotal" name="Show Total" type="string" require="false" visible="true">
@@ -165,6 +188,115 @@
         <options>
           <option value="0" text="No" />
           <option value="1" text="Yes" />
+        </options>
+      </property>
+    </category>
+    <category id="timePicker" name="Time Picker">
+      <property xsi:type="standardProperty" id="imperial" name="Time format" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Option to choose 24 hour clock or 12 hour clock]]></description>
+        <value><![CDATA[false]]></value>
+        <options>
+          <option value="false" text="24 Hour clock" />
+          <option value="true" text="12 Hour clock" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="showSeconds" name="Show Seconds" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Option to show/hide seconds counter]]></description>
+        <value><![CDATA[false]]></value>
+        <options>
+          <option value="true" text="Show" />
+          <option value="false" text="Hide" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="stepMinutes" name="Minutes Intervals" type="number" mode="dynamic" require="false" visible="true" min="1" max="59">
+        <description><![CDATA[Step intervals for minute counter]]></description>
+        <value><![CDATA[1]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="stepSeconds" name="Seconds Intervals" type="number" mode="dynamic" require="false" visible="true" min="1" max="59">
+        <description><![CDATA[Step intervals for seconds counter]]></description>
+        <value><![CDATA[1]]></value>
+      </property>
+    </category>
+    <category id="Date" name="Date options">
+      <property xsi:type="standardProperty" id="defaultDate" name="Default date" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[The initial date to view when first opened
+Format: MM/DD/YYYY]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="bound" name="Show datepicker" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Hide datepicker by default. Hide datepicker until it is in focus.]]></description>
+        <value><![CDATA[1]]></value>
+        <options>
+          <option value="1" text="Hide" />
+          <option value="0" text="Show" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="position" name="Position" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[preferred position of the datepicker relative to the form field, e.g.: top right, bottom right Note: automatic adjustment may occur to avoid datepicker from being displayed outside the viewport.]]></description>
+        <value><![CDATA[bottom left]]></value>
+        <options>
+          <option value="bottom left" text="bottom left" />
+          <option value="top left" text="top left" />
+          <option value="top right" text="top right" />
+          <option value="bottom right" text="bottom right" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="setDefaultDate" name="Set default date" type="boolean" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Make the "Default Date" the initial selected value]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="0" text="No" />
+          <option value="1" text="Yes" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="firstDay" name="First Day of the month" type="number" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Select the first day of the month:
+0 = Sunday, 1 = Monday etc.]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="0" text="Sunday" />
+          <option value="1" text="Monday" />
+          <option value="2" text="Tuesday" />
+          <option value="3" text="Wednesday" />
+          <option value="4" text="Thursday" />
+          <option value="5" text="Friday" />
+          <option value="6" text="Saturday" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="disableWeekends" name="Disable Weekends" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Option to disable the selection of weekends]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Disallow Weekends" />
+          <option value="0" text="Allow Weekends" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="showWeekNumber" name="Show Week Number" type="string" require="false" visible="true">
+        <description><![CDATA[Show the ISO week number at the head of the row (default false)]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Show" />
+          <option value="0" text="Hide" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="showMonthAfterYear" name="Month After Year" type="string" require="false" visible="true">
+        <description><![CDATA[Render the month after year in the title (default false)]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Month last (yyyy mm)" />
+          <option value="0" text="Month first (mm yyyy)" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="numberOfMonths" name="Number of Months" type="number" mode="dynamic" require="false" visible="true" min="1" max="3">
+        <description><![CDATA[Number of months visible at a time]]></description>
+        <value><![CDATA[1]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="mainCalendar" name="Main Calendar" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[When "Number of Months" is used, this will help you to choose where the main calendar will be (default left, can be set to right). Only used for the first display or when a selected date is not already visible]]></description>
+        <value><![CDATA[left]]></value>
+        <options>
+          <option value="left" text="Left" />
+          <option value="right" text="Right" />
         </options>
       </property>
     </category>

@@ -52,6 +52,7 @@
         }
     }
 
+
     /**
    * Creates a new instance of the SideBySideTable
    *
@@ -69,10 +70,68 @@
         this.rankingBox = options.rankingBox;
         this.headerFixed = options.headerFixed;
 
+
+        function simplboxConstructorCall(strId) {
+            var preLoadIconOn = function () {
+                var newE = document.createElement("div"),
+                    newB = document.createElement("div");
+                newE.setAttribute("id", "simplbox-loading");
+                newE.appendChild(newB);
+                document.body.appendChild(newE);
+            },
+                preLoadIconOff = function () {
+                    var elE = document.getElementById("simplbox-loading");
+                    elE.parentNode.removeChild(elE);
+                },
+                overlayOn = function () {
+                    var newA = document.createElement("div");
+                    newA.setAttribute("id", "simplbox-overlay");
+                    document.body.appendChild(newA);
+                },
+                overlayOff = function () {
+                    var elA = document.getElementById("simplbox-overlay");
+                    elA.parentNode.removeChild(elA);
+                };
+            var img = new SimplBox(document.querySelectorAll("[data-simplbox='" + strId + "']"), {
+                quitOnImageClick: true,
+                quitOnDocumentClick: false,
+                onStart: overlayOn,
+                onEnd: overlayOff,
+                onImageLoadStart: preLoadIconOn,
+                onImageLoadEnd: preLoadIconOff
+            });
+            img.init();
+        }
+
+        var zooms = document.getElementById("adc_" + this.instanceId).querySelectorAll("tbody tr");
+        for (var l1 = 0, k1 = zooms.length; l1 < k1; l1++) {
+            simplboxConstructorCall(zooms[l1].getAttribute("data-id"));
+        }
+
+        var responseszooms = document.getElementById("adc_" + this.instanceId).querySelectorAll(".otherColumn img");
+        for (var l2 = 0, k2 = responseszooms.length; l2 < k2; l2++) {
+            simplboxConstructorCall(responseszooms[l2].getAttribute("data-id"));
+        }
+
+
         var elements = document.querySelectorAll("#adc_" + options.instanceId + "_thead th");
         window.addEventListener("scroll",function(){
             headerFix(elements,options);
         });
+
+
+        function triggerRouting() {
+            var routing_bool = false;
+            for(i=0; i<options.questions.length; i++){
+                routing_bool = routing_bool || (window.arrLiveRoutingShortcut.indexOf(options.questions[i]) >= 0);
+            }
+            if (window.askia 
+                && window.arrLiveRoutingShortcut 
+                && window.arrLiveRoutingShortcut.length > 0
+                && routing_bool) {
+                askia.triggerAnswer();
+            }
+        }
 
         /**
         * Handle exclusive response in multicoded questions
@@ -96,16 +155,7 @@
                     element.parentElement.classList.remove("cell-selected");
                 });
             }
-            var routing_bool = false;
-            for(i=0; i<options.questions.length; i++){
-                routing_bool = routing_bool || (window.arrLiveRoutingShortcut.indexOf(options.questions[i]) >= 0);
-            }
-            if (window.askia 
-                && window.arrLiveRoutingShortcut 
-                && window.arrLiveRoutingShortcut.length > 0
-                && routing_bool) {
-                askia.triggerAnswer();
-            }
+            triggerRouting();
         }
 
         /**
@@ -116,6 +166,17 @@
             inputElmt[i].addEventListener("change", exclusiveChangeEvent);    
             inputElmt[i].addEventListener("input", exclusiveChangeEvent);    
         }
+
+
+        var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutationRecord) {
+                if(mutationRecord.target.style.display!=="none") triggerRouting();
+            });    
+        });
+
+        var target = document;
+        observer.observe(target, { attributes : true, attributeFilter : ['style'], childList: true, subtree: true });
+
 
         /**
        * addEvent Listener for step by step table
@@ -280,6 +341,23 @@
     var inputElmt = document.querySelectorAll('.response');
     for(i = 0; i<inputElmt.length; i++) {
         inputElmt[i].addEventListener("click", clickCellEvent);    
+    }
+    
+    function clickImgEvent(event){
+        event.target.parentElement.firstElementChild.checked = !event.target.parentElement.firstElementChild.checked;
+        event.target.parentElement.firstElementChild.checked ? event.target.parentElement.classList.add("cell-selected") : event.target.parentElement.classList.remove("cell-selected");
+        // Create the event
+        var eventTrig = new CustomEvent("change", {});
+        // Dispatch/Trigger/Fire the event
+        event.target.parentElement.firstElementChild.dispatchEvent(eventTrig);
+    }
+
+    /**
+    * add the eventlistener to implement exclusive answer inside multi coded question
+    */
+    var inputElmt = document.querySelectorAll('td.response img');
+    for(i = 0; i<inputElmt.length; i++) {
+        inputElmt[i].addEventListener("click", clickImgEvent);    
     }
 
 

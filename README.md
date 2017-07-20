@@ -1,2 +1,2 @@
-# adc-SideBySide
-Side By Side ADC
+# adc2-sideBySideTable
+   
