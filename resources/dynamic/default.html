@@ -25,7 +25,7 @@ Dim totalCaptionLeft = On(CurrentADC.PropValue("displayTotalCaption") = "0", tot
 Dim totalCaptionCol  = On(CurrentADC.PropValue("displayTotalCaption") = "1", totalCaption, "")
 
 For i = 1 To COLUMN_NUMBER
-    column = CurrentADC.Var("questionCol"+i).ToQuestion()
+    column = CurrentADC.PropQuestion("questionCol"+i)
     if ((i = 1) And (column.Id = DK)) Then column = CurrentQuestion EndIf
 
     boolColMerge = boolColMerge Or (CurrentADC.PropValue("respOnHeader") = "1" And (column.Type = "single" Or column.Type="multiple"))
@@ -39,7 +39,7 @@ Next
                     <th class="firstColumn">&nbsp;</th>
             {%
 			For i = 1 to COLUMN_NUMBER
-    			column = CurrentADC.Var("questionCol"+i).ToQuestion()
+    			column = CurrentADC.PropQuestion("questionCol"+i)
     			if ((i = 1) and (column.Id = DK)) Then	column = CurrentQuestion	EndIf
 
         		attrColMerge = On(((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox"+i) = "0")) or (column.Type = "multiple"), "colspan=" + column.AvailableResponses.Count, "")
@@ -58,7 +58,7 @@ Next
             <tr>
                 <th class="firstColumn">&nbsp;</th>
      {%	  	For i = 1 to COLUMN_NUMBER
-                  	column = CurrentADC.Var("questionCol"+i).ToQuestion()
+    				column = CurrentADC.PropQuestion("questionCol"+i)
     				if ((i = 1) And (column.Id = DK)) Then column = CurrentQuestion EndIf
                     If column.Id <> DK then %}                        
                             {% If ((CurrentADC.PropValue("respOnHeader") = "1") and ((column.Type = "multiple") or ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox"+i) = "0")))) Then%}
@@ -107,7 +107,7 @@ Next
             
             {%
             For k = 1 To COLUMN_NUMBER
-    			column = CurrentADC.Var("questionCol"+k).ToQuestion()
+    			column = CurrentADC.PropQuestion("questionCol"+k)
     			if ((k = 1) And (column.Id = DK)) Then column = CurrentQuestion EndIf
     			If (column.Id <> DK) then
         			column = column.Alliterations[i]
@@ -246,7 +246,7 @@ Next
         <tr>
             <th>{%= totalCaptionLeft %}</th>
                 {% For i = 1 to COLUMN_NUMBER
-                    column = CurrentADC.Var("questionCol"+i).ToQuestion()
+    				column = CurrentADC.PropQuestion("questionCol"+i)
     				if ((i = 1) And (column.Id = DK)) Then column = CurrentQuestion EndIf
                     If column.Id <> DK then %}                        
                         {% If ((column.Type = "multiple") or ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox"+i) = "0"))) Then%}

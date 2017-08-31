@@ -19,6 +19,13 @@
 .adc-sidebyside-table th, .adc-sidebyside-table td {
     padding: .3em;
     text-align: center;
+    -moz-transition: all 0.2s ease-in;
+    /* WebKit */
+    -webkit-transition: all 0.2s ease-in;
+    /* Opera */
+    -o-transition: all 0.2s ease-in;
+    /* Standard */
+    transition: all 0.2s ease-in;
 }
 .adc-sidebyside-table th:first-child, .adc-sidebyside-table td:first-child {
     text-align: left;

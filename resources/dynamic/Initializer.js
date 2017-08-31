@@ -1,5 +1,5 @@
 {%
-Dim nb = 0
+Dim nb = 1
 Dim COLUMN_NUMBER = 5
 Dim varLim
 Dim ranking
@@ -9,9 +9,9 @@ Dim inputId
 Dim i
 Dim j
 Dim tmpQ
-For i=1 To 5
-    tmpQ = CurrentADC.Var("questionCol"+i).ToQuestion()
-    If tmpQ.Id <> DK Then
+For i=2 To 5
+    tmpQ = CurrentADC.PropQuestion("questionCol"+i)
+    If (tmpQ.Id <> DK) Then
         nb = nb + 1
     EndIf
 Next
@@ -47,7 +47,7 @@ dim maxBound
         respOnHeader: {%= On(CurrentADC.PropValue("respOnHeader") = "1", true, false)%},
         headerFixed: {%= On(CurrentADC.PropValue("headerFixed") = "1", true, false)%},
         questions: [{% For i=1 To COLUMN_NUMBER
-            column = CurrentADC.Var("questionCol"+i).ToQuestion()
+    	column = CurrentADC.PropQuestion("questionCol"+i)
             If column.Id = DK and i=1 Then
                 column = CurrentQuestion
             Endif
@@ -61,7 +61,7 @@ dim maxBound
     
     {% 
 	For i = 1 to COLUMN_NUMBER 
-   	    column = CurrentADC.Var("questionCol"+i).ToQuestion()
+    	column = CurrentADC.PropQuestion("questionCol"+i)
         If column.Id = DK and i=1 Then
         	column = CurrentQuestion
 		Endif
@@ -114,11 +114,10 @@ dim maxBound
                     maxBound = 2100
                 EndIf
 				For j=1 to CurrentQuestion.ParentLoop.Answers.Count 
-    				column = CurrentADC.Var("questionCol"+i).ToQuestion()
+    				column = CurrentADC.PropQuestion("questionCol"+i)
 					column = column.AllIterations[j]
                     inputName = column.InputName()
                     inputId     = (inputName + "_" + i).Replace("D", "askia-input-dateO")%}
-    				alert("{%= inputId %}");
                 	var datePickerR{%= j%}C{%= i%} = new DatePicker({
                         adcId: {%= CurrentADC.InstanceId %},
                         inputNameX: "{%= inputId %}",
@@ -189,11 +188,10 @@ dim maxBound
                     maxBound = 2100
                 EndIf
 				For j=1 to CurrentQuestion.ParentLoop.Answers.Count 
-    				column = CurrentADC.Var("questionCol"+i).ToQuestion()
+    				column = CurrentADC.PropQuestion("questionCol"+i)
 					column = column.AllIterations[j]
                     inputName = column.InputName()
                     inputId     = (inputName + "_" + i).Replace("D", "askia-input-dateO")%}
-    				alert("j'ai surement quelques soucis ici");
                 	var datePickerR{%= j%}C{%= i%} = new DatePicker({
                         adcId: {%= CurrentADC.InstanceId %},
                         inputNameX: "{%= inputId %}",

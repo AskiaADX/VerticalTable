@@ -45,9 +45,23 @@ Dim firstColumnWidth = CurrentADC.PropValue("firstColumnWidth")
 }
 #adc_{%= CurrentADC.InstanceId %} .response:hover {
     background-color: rgba({%= CurrentADC.PropValue("hoverCellColor") %},0.8);
+    -moz-transition: all 0.2s ease-in;
+    /* WebKit */
+    -webkit-transition: all 0.2s ease-in;
+    /* Opera */
+    -o-transition: all 0.2s ease-in;
+    /* Standard */
+    transition: all 0.2s ease-in;
 }
 #adc_{%= CurrentADC.InstanceId %} .cell-selected {
     background-color: rgba({%= CurrentADC.PropValue("selectedCellColor") %},0.8);
+    -moz-transition: all 0.2s ease-in;
+    /* WebKit */
+    -webkit-transition: all 0.2s ease-in;
+    /* Opera */
+    -o-transition: all 0.2s ease-in;
+    /* Standard */
+    transition: all 0.2s ease-in;
 }
 {% If CurrentADC.PropValue("respOnHeader") = "0" Then %}
     #adc_{%= CurrentADC.InstanceId %} label.askia-radio{
@@ -61,6 +75,13 @@ Dim firstColumnWidth = CurrentADC.PropValue("firstColumnWidth")
     }
     #adc_{%= CurrentADC.InstanceId %} .response {
         cursor:pointer;
+        -moz-transition: all 0.2s ease-in;
+        /* WebKit */
+        -webkit-transition: all 0.2s ease-in;
+        /* Opera */
+        -o-transition: all 0.2s ease-in;
+        /* Standard */
+        transition: all 0.2s ease-in;
     }
     #adc_{%= CurrentADC.InstanceId %} .number-element {
         display: flex;

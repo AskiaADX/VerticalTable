@@ -15,7 +15,6 @@
         this.question = options.question;
         var adcId = options.adcId
         
-        console.log(JSON.stringify(options));
 
         if (!minHour) {
             minHour = 00;
@@ -38,7 +37,6 @@
         for (var x in seps) {
             document.getElementsByClassName('timeSeparator_' + adcId)[x].innerHTML = timeSep;
         }
-        console.log(row + " : " + col);
         if (!showSeconds) {
             document.querySelector("#row" + row + " .col" + col + " #secsContainer_" + adcId).innerHTML="";
         } else {

@@ -121,6 +121,7 @@
 
 
         function triggerRouting() {
+            console.log("trigger Routing");
             var routing_bool = false;
             for(i=0; i<options.questions.length; i++){
                 routing_bool = routing_bool || (window.arrLiveRoutingShortcut.indexOf(options.questions[i]) >= 0);
@@ -221,9 +222,19 @@
        *	Function that check if every questions of a row are fully completed
        */
         function checkResponses(event, elmtID) {
-            if(event != null) {
+            /**if(event != null) {
                 var tmpStr = event.target.parentNode.parentNode.id;
+            }**/
+            if(event != null) {
+                var parent = event.target.parentNode;
+                var tmpStr = parent.id;
+            
+                while (tmpStr == "" || tmpStr == undefined || tmpStr == null || tmpStr.substr(0,3) != "row") {
+                    parent = parent.parentNode;
+                    tmpStr = parent.id;
+                }
             }
+            
             if(elmtID != null) {
                 tmpStr = elmtID;
             }
@@ -231,10 +242,12 @@
             var nbCol = options.nbCol;
             var test2 = true;
             for(j=1; j<=nbCol; j++) {
+                console.log("j : " + j + " | nbCol : " + nbCol + " | idRow : " + idRow);
                 var elt = document.querySelector("[id='row" + idRow + "']").querySelectorAll(".col"+j);
                 var test1 = false
                 for(i=0; i<elt.length; i++) {
                     var input = elt[i].firstElementChild;
+                    if (input.classList.contains("number-element")) input = elt[i].firstElementChild.firstElementChild;
                     if ((input.id.substring(0, 16) === "askia-input-open") || (input.id.substring(0, 18) === "askia-input-number")) {
                         test1 = test1 || elt[i].firstElementChild.value != "";
                     } else if (input.id.substring(0, 18) === "askia-input-select") {
@@ -243,6 +256,7 @@
                         test1 = test1 || elt[i].firstElementChild.checked;
                     }
                 }
+                console.log("test 1 : " + test1 + " | test 2 : " + test2);
                 test2 = test2 && test1;
             }
             var achieveLim = true;
