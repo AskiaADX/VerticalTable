@@ -50,7 +50,7 @@
         // Prototype the indexOf function
         if (!Array.prototype.indexOf) {
             Array.prototype.indexOf = function (obj, fromIndex) {
-                if (fromIndex == null) {
+                if (fromIndex === null) {
                     fromIndex = 0;
                 } else if (fromIndex < 0) {
                     fromIndex = Math.max(0, this.length + fromIndex);
@@ -127,8 +127,8 @@
         var picker = new Pikaday(
             {
                 field: document.getElementById(inputNameX),
-                                               firstDay: firstDay,
-                                               defaultDate: new Date(xdefaultDate),
+                firstDay: firstDay,
+                defaultDate: new Date(xdefaultDate),
                 bound: bound,
                 position: position,
                 setDefaultDate: setDefaultDate,
@@ -156,7 +156,7 @@
                 && window.arrLiveRoutingShortcut 
                 && window.arrLiveRoutingShortcut.length > 0
                 && window.arrLiveRoutingShortcut.indexOf(question) >= 0) {
-                                                         askia.triggerAnswer();
+                	askia.triggerAnswer();
                 }
                 },
                 onDraw: function(event) {

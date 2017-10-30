@@ -60,14 +60,16 @@ Next
      {%	  	For i = 1 to COLUMN_NUMBER
     				column = CurrentADC.PropQuestion("questionCol"+i)
     				if ((i = 1) And (column.Id = DK)) Then column = CurrentQuestion EndIf
+    				Dim padRightHead = ""
                     If column.Id <> DK then %}                        
                             {% If ((CurrentADC.PropValue("respOnHeader") = "1") and ((column.Type = "multiple") or ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox"+i) = "0")))) Then%}
                                 {% For k = 1 To column.AvailableResponses.Count
+    								padRightHead = On(column.AvailableResponses[k].ResourceURL <> "" and CurrentADC.PropValue("imgZoomColumn") = "1" and CurrentADC.PropValue("respOnHeader") = "1"," padRight","")
     								imageId = column.AvailableResponses[k].InputName() %}
-                                    <th class="otherColumn">
+                					<th class="otherColumn{%:= padRightHead %}">
                                         {% If column.AvailableResponses[k].ResourceURL <> "" and CurrentADC.PropValue("iterationColumn") <> "0" Then%}
-                                        	<img src="{%= column.AvailableResponses[k].ResourceURL %}" data-id="{%= imageId %}" class="image">
-                                        {%If CurrentADC.PropValue("imgZoomColumn") = "1" Then %}<a href="{%= column.AvailableResponses[k].ResourceURL %}" target="_blank" data-simplbox="{%= imageId %}"><div class="imgZoom"></div></a>{%EndIf%}
+                                        	<img src="{%= column.AvailableResponses[k].ResourceURL %}" data-id="{%= imageId %}" class="image"><br />
+                                        {%If CurrentADC.PropValue("imgZoomColumn") = "1" Then %}<a href="{%= column.AvailableResponses[k].ResourceURL %}" target="_blank" data-simplbox="{%= imageId %}" class="zoomLink"><div class="imgZoom"></div></a>{%EndIf%}
                                         {% EndIf %}
                                         {% If CurrentADC.PropValue("iterationColumn") <> "1" or column.AvailableResponses[k].ResourceURL = "" Then %}
                                         	{%= column.AvailableResponses[k].Caption %}
@@ -78,10 +80,9 @@ Next
                 					<th class="otherColumn">&nbsp;</th>
                             {%EndIf%}
                     {% Endif   
-                Next
-			EndIf
-			%}
-        </tr>
+                Next %}
+			</tr>
+			{% EndIf %}
   		</thead>
     
         <tbody>        	            
@@ -92,12 +93,13 @@ Next
             <tr id="row{%= i%}" {%= displayRow %} data-id='{%= imageId%}'>
             
             {%Dim select = CurrentQuestion.ParentLoop
+				Dim padRightIteration = On(select.Answers[i].ResourceURL <> "" and CurrentADC.PropValue("imgZoomRow") = "1","padRight","")
 				If select.Id<>DK Then 
     				attrChecked = On(select.Answers[i].IsSelected, "checked", "") %}
-                <td>
+                <td class="{%= padRightIteration %}">
                     {% If select.Answers[i].ResourceURL <> "" and CurrentADC.PropValue("iterationColumn") <> "0" Then%}
-                    	<img src="{%= select.Answers[i].ResourceURL %}" data-id="{%= select.Answers[i].Id %}" class="image" width="100%">
-                    	{% If CurrentADC.PropValue("imgZoomRow") = "1" Then %}<a href="{%= select.Answers[i].ResourceURL %}" target="_blank" data-simplbox="{%= imageId %}"><div class="imgZoom"></div></a>{% EndIf %}
+                    	<img src="{%= select.Answers[i].ResourceURL %}" data-id="{%= select.Answers[i].Id %}" class="image" width="100%"><br />
+                    	{% If CurrentADC.PropValue("imgZoomRow") = "1" Then %}<a href="{%= select.Answers[i].ResourceURL %}" target="_blank" data-simplbox="{%= imageId %}" class="zoomLink"><div class="imgZoom"></div></a>{% EndIf %}
                     {% EndIf %}
                    	{% If CurrentADC.PropValue("iterationColumn") <> "1" or select.Answers[i].ResourceURL = "" Then %}
     					{%:= select.Answers[i].Caption %}
@@ -116,13 +118,13 @@ Next
             			attrChecked = On(column.AvailableResponses[i].IsSelected, "checked", "")
               %}
                 	
-                        {% If (CurrentADC.PropValue("colAsComboBox"+k) > "1") And column.Type = "single" Then 
+                        {% If (CurrentADC.PropValue("colAsComboBox"+k) >= "1") And column.Type = "single" Then 
             				inputName = column.InputName()
     						inputId     = (inputName + "_" + k).Replace("U", "askia-input-select")
             				inputCode = column.inputCode %}
             			<td class="col{%= k %}">
                             <select class="askia-question-{%= inputCode %}" id="{%= inputId%}" name="{%:= column.InputName()%}">
-                            <option value="0"></option>
+                            <option value="0">{%:= CurrentADC.PropValue("firstOptionCombo"+k) %}</option>
                             {% For j=1 to column.AvailableResponses.Count
     							 	Dim attrSelected = On(column.AvailableResponses[j].IsSelected, "selected=\"selected\"", "")%}
                             		<option {%:= attrSelected %} value="{%:= column.AvailableResponses[j].InputValue() %}">{%= column.AvailableResponses[j].Caption %}</option>
@@ -144,15 +146,16 @@ Next
                                 caption     = column.AvailableResponses[j].Caption
                                 isExclusive = On((column.AvailableResponses[j].IsExclusive) or (column.Type = "single"), " exclusive", "")
                                 isAskiaExclusive = On((column.AvailableResponses[j].IsExclusive) or (column.Type = "single"), "askia-exclusive", "")
-    							isSelected = On(column.Answers.Index Has column.AvailableResponses[j].Index, " selected", "")
+								isSelected = On(column.Answers.Index Has column.AvailableResponses[j].Index, " cell-selected", "")
+								Dim padRight = On(column.AvailableResponses[j].ResourceURL <> "" and CurrentADC.PropValue("imgZoomColumn") = "1" and CurrentADC.PropValue("respOnHeader") = "0"," padRight","")
     						%}
-                        	<td class="col{%= k %} response{%:= isExclusive %}{%:= isSelected %}">
+                        	<td class="col{%= k %} response{%:= isExclusive %}{%:= isSelected %}{%:= padRight %}">
                                     <input type="{%:= attrMulti %}" id="{%:= inputId %}" class="{%:= isAskiaExclusive %} askia-question-{%= inputCode %}" name="{%:= inputName %}" value="{%:= inputValue %}" {%:= attrChecked %}>
                                     <label for="{%= inputId %}" class="askia-{%:= attrMulti %} askia-question-{%= inputCode %}"></label>
                                     {% If CurrentADC.PropValue("respOnHeader") = "0" Then %}
                                         {% If column.AvailableResponses[j].ResourceURL <> "" and CurrentADC.PropValue("iterationColumn") <> "0" Then%}
-                                            <img src="{%= column.AvailableResponses[j].ResourceURL %}" data-id="{%= imageId %}" class="image">
-                                			{%If CurrentADC.PropValue("imgZoomColumn") = "1" Then %}<a href="{%= column.AvailableResponses[j].ResourceURL %}" target="_blank" data-simplbox="{%= imageId %}"><div class="imgZoom"></div></a>{%EndIf%}
+                                            <img src="{%= column.AvailableResponses[j].ResourceURL %}" data-id="{%= imageId %}" class="image"><br />
+                                			{%If CurrentADC.PropValue("imgZoomColumn") = "1" Then %}<a href="{%= column.AvailableResponses[j].ResourceURL %}" target="_blank" data-simplbox="{%= imageId %}" class="zoomLink"><div class="imgZoom"></div></a>{%EndIf%}
                                         {% EndIf %}
                                         {% If CurrentADC.PropValue("iterationColumn") <> "1" or column.AvailableResponses[j].ResourceURL = "" Then %}
                                        		<label for="{%:= inputId %}" class="text" askia-question-{%= inputCode %}>{%= caption %}</label>
@@ -168,9 +171,9 @@ Next
 						inputCode	 = column.InputCode %}
                             <td class="col{%= k %}">
                                 <span class="askia-question-{%= inputCode %} number-element">
-                                    {%= CurrentADC.PropValue("numBoxPrefix"+k) %}
+                                    <span class="prefix">{%= CurrentADC.PropValue("numBoxPrefix"+k) %}</span>
                                     <input type ="number" id="{%= inputId %}" name="{%:= inputName %}" value="{%:= column.InputValue() %}">
-                                    {%= CurrentADC.PropValue("numBoxSuffix"+k) %}
+                                    <span class="suffix">{%= CurrentADC.PropValue("numBoxSuffix"+k) %}</span>
                                 </span>
                             </td>
                         {%
@@ -181,60 +184,36 @@ Next
                         <td class="col{%= k %}">
                             <input type ="text" class="askia-question-{%= inputCode %}" id="{%= inputId %}" name="{%:= inputName %}" value="{%:= column.InputValue() %}">
                         </td>
+                	{% ElseIf (column.type = "datetime") Then %}
+                	<td class="col{%= k %}">
                 	{%
-					ElseIf (column.type = "datetime") Then 
                         inputName = column.InputName()
 						inputId     = (inputName + "_" + k).Replace("D", "askia-input-date")
 						inputIdDate = (inputName + "_" + k).Replace("D", "askia-input-dateO")
-						inputCode	 = column.InputCode 
-						If (column.IsTimeOnly ) Then %}
-                            <td class="col{%= k %}">
-                                <div class="RLTimePicker">
-                                    <select id="hour_{%= CurrentADC.InstanceId %}" name="hour"></select>
-                                    <span class="timeSeparator_{%= CurrentADC.InstanceId %}"></span>
-                                    <select id="minutes_{%= CurrentADC.InstanceId %}" name="minutes"></select>
-                                    <span id="secsContainer_{%= CurrentADC.InstanceId %}">
-                                        <span class="timeSeparator_{%= CurrentADC.InstanceId %}"></span>
-                                        <select id="seconds_{%= CurrentADC.InstanceId %}" name="seconds"></select>
-                                    </span>
-                                    <!--<input type="text" id="time" name="time" readonly="readonly" hidden=true/> -->
-                                    <input id="{%=inputId%}" class="askia-question-{%= inputCode %} time_{%= CurrentADC.InstanceId %}" hidden type="text" name="{%= inputName %}" />
-                                    <span class="imperial" {%If CurrentADC.PropValue("imperial") = "false" Then %} hidden {% EndIf %} id="ampm_{%= CurrentADC.InstanceId %}"></span>
-                                </div>
-                            </td>
-                {% 	
-						ElseIf (column.IsDateOnly ) Then  
-							Dim attrMin = On(column.MinDate.ToNumber() <> DK, "min=\"" + column.MinDate.Format("dd/MM/yyyy") + "\"", "")
-    						Dim attrMax = On(column.MaxDate.ToNumber() <> DK, "max=\"" + column.MaxDate.Format("dd/MM/yyyy") + "\"", "")    %}
-                			<td class="col{%= k%}">
-                                <div class="RLDatePicker">
-                                    <input type="text" id="{%= inputIdDate %}" class="askia-question-{%= inputCode %}" name="{%= inputName %}" value="{%= column.InputValue("date") %}" {%:= attrMin %} {%:= attrMax %} readonly="true"/>
-                                </div>
-                			</td>
-                	{%
-						Else
-							attrMin = On(column.MinDate.ToNumber() <> DK, "min=\"" + column.MinDate.Format("dd/MM/yyyy") + "\"", "")
-    						attrMax = On(column.MaxDate.ToNumber() <> DK, "max=\"" + column.MaxDate.Format("dd/MM/yyyy") + "\"", "")    %}
-                			<td class="col{%= k %}">
-                                <div class="RLTimePicker">
-                                    <select id="hour_{%= CurrentADC.InstanceId %}" name="hour"></select>
-                                    <span class="timeSeparator_{%= CurrentADC.InstanceId %}"></span>
-                                    <select id="minutes_{%= CurrentADC.InstanceId %}" name="minutes"></select>
-                                    <span id="secsContainer_{%= CurrentADC.InstanceId %}">
-                                        <span class="timeSeparator_{%= CurrentADC.InstanceId %}"></span>
-                                        <select id="seconds_{%= CurrentADC.InstanceId %}" name="seconds"></select>
-                                    </span>
-                                    <!--<input type="text" id="time" name="time" readonly="readonly" hidden=true/> -->
-                                    <input id="{%=inputId%}" class="askia-question-{%= inputCode %} time_{%= CurrentADC.InstanceId %}" hidden type="text" name="{%= inputName %}" />
-                                    <span class="imperial" {%If CurrentADC.PropValue("imperial") = "false" Then %} hidden {% EndIf %} id="ampm_{%= CurrentADC.InstanceId %}"></span>
-                                </div>
-                                <div class="RLDatePicker">
-                                    <input type="text" id="{%= inputIdDate %}" class="askia-question-{%= inputCode %}" name="{%= inputName %}" value="{%= column.InputValue("date") %}" {%:= attrMin %} {%:= attrMax %} readonly="true"/>
-                                </div>
-                            </td>			
-                {%
-						Endif
-					Endif 
+						inputCode	 = column.InputCode
+						Dim attrMin = On(column.MinDate.ToNumber() <> DK, "min=\"" + column.MinDate.Format("dd/MM/yyyy") + "\"", "")
+    					Dim attrMax = On(column.MaxDate.ToNumber() <> DK, "max=\"" + column.MaxDate.Format("dd/MM/yyyy") + "\"", "")
+						If (Not(column.IsTimeOnly)) Then %}
+                        	<div class="RLDatePicker">
+                            	<input type="text" id="{%= inputIdDate %}" class="askia-question-{%= inputCode %}" name="{%= inputName %}" value="{%= column.InputValue("date") %}" {%:= attrMin %} {%:= attrMax %} readonly="true"/>
+                             </div>
+                        {%	Endif %}
+                        {% If (Not(column.IsDateOnly)) Then  %}
+                             <div class="RLTimePicker">
+                             	<select id="hour_{%= CurrentADC.InstanceId %}" name="hour"></select>
+                                <span class="timeSeparator_{%= CurrentADC.InstanceId %}"></span>
+                                <select id="minutes_{%= CurrentADC.InstanceId %}" name="minutes"></select>
+                                <span id="secsContainer_{%= CurrentADC.InstanceId %}">
+                                	<span class="timeSeparator_{%= CurrentADC.InstanceId %}"></span>
+                                    <select id="seconds_{%= CurrentADC.InstanceId %}" name="seconds"></select>
+                                </span>
+                                <!--<input type="text" id="time" name="time" readonly="readonly" hidden=true/> -->
+                                <input id="{%=inputId%}" class="askia-question-{%= inputCode %} time_{%= CurrentADC.InstanceId %}" hidden type="text" name="{%= inputName %}" />
+                                <span class="imperial" {%If CurrentADC.PropValue("imperial") = "false" Then %} hidden {% EndIf %} id="ampm_{%= CurrentADC.InstanceId %}"></span>
+                            </div>
+                		{%	Endif %}
+                </td>
+                {%	Endif 
     			EndIf
 			Next
             %}

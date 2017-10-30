@@ -6,6 +6,14 @@
 	border-collapse: collapse;
 	text-align: left;
 }
+:root .adc-sidebyside-table {
+    line-height: 1.1 \0/IE9; 
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	.adc-sidebyside-table {
+		line-height: 1.1;
+	}
+}
 .adc-sidebyside-table th {
     text-align: center;
     font-weight: normal;
@@ -13,22 +21,22 @@
 .adc-sidebyside-table td {
    position: relative;
 }
+.adc-sidebyside-table .padRight {
+    padding-right: 25px;
+    padding-bottom: 0px;
+}
 .adc-sidebyside-table thead tr:last-child th, .adc-sidebyside-table td {
 	border-bottom: 1px solid #DDD;
 }
 .adc-sidebyside-table th, .adc-sidebyside-table td {
     padding: .3em;
     text-align: center;
-    -moz-transition: all 0.2s ease-in;
-    /* WebKit */
-    -webkit-transition: all 0.2s ease-in;
-    /* Opera */
-    -o-transition: all 0.2s ease-in;
-    /* Standard */
-    transition: all 0.2s ease-in;
 }
 .adc-sidebyside-table th:first-child, .adc-sidebyside-table td:first-child {
     text-align: left;
+}
+.adc-sidebyside-table .response:hover {
+    cursor: pointer;
 }
 .adc-sidebyside-table input[type=text] {
     width: 100%;
@@ -37,7 +45,7 @@
 }
 .adc-sidebyside-table input[type=number] {
     width: 100%;
-    min-width: auto;
+    min-width: 10%;
     max-width: 70%;
 }
 .adc-sidebyside-table label {
@@ -45,6 +53,22 @@
   -moz-user-select: none;     /* Firefox all */
   -ms-user-select: none;      /* IE 10+ */
   user-select: none;          /* Likely future */      
+}
+
+.adc-sidebyside .number-element {
+    display: inline-flex;
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	.adc-sidebyside .number-element {
+    	display: table;
+	}
+}
+.adc-sidebyside .number-element .prefix,
+.adc-sidebyside .number-element .suffix{
+    line-height: 2.4;
+}
+.adc-sidebyside .zoomLink {
+    /* display: table; */
 }
 .adc-sidebyside .imgZoom {
     position: absolute;
@@ -54,6 +78,9 @@
     height: 22px;
     z-index: 2;
     right: 5px;
+}
+.adc-sidebyside .imgZoom:hover {
+    border: 1px solid transparent;
 }
 /* simplbox lightbox styling */
 #simplbox {
@@ -91,14 +118,14 @@
     animation: rotateplane 1.2s infinite ease-in-out;
 }
 
+/* TIME PICKER */
 .RLTimePicker {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    display: block;
+    display: inline-flex;
     border: 0.0625em solid rgba(221,221,221,1);
 	border-radius: 0.1875em;
-    max-width: 170px;
     margin: 0 auto;
 }
 .RLTimePicker .show {
@@ -113,7 +140,7 @@
     border: none;
     padding: 5px;
     height: 34px;
-    width: 55px;
+    /* width: 60px; */
     text-align: center;
     text-align-last: center;
     -webkit-appearance: none;
@@ -134,7 +161,10 @@
 .RLTimePicker .imperial {
     width: 45px;
     padding: 5px;
-
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 .RLTimePicker .timeSeparator {
     width: 5px;
@@ -156,12 +186,13 @@
 
 .pika-single {
     z-index: 9999;
-    display: block;
+    display: inline-block;
     position: relative;
     color: #333;
     background: #fff;
     border: 1px solid #ccc;
     border-bottom-color: #bbb;
+    box-shadow: 0 5px 15px -5px rgba(0,0,0,.5);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -372,7 +403,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   display: block;
   width: 100%;
   max-width: 10em;
-    margin: 0 auto;
+  margin: 0 auto;
 }
 /* line 29, ../sass/timePicker.scss */
 .RLDatePicker input {
@@ -380,6 +411,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    max-width: 9.5em;
     /* width: 210px;
     padding: 8px 8px 6px; */
     margin: 0;
@@ -388,10 +420,78 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     /* border: none;
     border-bottom: 2px solid white;
     background: transparent; */
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    cursor: pointer;
 }
 /* line 41, ../sass/timePicker.scss */
 .RLDatePicker input:focus {
     /* border: 1px solid #dddddd;
     border-bottom-color: #ace; */
     outline: none; 
+}
+.RLDatePicker input[type=text] {
+    max-width: 90%;
+}
+/**
+ * This theme is an example to show how you can create your own.
+ */
+.pika-single.dark-theme {
+    color: #fff;
+    background: #333;
+    border: 1px solid #666;
+    border-bottom-color: #999;
+}
+
+.dark-theme .pika-label {
+    background-color: #333;
+}
+
+.dark-theme .pika-prev,
+.dark-theme .is-rtl .pika-next {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAQAAACGG/bgAAAAQ0lEQVR4Ae3KIQ4AIBTD0N0/IeHGI3UIRA3ut/Zl+ltXc5++htVAmIAwAWECwgSEKbgthEoIlRAqIVRCqINQB9nDgQd7ktwFo6UpWQAAAABJRU5ErkJggg==');
+}
+
+.dark-theme .pika-next,
+.dark-theme .is-rtl .pika-prev {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAQAAACGG/bgAAAAP0lEQVQ4y+3TMQoAMAgEwfwfAvvjTZ1uGzuvHhBPPGczEG+FRqqRaqQaqUaqkX6QBmmjacvQ6qEVTjsh+xizebvlaWptGXZAAAAAAElFTkSuQmCC');
+}
+
+.dark-theme .pika-table th {
+    color: #999;
+}
+
+.dark-theme .pika-button {
+    color: #fff;
+    background: #222;
+}
+
+.dark-theme .pika-week {
+    color: #999;
+}
+
+.dark-theme .is-today .pika-button {
+    color: #33aaff;
+}
+
+.dark-theme .is-selected .pika-button {
+    color: #fff;
+}
+
+.dark-theme .is-disabled .pika-button {
+    color: #999;
+    opacity: .3;
+}
+
+.dark-theme .pika-button:hover {
+    color: #fff !important;
+    background: #ff8000 !important;
+}
+/**
+ * This theme is an example to show how you can add triangles to the dropdowns.
+ */
+.triangle-theme .pika-label:after {
+    content:" \25be";
 }

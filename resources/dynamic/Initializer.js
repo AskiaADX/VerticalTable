@@ -74,12 +74,12 @@ dim maxBound
                         stepSeconds: {%=CurrentADC.PropValue("stepSeconds")%},
                         imperial: {%=CurrentADC.PropValue("imperial")%},
                         hideInput: true,
-                        minHour: {%= Val(column.MinDate.Format("hh")) %},
-                        maxHour: {%= Val(column.MaxDate.Format("hh")) %},
-                        selected_hour: {%= column.Iteration(j).Value %},
-                        selected_min: {%= column.Iteration(j).Value %},
-                        selected_sec: {%=column.Iteration(j).Value %},
-                        question: "{%= column.Iteration(j).Shortcut %}",
+                        minHour: {%= Hour(column.Iteration(CurrentQuestion.ParentLoop.Answers[j].Index).MinDate) %},
+                        maxHour: {%= Hour(column.Iteration(CurrentQuestion.ParentLoop.Answers[j].Index).MaxDate) %},
+                        selected_hour: "{%= Hour(column.Iteration(CurrentQuestion.ParentLoop.Answers[j].Index).Value.ToDate()) %}",
+                        selected_min: "{%= Minute(column.Iteration(CurrentQuestion.ParentLoop.Answers[j].Index).Value.ToDate()) %}",
+                        selected_sec: "{%= Second(column.Iteration(CurrentQuestion.ParentLoop.Answers[j].Index).Value.ToDate()) %}",
+                        question: "{%= column.Iteration(CurrentQuestion.ParentLoop.Answers[j].Index).Shortcut %}",
                         adcId: {%= CurrentADC.InstanceId%},
                         row: {%= j %},
                         col: {%= i%}
@@ -121,7 +121,7 @@ dim maxBound
                 	var datePickerR{%= j%}C{%= i%} = new DatePicker({
                         adcId: {%= CurrentADC.InstanceId %},
                         inputNameX: "{%= inputId %}",
-                        defaultDate: {%= defaultDate %},
+                        defaultDate: "{%= defaultDate %}",
                         bound: {%= bound%},
                         position: {%= position %},
                         setDefaultDate:{%= setDefaultDate%},
@@ -140,7 +140,7 @@ dim maxBound
                         xminBound: '{%=minBound%}',
                         xmaxBound: '{%=maxBound%}',
                         lang: {%= Interview.Language.Id %},
-                        question: '{%:= column.Shortcut %}',
+                        question: '{%:= column.Shortcut %}'
                 	});
         {% 	  Next 	
 			Else
@@ -151,12 +151,12 @@ dim maxBound
                         stepSeconds: {%=CurrentADC.PropValue("stepSeconds")%},
                         imperial: {%=CurrentADC.PropValue("imperial")%},
                         hideInput: true,
-                        minHour: {%= Val(column.MinDate.Format("hh")) %},
-                        maxHour: {%= Val(column.MaxDate.Format("hh")) %},
-                        selected_hour: {%= column.Iteration(j).Value %},
-                        selected_min: {%= column.Iteration(j).Value %},
-                        selected_sec: {%=column.Iteration(j).Value %},
-                        question: "{%= column.Iteration(j).Shortcut %}",
+                        minHour: {%= Hour(column.Iteration(CurrentQuestion.ParentLoop.Answers[j].Index).MinDate) %},
+                        maxHour: {%= Hour(column.Iteration(CurrentQuestion.ParentLoop.Answers[j].Index).MaxDate) %},
+                        selected_hour: "{%= Hour(column.Iteration(CurrentQuestion.ParentLoop.Answers[j].Index).Value.ToDate()) %}",
+                        selected_min: "{%= Minute(column.Iteration(CurrentQuestion.ParentLoop.Answers[j].Index).Value.ToDate()) %}",
+                        selected_sec: "{%= Second(column.Iteration(CurrentQuestion.ParentLoop.Answers[j].Index).Value.ToDate()) %}",
+                        question: "{%= column.Iteration(CurrentQuestion.ParentLoop.Answers[j].Index).Shortcut %}",
                         adcId: {%= CurrentADC.InstanceId%},
                         row: {%= j %},
                         col: {%= i%}
@@ -195,7 +195,7 @@ dim maxBound
                 	var datePickerR{%= j%}C{%= i%} = new DatePicker({
                         adcId: {%= CurrentADC.InstanceId %},
                         inputNameX: "{%= inputId %}",
-                        defaultDate: {%= defaultDate %},
+                        defaultDate: "{%= defaultDate %}",
                         bound: {%= bound%},
                         position: {%= position %},
                         setDefaultDate:{%= setDefaultDate%},
@@ -214,7 +214,7 @@ dim maxBound
                         xminBound: '{%=minBound%}',
                         xmaxBound: '{%=maxBound%}',
                         lang: {%= Interview.Language.Id %},
-                        question: '{%:= column.Shortcut %}',
+                        question: '{%:= column.Shortcut %}'
                 	});
         {% 	  Next 	
 			EndIf

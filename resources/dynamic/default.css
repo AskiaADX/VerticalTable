@@ -21,12 +21,12 @@ Dim firstColumnWidth = CurrentADC.PropValue("firstColumnWidth")
 #adc_{%= CurrentADC.InstanceId %} th.otherColumn {
 	z-index: 3;
     position: relative;
-    background-color: rgb(255,255,255);
+    background-color: rgb({%= Theme.WhiteColor.ToRGB() %});
 }
 #adc_{%= CurrentADC.InstanceId %} th.firstColumn {
 	z-index: -1;
     position: relative;
-    background-color: rgb(255,255,255);
+    background-color: rgb({%= Theme.WhiteColor.ToRGB() %});
 }
 #adc_{%= CurrentADC.InstanceId %} th:first-child, 
 #adc_{%= CurrentADC.InstanceId %} td:first-child {
@@ -43,25 +43,12 @@ Dim firstColumnWidth = CurrentADC.PropValue("firstColumnWidth")
 #adc_{%= CurrentADC.InstanceId %} .equalLimit {
     color: rgba({%= CurrentADC.PropValue("maxLimReachedColor") %},1);
 }
-#adc_{%= CurrentADC.InstanceId %} .response:hover {
-    background-color: rgba({%= CurrentADC.PropValue("hoverCellColor") %},0.8);
-    -moz-transition: all 0.2s ease-in;
-    /* WebKit */
-    -webkit-transition: all 0.2s ease-in;
-    /* Opera */
-    -o-transition: all 0.2s ease-in;
-    /* Standard */
-    transition: all 0.2s ease-in;
+#adc_{%= CurrentADC.InstanceId %} td:not(.cell-selected).response:hover {
+    background-color: rgba({%= Theme.BlackColor.ToRGB() %},.1);
 }
+#adc_{%= CurrentADC.InstanceId %} .selected,
 #adc_{%= CurrentADC.InstanceId %} .cell-selected {
-    background-color: rgba({%= CurrentADC.PropValue("selectedCellColor") %},0.8);
-    -moz-transition: all 0.2s ease-in;
-    /* WebKit */
-    -webkit-transition: all 0.2s ease-in;
-    /* Opera */
-    -o-transition: all 0.2s ease-in;
-    /* Standard */
-    transition: all 0.2s ease-in;
+    background-color: rgba({%= Theme.SecondaryColor.ToRGB() %},1) !important;
 }
 {% If CurrentADC.PropValue("respOnHeader") = "0" Then %}
     #adc_{%= CurrentADC.InstanceId %} label.askia-radio{
@@ -75,16 +62,34 @@ Dim firstColumnWidth = CurrentADC.PropValue("firstColumnWidth")
     }
     #adc_{%= CurrentADC.InstanceId %} .response {
         cursor:pointer;
-        -moz-transition: all 0.2s ease-in;
-        /* WebKit */
-        -webkit-transition: all 0.2s ease-in;
-        /* Opera */
-        -o-transition: all 0.2s ease-in;
-        /* Standard */
-        transition: all 0.2s ease-in;
     }
     #adc_{%= CurrentADC.InstanceId %} .number-element {
         display: flex;
         align-items: baseline;
     }
 {%EndIf%}
+#adc_{%= CurrentADC.InstanceId %} .RLTimePicker select {
+    color: rgba({%= Theme.BlackColor %}) !important;
+}
+#adc_{%= CurrentADC.InstanceId %} .RLTimePicker,
+#adc_{%= CurrentADC.InstanceId %} .RLTimePicker option {
+    color: rgba({%= Theme.BlackColor %}) !important;
+    background-color: rgba({%= Theme.WhiteColor %}) !important;
+}
+#adc_{%= CurrentADC.InstanceId %} .timeSeparator_{%= CurrentADC.InstanceId %} {
+    line-height: 2;
+}
+#picker{%= CurrentADC.InstanceId %} .is-today .pika-button {
+    color: rgba({%= Theme.SecondaryColor %}) !important;
+}
+#picker{%= CurrentADC.InstanceId %} .is-selected .pika-button,
+#picker{%= CurrentADC.InstanceId %} .is-inrange .pika-button,
+#picker{%= CurrentADC.InstanceId %} .is-startrange .pika-button,
+#picker{%= CurrentADC.InstanceId %} .is-endrange .pika-button {
+    background-color: rgba({%= Theme.SecondaryColor %}) !important;
+    color: rgba(255,255,255,1) !important;
+}
+#picker{%= CurrentADC.InstanceId %} .pika-button:hover {
+    background-color: rgba({%= Theme.PrimaryColor %}) !important;
+    color: rgba(255,255,255,1) !important;
+}

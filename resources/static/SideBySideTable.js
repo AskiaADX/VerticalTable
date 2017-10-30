@@ -138,13 +138,14 @@
         * Handle exclusive response in multicoded questions
         */
         function exclusiveChangeEvent(event) {
-            event.target.checked ? event.target.parentElement.classList.add("cell-selected") : event.target.parentElement.classList.remove("cell-selected");
-            var el = document.getElementById(event.target.id);
-            if(el.classList.contains('askia-exclusive') && (el.checked == true)){
+            var elTarg = event.target || event.srcElement;
+            elTarg.checked ? AddClass(elTarg.parentElement,"cell-selected") : RemoveClass(elTarg.parentElement,"cell-selected");
+            var el = document.getElementById(elTarg.id);
+            if(HasClass(el,'askia-exclusive') && (el.checked == true)){
                 var filtered = Array.prototype.filter.call(document.querySelectorAll('[id^="'+ el.id.split("_")[0] +'_"]' ), function (elem) {return elem !== el;});
                 filtered.forEach(function(element) {
                     element.checked = false;
-                    element.parentElement.classList.remove("cell-selected");
+                    RemoveClass(element.parentElement,"cell-selected");
                 });
                 /*document.querySelectorAll('[name^="'+ el.name.split(" ")[0] +'"]' ).filter(function (elem) {return elem !== el;}).forEach(function(element) {
                         element.checked = false;
@@ -153,7 +154,7 @@
                 var element = document.querySelectorAll('[id^="'+ el.id.split("_")[0] +'_"].askia-exclusive' );
                 Array.prototype.forEach.call(element, function(element) {
                     element.checked = false;
-                    element.parentElement.classList.remove("cell-selected");
+                    RemoveClass(element.parentElement,"cell-selected");
                 });
             }
             triggerRouting();
@@ -167,17 +168,6 @@
             inputElmt[i].addEventListener("change", exclusiveChangeEvent);    
             inputElmt[i].addEventListener("input", exclusiveChangeEvent);    
         }
-
-
-        var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutationRecord) {
-                if(mutationRecord.target.style.display!=="none") triggerRouting();
-            });    
-        });
-
-        var target = document;
-        observer.observe(target, { attributes : true, attributeFilter : ['style'], childList: true, subtree: true });
-
 
         /**
        * addEvent Listener for step by step table
@@ -225,8 +215,9 @@
             /**if(event != null) {
                 var tmpStr = event.target.parentNode.parentNode.id;
             }**/
+            var el = event.target || event.srcElement;
             if(event != null) {
-                var parent = event.target.parentNode;
+                var parent = el.parentNode;
                 var tmpStr = parent.id;
             
                 while (tmpStr == "" || tmpStr == undefined || tmpStr == null || tmpStr.substr(0,3) != "row") {
@@ -242,12 +233,11 @@
             var nbCol = options.nbCol;
             var test2 = true;
             for(j=1; j<=nbCol; j++) {
-                console.log("j : " + j + " | nbCol : " + nbCol + " | idRow : " + idRow);
                 var elt = document.querySelector("[id='row" + idRow + "']").querySelectorAll(".col"+j);
                 var test1 = false
                 for(i=0; i<elt.length; i++) {
                     var input = elt[i].firstElementChild;
-                    if (input.classList.contains("number-element")) input = elt[i].firstElementChild.firstElementChild;
+                    if (HasClass(input,"number-element")) input = elt[i].firstElementChild.firstElementChild;
                     if ((input.id.substring(0, 16) === "askia-input-open") || (input.id.substring(0, 18) === "askia-input-number")) {
                         test1 = test1 || elt[i].firstElementChild.value != "";
                     } else if (input.id.substring(0, 18) === "askia-input-select") {
@@ -256,7 +246,6 @@
                         test1 = test1 || elt[i].firstElementChild.checked;
                     }
                 }
-                console.log("test 1 : " + test1 + " | test 2 : " + test2);
                 test2 = test2 && test1;
             }
             var achieveLim = true;
@@ -296,7 +285,8 @@
         }
 
         function updateComboBox(event) {
-            var col = event.target.id.substr(event.target.id.length-1, 1);
+            var el = event.target || event.srcElement;
+            var col = el.id.substr(el.id.length-1, 1);
             var inputSelect = document.querySelectorAll("[id^='askia-input-select'][id$='" + col + "']");
             resetComboBox(inputSelect);
             var selectedIndex = 0;
@@ -314,38 +304,62 @@
         }
 
         function updateSum(event) {
-            var col = event.target.id.substr(event.target.id.length-1, 1);
+            var el = event.target || event.srcElement;
+            var col = el.id.substr(el.id.length-1, 1);
             var inputNum = document.querySelectorAll("[id^='askia-input-number'][id$='" + col + "']");
             var sum = 0;
+            var totalCol = document.querySelector("#totalCol"+options.instanceId+"_"+col);
             for(i = 0; i<inputNum.length; i++) {
                 var tmp = inputNum[i];
                 sum += parseInt(tmp.value) || 0;
             }
             if(options.maxLimit[col-1] != null) {
                 if (sum == options.maxLimit[col-1]) { 
-                    document.querySelector("#totalCol"+options.instanceId+"_"+col).classList.remove("aboveLimit");
-                    document.querySelector("#totalCol"+options.instanceId+"_"+col).classList.add("equalLimit");
+                    RemoveClass(totalCol,"aboveLimit");
+                    AddClass(totalCol,"equalLimit");
                 } else if (sum > options.maxLimit[col-1]) {
-                    document.querySelector("#totalCol"+options.instanceId+"_"+col).classList.remove("equalLimit");
-                    document.querySelector("#totalCol"+options.instanceId+"_"+col).classList.add("aboveLimit");
+                    RemoveClass(totalCol,"equalLimit");
+                    AddClass(totalCol,"aboveLimit");
                 } else {
-                    document.querySelector("#totalCol"+options.instanceId+"_"+col).classList.remove("equalLimit");
-                    document.querySelector("#totalCol"+options.instanceId+"_"+col).classList.remove("aboveLimit")
+                    RemoveClass(totalCol,"equalLimit");
+                    AddClass(totalCol,"aboveLimit");
                 }
             }
             document.querySelector("#total"+options.instanceId+"_"+col).innerHTML = sum;
         }
     }
+    
+    function AddClass(el,className) {
+        if (el.classList)
+            el.classList.add(className);
+        else
+            el.className += ' ' + className;
+    }
+    
+    function RemoveClass(el,className) {
+        if (el.classList)
+            el.classList.remove(className);
+        else
+            el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+    }
+    
+    function HasClass(el,className) {
+        if (el.classList)
+            return el.classList.contains(className);
+        else
+            return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
+    }
 
 
     function clickCellEvent(event){
-        if (event.target.firstElementChild != null) {
-            event.target.firstElementChild.checked = !event.target.firstElementChild.checked;
-            event.target.firstElementChild.checked ? event.target.classList.add("cell-selected") : event.target.classList.remove("cell-selected");
+        var el = event.target || event.srcElement;
+        if (el.firstElementChild != null) {
+            el.firstElementChild.checked = !el.firstElementChild.checked;
+            el.firstElementChild.checked ? AddClass(el,"cell-selected") : RemoveClass(el,"cell-selected");
             // Create the event
             var eventTrig = new CustomEvent("change", {});
             // Dispatch/Trigger/Fire the event
-            event.target.firstElementChild.dispatchEvent(eventTrig);
+            el.firstElementChild.dispatchEvent(eventTrig);
         }
     }
 
@@ -358,12 +372,13 @@
     }
     
     function clickImgEvent(event){
-        event.target.parentElement.firstElementChild.checked = !event.target.parentElement.firstElementChild.checked;
-        event.target.parentElement.firstElementChild.checked ? event.target.parentElement.classList.add("cell-selected") : event.target.parentElement.classList.remove("cell-selected");
+        var el = event.target || event.srcElement;
+        el.parentElement.firstElementChild.checked = !el.parentElement.firstElementChild.checked;
+        el.parentElement.firstElementChild.checked ? AddClass(el.parentElement,"cell-selected") : RemoveClass(el.parentElement,"cell-selected");
         // Create the event
         var eventTrig = new CustomEvent("change", {});
         // Dispatch/Trigger/Fire the event
-        event.target.parentElement.firstElementChild.dispatchEvent(eventTrig);
+        el.parentElement.firstElementChild.dispatchEvent(eventTrig);
     }
 
     /**

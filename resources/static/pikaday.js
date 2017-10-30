@@ -982,6 +982,7 @@
             if (typeof this._o.onDraw === 'function') {
                 this._o.onDraw(this);
             }
+          // console.dir(this._o.field);
           // let the screen reader user know to use arrow keys
           this._o.field.setAttribute('aria-label', 'Use the arrow keys to pick a date');
         },

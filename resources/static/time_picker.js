@@ -5,13 +5,13 @@
 (function () {
 
     function TimePicker(options) {
-        var minHour = options.minHour;
-        var maxHour = options.maxHour;
+        var minHour = (options.minHour < 0) ? 00 : options.minHour;
+        var maxHour = (options.maxHour < 0) ? 24 : options.maxHour;
         var col = options.col;
         var row = options.row;
-        this.selected_hour = options.selected_hour;
-        this.selected_min = options.selected_min;
-        this.selected_sec = options.selected_sec;
+        this.selected_hour = parseInt(options.selected_hour,10) || 0;
+        this.selected_min = parseInt(options.selected_min,10) || 0;
+        this.selected_sec = parseInt(options.selected_sec,10) || 0;
         this.question = options.question;
         var adcId = options.adcId
         
@@ -52,12 +52,16 @@
         min.options[0] = new Option("mm");
 
 
-        for (var i=minHour;i<maxHour;i++) {
+        for (var i=0;i<24;i++) {
             // var val = i<10&&mil?"0"+i:i;
             var val = i;
             if (!mil &&  val>12) val-=12;
             val = val<10?"0"+val:val;
-            hour.options[i+1]=new Option(val,i);
+            var opt = new Option(val,i);
+            if (i < minHour || i > maxHour) {
+            	opt.setAttribute("disabled","disabled");    
+            }
+            hour.options[i+1]=opt;
         }
         hour.selectedIndex = 0;
 
@@ -86,7 +90,7 @@
         hour.onchange=function() {
             var timeResult = "";
             if (!mil) {
-                ampm.innerHTML=(hour.selectedIndex)<12?"am":"pm";
+                ampm.innerHTML=(hour.selectedIndex)<13?"am":"pm";
             }
             var hourVal = hour.options[hour.selectedIndex].text;
             if(ampm.innerHTML == "pm") hourVal = parseInt(hourVal) + 12;
