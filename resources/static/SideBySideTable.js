@@ -108,11 +108,10 @@
             simplboxConstructorCall(zooms[l1].getAttribute("data-id"));
         }
 
-        var responseszooms = document.getElementById("adc_" + this.instanceId).querySelectorAll(".otherColumn img");
-        for (var l2 = 0, k2 = responseszooms.length; l2 < k2; l2++) {
-            simplboxConstructorCall(responseszooms[l2].getAttribute("data-id"));
+        var headerszooms = document.getElementById("adc_" + this.instanceId).querySelectorAll(".otherColumn img");
+        for (var l2 = 0, k2 = headerszooms.length; l2 < k2; l2++) {
+            simplboxConstructorCall(headerszooms[l2].getAttribute("data-id"));
         }
-
 
         var elements = document.querySelectorAll("#adc_" + options.instanceId + "_thead th");
         window.addEventListener("scroll",function(){
@@ -124,7 +123,10 @@
             console.log("trigger Routing");
             var routing_bool = false;
             for(i=0; i<options.questions.length; i++){
-                routing_bool = routing_bool || (window.arrLiveRoutingShortcut.indexOf(options.questions[i]) >= 0);
+                routing_bool = routing_bool || (window.askia 
+                && window.arrLiveRoutingShortcut 
+                && window.arrLiveRoutingShortcut.length > 0 &&
+                window.arrLiveRoutingShortcut.indexOf(options.questions[i]) >= 0);
             }
             if (window.askia 
                 && window.arrLiveRoutingShortcut 
@@ -195,17 +197,18 @@
             }   
         }
 
-        /**
-        function outerHTML(node){
-            return node.outerHTML || new XMLSerializer().serializeToString(node);
-        }*/
-
         if(this.showSum) {
             var inputNum = document.querySelectorAll("[id^='askia-input-number']");
             for(i = 0; i<inputNum.length; i++) {
                 inputNum[i].addEventListener("change", updateSum);    
                 inputNum[i].addEventListener("input", updateSum);
-                //inputNum[i].onchange();
+                if ("createEvent" in document) {
+                    var evt = document.createEvent("HTMLEvents");
+                    evt.initEvent("change", false, true);
+                    inputNum[i].dispatchEvent(evt);
+                } else {
+                    inputNum[i].fireEvent("onchange");
+                }
             }
         }
         /**
@@ -322,7 +325,7 @@
                     AddClass(totalCol,"aboveLimit");
                 } else {
                     RemoveClass(totalCol,"equalLimit");
-                    AddClass(totalCol,"aboveLimit");
+                    RemoveClass(totalCol,"aboveLimit");
                 }
             }
             document.querySelector("#total"+options.instanceId+"_"+col).innerHTML = sum;
@@ -357,9 +360,13 @@
             el.firstElementChild.checked = !el.firstElementChild.checked;
             el.firstElementChild.checked ? AddClass(el,"cell-selected") : RemoveClass(el,"cell-selected");
             // Create the event
-            var eventTrig = new CustomEvent("change", {});
-            // Dispatch/Trigger/Fire the event
-            el.firstElementChild.dispatchEvent(eventTrig);
+            if ("createEvent" in document) {
+                var evt = document.createEvent("HTMLEvents");
+                evt.initEvent("change", false, true);
+                el.firstElementChild.dispatchEvent(evt);
+            } else {
+                el.firstElementChild.fireEvent("onchange");
+            }
         }
     }
 
@@ -376,17 +383,21 @@
         el.parentElement.firstElementChild.checked = !el.parentElement.firstElementChild.checked;
         el.parentElement.firstElementChild.checked ? AddClass(el.parentElement,"cell-selected") : RemoveClass(el.parentElement,"cell-selected");
         // Create the event
-        var eventTrig = new CustomEvent("change", {});
-        // Dispatch/Trigger/Fire the event
-        el.parentElement.firstElementChild.dispatchEvent(eventTrig);
+        if ("createEvent" in document) {
+            var evt = document.createEvent("HTMLEvents");
+            evt.initEvent("change", false, true);
+            el.parentElement.firstElementChild.dispatchEvent(evt);
+        } else {
+            el.parentElement.firstElementChild.fireEvent("onchange");
+        }
     }
 
     /**
     * add the eventlistener to implement exclusive answer inside multi coded question
     */
-    var inputElmt = document.querySelectorAll('td.response img');
-    for(i = 0; i<inputElmt.length; i++) {
-        inputElmt[i].addEventListener("click", clickImgEvent);    
+    var imgElmt = document.querySelectorAll('td.response img');
+    for(i = 0; i<imgElmt.length; i++) {
+        imgElmt[i].addEventListener("click", clickImgEvent);    
     }
 
 

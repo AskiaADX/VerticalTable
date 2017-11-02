@@ -5,7 +5,7 @@
           version="2.1.0"
           askiaCompat="5.4.2">
   <info>
-    <name>SideBySideTable</name>
+    <name>SideBySide</name>
     <guid>c4acbd4e-3246-457c-9f9a-3a2dc9871dcc</guid>
     <version>2.0.1</version>
     <date>2017-05-26</date>
@@ -32,9 +32,9 @@
       <content fileName="pikaday.js" type="javascript" mode="static" position="head" />
       <content fileName="default.html" type="html" mode="dynamic" position="placeholder" />
       <content fileName="magnifyingGlass.png" type="image" mode="static" position="none" />
+      <content fileName="simplbox.js" type="javascript" mode="static" position="foot" />
       <content fileName="time_picker.js" type="javascript" mode="static" position="foot" />
       <content fileName="date_picker.js" type="javascript" mode="static" position="foot" />
-      <content fileName="simplbox.js" type="javascript" mode="static" position="foot" />
       <content fileName="SideBySideTable.js" type="javascript" mode="static" position="foot" />
       <content fileName="Initializer.js" type="javascript" mode="dynamic" position="foot" />
     </output>
@@ -176,11 +176,11 @@
       </property>
       <property xsi:type="standardProperty" id="maxLimReachedColor" name="Max Limit Reached Color" type="color" require="false" visible="true" colorFormat="rgb">
         <description><![CDATA[]]></description>
-        <value><![CDATA[93,209,92]]></value>
+        <value><![CDATA[141,198,63]]></value>
       </property>
-      <property xsi:type="standardProperty" id="maxLimitExceededColor" name="Max Limit Exceeded Color" type="color" require="false" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="maxLimitExceededColor" name="Max Limit Exceeded Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[]]></description>
-        <value><![CDATA[180,30,30]]></value>
+        <value><![CDATA[{%= Theme.ErrorColor %}]]></value>
       </property>
       <property xsi:type="standardProperty" id="blockLimit" name="Block on limit" type="string" require="false" visible="true">
         <description><![CDATA[]]></description>
@@ -218,6 +218,14 @@
       </property>
     </category>
     <category id="Date" name="Date options">
+      <property xsi:type="standardProperty" id="theme" name="Theme" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Select the theme of the calendar]]></description>
+        <value><![CDATA[light-theme]]></value>
+        <options>
+          <option value="light-theme" text="Light theme" />
+          <option value="dark-theme" text="Dark theme" />
+        </options>
+      </property>
       <property xsi:type="standardProperty" id="defaultDate" name="Default date" type="string" mode="dynamic" require="false" visible="true">
         <description><![CDATA[The initial date to view when first opened
 Format: MM/DD/YYYY]]></description>

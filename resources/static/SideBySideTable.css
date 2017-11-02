@@ -3,7 +3,7 @@
 }
 .adc-sidebyside-table {
 	width: 100%;
-	border-collapse: collapse;
+	/* border-collapse: collapse; */
 	text-align: left;
 }
 :root .adc-sidebyside-table {
@@ -23,10 +23,7 @@
 }
 .adc-sidebyside-table .padRight {
     padding-right: 25px;
-    padding-bottom: 0px;
-}
-.adc-sidebyside-table thead tr:last-child th, .adc-sidebyside-table td {
-	border-bottom: 1px solid #DDD;
+    /* padding-bottom: 0px; */
 }
 .adc-sidebyside-table th, .adc-sidebyside-table td {
     padding: .3em;
@@ -47,6 +44,7 @@
     width: 100%;
     min-width: 10%;
     max-width: 70%;
+    margin: auto;
 }
 .adc-sidebyside-table label {
   -webkit-user-select: none;  /* Chrome all / Safari all */

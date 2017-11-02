@@ -17,6 +17,7 @@ Dim firstColumnWidth = CurrentADC.PropValue("firstColumnWidth")
     {% If (CurrentADC.PropValue("sameSize") = "1") Then %}
         table-layout: fixed;
     {% EndIf %}
+    background-color: rgb({%= Theme.WhiteColor.ToRGB() %});
 }
 #adc_{%= CurrentADC.InstanceId %} th.otherColumn {
 	z-index: 3;
@@ -31,6 +32,10 @@ Dim firstColumnWidth = CurrentADC.PropValue("firstColumnWidth")
 #adc_{%= CurrentADC.InstanceId %} th:first-child, 
 #adc_{%= CurrentADC.InstanceId %} td:first-child {
     width: {%= firstColumnWidth + "%" %};
+}
+#adc_{%= CurrentADC.InstanceId %} tbody td,
+#adc_{%= CurrentADC.InstanceId %} tbody th {
+    border-top: 1px solid {%= Theme.NeutralDarkColor.ToHexa() %};
 }
 #adc_{%= CurrentADC.InstanceId %} tbody tr:hover td {
     {% If (CurrentADC.PropValue("hightlightRowOnHover") = "yes") Then %}

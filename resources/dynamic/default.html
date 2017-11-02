@@ -32,7 +32,7 @@ For i = 1 To COLUMN_NUMBER
 Next
 %}
 <div id="adc_{%= CurrentADC.InstanceId %}" class="adc-sidebyside">
-	<table class="adc-sidebyside-table">
+	<table class="adc-sidebyside-table" cellspacing="0">
         {%If CurrentADC.PropValue("showTitle") = "1"  Then%}
     	<thead id="adc_{%= CurrentADC.InstanceId %}_thead">
             <tr>
@@ -68,8 +68,8 @@ Next
     								imageId = column.AvailableResponses[k].InputName() %}
                 					<th class="otherColumn{%:= padRightHead %}">
                                         {% If column.AvailableResponses[k].ResourceURL <> "" and CurrentADC.PropValue("iterationColumn") <> "0" Then%}
-                                        	<img src="{%= column.AvailableResponses[k].ResourceURL %}" data-id="{%= imageId %}" class="image"><br />
-                                        {%If CurrentADC.PropValue("imgZoomColumn") = "1" Then %}<a href="{%= column.AvailableResponses[k].ResourceURL %}" target="_blank" data-simplbox="{%= imageId %}" class="zoomLink"><div class="imgZoom"></div></a>{%EndIf%}
+                                        	<img src="{%= column.AvailableResponses[k].ResourceURL %}" data-id="head{%= CurrentADC.InstanceId.ToString() + k %}" class="image"><br />
+                                        {%If CurrentADC.PropValue("imgZoomColumn") = "1" Then %}<a href="{%= column.AvailableResponses[k].ResourceURL %}" target="_blank" data-simplbox="head{%= CurrentADC.InstanceId.ToString() + k %}" class="zoomLink"><div class="imgZoom"></div></a>{%EndIf%}
                                         {% EndIf %}
                                         {% If CurrentADC.PropValue("iterationColumn") <> "1" or column.AvailableResponses[k].ResourceURL = "" Then %}
                                         	{%= column.AvailableResponses[k].Caption %}
@@ -90,7 +90,7 @@ Next
         {%For i = 1 To CurrentQuestion.ParentLoop.Answers.Count
             displayRow = On((CurrentADC.PropValue("stepByStep") = "1" And i>1), "hidden", "" )
             imageId = CurrentQuestion.ParentLoop.Answers[i].InputName() %}
-            <tr id="row{%= i%}" {%= displayRow %} data-id='{%= imageId%}'>
+            <tr id="row{%= i%}" {%= displayRow %} data-id='row{%= CurrentADC.InstanceId.ToString() + i %}'>
             
             {%Dim select = CurrentQuestion.ParentLoop
 				Dim padRightIteration = On(select.Answers[i].ResourceURL <> "" and CurrentADC.PropValue("imgZoomRow") = "1","padRight","")
@@ -98,8 +98,8 @@ Next
     				attrChecked = On(select.Answers[i].IsSelected, "checked", "") %}
                 <td class="{%= padRightIteration %}">
                     {% If select.Answers[i].ResourceURL <> "" and CurrentADC.PropValue("iterationColumn") <> "0" Then%}
-                    	<img src="{%= select.Answers[i].ResourceURL %}" data-id="{%= select.Answers[i].Id %}" class="image" width="100%"><br />
-                    	{% If CurrentADC.PropValue("imgZoomRow") = "1" Then %}<a href="{%= select.Answers[i].ResourceURL %}" target="_blank" data-simplbox="{%= imageId %}" class="zoomLink"><div class="imgZoom"></div></a>{% EndIf %}
+                    	<img src="{%= select.Answers[i].ResourceURL %}" class="image" width="100%"><br />
+                    	{% If CurrentADC.PropValue("imgZoomRow") = "1" Then %}<a href="{%= select.Answers[i].ResourceURL %}" target="_blank" data-simplbox="row{%= CurrentADC.InstanceId.ToString() + i %}" class="zoomLink"><div class="imgZoom"></div></a>{% EndIf %}
                     {% EndIf %}
                    	{% If CurrentADC.PropValue("iterationColumn") <> "1" or select.Answers[i].ResourceURL = "" Then %}
     					{%:= select.Answers[i].Caption %}
@@ -147,15 +147,13 @@ Next
                                 isExclusive = On((column.AvailableResponses[j].IsExclusive) or (column.Type = "single"), " exclusive", "")
                                 isAskiaExclusive = On((column.AvailableResponses[j].IsExclusive) or (column.Type = "single"), "askia-exclusive", "")
 								isSelected = On(column.Answers.Index Has column.AvailableResponses[j].Index, " cell-selected", "")
-								Dim padRight = On(column.AvailableResponses[j].ResourceURL <> "" and CurrentADC.PropValue("imgZoomColumn") = "1" and CurrentADC.PropValue("respOnHeader") = "0"," padRight","")
     						%}
-                        	<td class="col{%= k %} response{%:= isExclusive %}{%:= isSelected %}{%:= padRight %}">
+                        	<td class="col{%= k %} response{%:= isExclusive %}{%:= isSelected %}">
                                     <input type="{%:= attrMulti %}" id="{%:= inputId %}" class="{%:= isAskiaExclusive %} askia-question-{%= inputCode %}" name="{%:= inputName %}" value="{%:= inputValue %}" {%:= attrChecked %}>
                                     <label for="{%= inputId %}" class="askia-{%:= attrMulti %} askia-question-{%= inputCode %}"></label>
                                     {% If CurrentADC.PropValue("respOnHeader") = "0" Then %}
                                         {% If column.AvailableResponses[j].ResourceURL <> "" and CurrentADC.PropValue("iterationColumn") <> "0" Then%}
-                                            <img src="{%= column.AvailableResponses[j].ResourceURL %}" data-id="{%= imageId %}" class="image"><br />
-                                			{%If CurrentADC.PropValue("imgZoomColumn") = "1" Then %}<a href="{%= column.AvailableResponses[j].ResourceURL %}" target="_blank" data-simplbox="{%= imageId %}" class="zoomLink"><div class="imgZoom"></div></a>{%EndIf%}
+                                            <img src="{%= column.AvailableResponses[j].ResourceURL %}" class="image"><br />
                                         {% EndIf %}
                                         {% If CurrentADC.PropValue("iterationColumn") <> "1" or column.AvailableResponses[j].ResourceURL = "" Then %}
                                        		<label for="{%:= inputId %}" class="text" askia-question-{%= inputCode %}>{%= caption %}</label>
@@ -188,6 +186,8 @@ Next
                 	<td class="col{%= k %}">
                 	{%
                         inputName = column.InputName()
+						Dim inputNameDate = column.InputName("date")
+						Dim inputNameTime = column.InputName("time")
 						inputId     = (inputName + "_" + k).Replace("D", "askia-input-date")
 						inputIdDate = (inputName + "_" + k).Replace("D", "askia-input-dateO")
 						inputCode	 = column.InputCode
@@ -195,7 +195,7 @@ Next
     					Dim attrMax = On(column.MaxDate.ToNumber() <> DK, "max=\"" + column.MaxDate.Format("dd/MM/yyyy") + "\"", "")
 						If (Not(column.IsTimeOnly)) Then %}
                         	<div class="RLDatePicker">
-                            	<input type="text" id="{%= inputIdDate %}" class="askia-question-{%= inputCode %}" name="{%= inputName %}" value="{%= column.InputValue("date") %}" {%:= attrMin %} {%:= attrMax %} readonly="true"/>
+                            	<input type="text" id="{%= inputIdDate %}" class="askia-question-{%= inputCode %}" name="{%= inputNameDate %}" value="{%= column.InputValue("date") %}" {%:= attrMin %} {%:= attrMax %} readonly="true"/>
                              </div>
                         {%	Endif %}
                         {% If (Not(column.IsDateOnly)) Then  %}
@@ -208,7 +208,7 @@ Next
                                     <select id="seconds_{%= CurrentADC.InstanceId %}" name="seconds"></select>
                                 </span>
                                 <!--<input type="text" id="time" name="time" readonly="readonly" hidden=true/> -->
-                                <input id="{%=inputId%}" class="askia-question-{%= inputCode %} time_{%= CurrentADC.InstanceId %}" hidden type="text" name="{%= inputName %}" />
+                                <input id="{%=inputId%}" class="askia-question-{%= inputCode %} time_{%= CurrentADC.InstanceId %}" hidden type="text" name="{%= inputNameTime %}" value="{%= column.InputValue("date") %}" />
                                 <span class="imperial" {%If CurrentADC.PropValue("imperial") = "false" Then %} hidden {% EndIf %} id="ampm_{%= CurrentADC.InstanceId %}"></span>
                             </div>
                 		{%	Endif %}
