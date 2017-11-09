@@ -22,7 +22,9 @@ Dim firstColumnWidth = CurrentADC.PropValue("firstColumnWidth")
 #adc_{%= CurrentADC.InstanceId %} th.otherColumn {
 	z-index: 3;
     position: relative;
+    {% If (CurrentADC.PropValue("headerFixed") = "1") Then %}
     background-color: rgb({%= Theme.WhiteColor.ToRGB() %});
+    {% EndIf %}
 }
 #adc_{%= CurrentADC.InstanceId %} th.firstColumn {
 	z-index: -1;
@@ -54,6 +56,7 @@ Dim firstColumnWidth = CurrentADC.PropValue("firstColumnWidth")
 #adc_{%= CurrentADC.InstanceId %} .selected,
 #adc_{%= CurrentADC.InstanceId %} .cell-selected {
     background-color: rgba({%= Theme.SecondaryColor.ToRGB() %},1) !important;
+    color: rgba(255,255,255,1) !important;
 }
 {% If CurrentADC.PropValue("respOnHeader") = "0" Then %}
     #adc_{%= CurrentADC.InstanceId %} label.askia-radio{

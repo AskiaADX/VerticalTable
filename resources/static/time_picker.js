@@ -84,7 +84,7 @@
                     secStep++;
                 }
             }
-            sec.hour.selectedIndex = 0;
+            sec.selectedIndex = 0;
         }
 
         hour.onchange=function() {

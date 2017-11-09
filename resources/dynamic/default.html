@@ -67,11 +67,11 @@ Next
     								padRightHead = On(column.AvailableResponses[k].ResourceURL <> "" and CurrentADC.PropValue("imgZoomColumn") = "1" and CurrentADC.PropValue("respOnHeader") = "1"," padRight","")
     								imageId = column.AvailableResponses[k].InputName() %}
                 					<th class="otherColumn{%:= padRightHead %}">
-                                        {% If column.AvailableResponses[k].ResourceURL <> "" and CurrentADC.PropValue("iterationColumn") <> "0" Then%}
+                                        {% If column.AvailableResponses[k].ResourceURL <> "" and CurrentADC.PropValue("responsesColumn") <> "0" Then%}
                                         	<img src="{%= column.AvailableResponses[k].ResourceURL %}" data-id="head{%= CurrentADC.InstanceId.ToString() + k %}" class="image"><br />
                                         {%If CurrentADC.PropValue("imgZoomColumn") = "1" Then %}<a href="{%= column.AvailableResponses[k].ResourceURL %}" target="_blank" data-simplbox="head{%= CurrentADC.InstanceId.ToString() + k %}" class="zoomLink"><div class="imgZoom"></div></a>{%EndIf%}
                                         {% EndIf %}
-                                        {% If CurrentADC.PropValue("iterationColumn") <> "1" or column.AvailableResponses[k].ResourceURL = "" Then %}
+                                        {% If CurrentADC.PropValue("responsesColumn") <> "1" or column.AvailableResponses[k].ResourceURL = "" Then %}
                                         	{%= column.AvailableResponses[k].Caption %}
                                         {% EndIf%}
                                     </th>
@@ -152,10 +152,10 @@ Next
                                     <input type="{%:= attrMulti %}" id="{%:= inputId %}" class="{%:= isAskiaExclusive %} askia-question-{%= inputCode %}" name="{%:= inputName %}" value="{%:= inputValue %}" {%:= attrChecked %}>
                                     <label for="{%= inputId %}" class="askia-{%:= attrMulti %} askia-question-{%= inputCode %}"></label>
                                     {% If CurrentADC.PropValue("respOnHeader") = "0" Then %}
-                                        {% If column.AvailableResponses[j].ResourceURL <> "" and CurrentADC.PropValue("iterationColumn") <> "0" Then%}
+                                        {% If column.AvailableResponses[j].ResourceURL <> "" and CurrentADC.PropValue("responsesColumn") <> "0" Then%}
                                             <img src="{%= column.AvailableResponses[j].ResourceURL %}" class="image"><br />
                                         {% EndIf %}
-                                        {% If CurrentADC.PropValue("iterationColumn") <> "1" or column.AvailableResponses[j].ResourceURL = "" Then %}
+                                {% If CurrentADC.PropValue("responsesColumn") <> "1" or column.AvailableResponses[j].ResourceURL = "" Then %}
                                        		<label for="{%:= inputId %}" class="text" askia-question-{%= inputCode %}>{%= caption %}</label>
                                         {% EndIf%}
                                     {% EndIf %}
@@ -203,7 +203,7 @@ Next
                              	<select id="hour_{%= CurrentADC.InstanceId %}" name="hour"></select>
                                 <span class="timeSeparator_{%= CurrentADC.InstanceId %}"></span>
                                 <select id="minutes_{%= CurrentADC.InstanceId %}" name="minutes"></select>
-                                <span id="secsContainer_{%= CurrentADC.InstanceId %}">
+                                <span id="secsContainer_{%= CurrentADC.InstanceId %}" class="secsContainer">
                                 	<span class="timeSeparator_{%= CurrentADC.InstanceId %}"></span>
                                     <select id="seconds_{%= CurrentADC.InstanceId %}" name="seconds"></select>
                                 </span>

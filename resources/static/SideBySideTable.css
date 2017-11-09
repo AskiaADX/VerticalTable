@@ -40,6 +40,9 @@
     min-width: auto;
     max-width: 70%;
 }
+.adc-sidebyside-table .RLDatePicker input[type=text] {
+    min-width: 105px;
+}
 .adc-sidebyside-table input[type=number] {
     width: 100%;
     min-width: 10%;
@@ -159,6 +162,7 @@
 .RLTimePicker .imperial {
     width: 45px;
     padding: 5px;
+    line-height: 1.5;
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -171,8 +175,8 @@
     font-size: 100px;
     font-weight: bolder;
 }
-.RLTimePicker #secsContainer {
-    display:inline;
+.RLTimePicker .secsContainer {
+    display: inherit;
     height: 34px;
 }
 

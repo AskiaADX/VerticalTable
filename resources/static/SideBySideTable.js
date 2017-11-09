@@ -120,14 +120,15 @@
 
 
         function triggerRouting() {
-            console.log("trigger Routing");
             var routing_bool = false;
+            console.dir(options.questions);
             for(i=0; i<options.questions.length; i++){
                 routing_bool = routing_bool || (window.askia 
                 && window.arrLiveRoutingShortcut 
                 && window.arrLiveRoutingShortcut.length > 0 &&
                 window.arrLiveRoutingShortcut.indexOf(options.questions[i]) >= 0);
             }
+            console.log("trigger Routing: ", routing_bool);
             if (window.askia 
                 && window.arrLiveRoutingShortcut 
                 && window.arrLiveRoutingShortcut.length > 0
@@ -200,14 +201,16 @@
         if(this.showSum) {
             var inputNum = document.querySelectorAll("[id^='askia-input-number']");
             for(i = 0; i<inputNum.length; i++) {
-                inputNum[i].addEventListener("change", updateSum);    
+                inputNum[i].addEventListener("change", updateSum);
                 inputNum[i].addEventListener("input", updateSum);
+            }
+            for(j = 0; j<inputNum.length; j++) {
                 if ("createEvent" in document) {
                     var evt = document.createEvent("HTMLEvents");
                     evt.initEvent("change", false, true);
-                    inputNum[i].dispatchEvent(evt);
+                    inputNum[j].dispatchEvent(evt);
                 } else {
-                    inputNum[i].fireEvent("onchange");
+                    inputNum[j].fireEvent("onchange");
                 }
             }
         }
@@ -218,8 +221,8 @@
             /**if(event != null) {
                 var tmpStr = event.target.parentNode.parentNode.id;
             }**/
-            var el = event.target || event.srcElement;
             if(event != null) {
+                var el = event.target || event.srcElement;
                 var parent = el.parentNode;
                 var tmpStr = parent.id;
             
@@ -309,7 +312,7 @@
         function updateSum(event) {
             var el = event.target || event.srcElement;
             var col = el.id.substr(el.id.length-1, 1);
-            var inputNum = document.querySelectorAll("[id^='askia-input-number'][id$='" + col + "']");
+            var inputNum = document.querySelectorAll("[id^='askia-input-number'][id$='_" + col + "']");
             var sum = 0;
             var totalCol = document.querySelector("#totalCol"+options.instanceId+"_"+col);
             for(i = 0; i<inputNum.length; i++) {

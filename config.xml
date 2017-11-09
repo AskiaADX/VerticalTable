@@ -127,7 +127,24 @@
           <option value="0" text="No" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="iterationColumn" name="Iteration column display" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="iterationColumn" name="Iteration display" type="string" require="false" visible="true">
+        <description><![CDATA[]]></description>
+        <value><![CDATA[2]]></value>
+        <options>
+          <option value="0" text="Just text" />
+          <option value="1" text="Just image" />
+          <option value="2" text="Image and text" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="imgZoomRow" name="Iteration Image Zoom" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Iteration Image Zoom]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="responsesColumn" name="Responses display" type="string" require="false" visible="true">
         <description><![CDATA[]]></description>
         <value><![CDATA[2]]></value>
         <options>
@@ -138,14 +155,6 @@
       </property>
       <property xsi:type="standardProperty" id="imgZoomColumn" name="Responses Image Zoom" type="string" mode="dynamic" require="false" visible="true">
         <description><![CDATA[Responses Image Zoom]]></description>
-        <value><![CDATA[0]]></value>
-        <options>
-          <option value="1" text="Yes" />
-          <option value="0" text="No" />
-        </options>
-      </property>
-      <property xsi:type="standardProperty" id="imgZoomRow" name="Iteration Image Zoom" type="string" mode="dynamic" require="false" visible="true">
-        <description><![CDATA[Iteration Image Zoom]]></description>
         <value><![CDATA[0]]></value>
         <options>
           <option value="1" text="Yes" />
