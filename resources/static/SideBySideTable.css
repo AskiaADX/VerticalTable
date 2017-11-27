@@ -21,6 +21,13 @@
 .adc-sidebyside-table td {
    position: relative;
 }
+.adc-sidebyside-table .RLDatePicker tbody td,
+.adc-sidebyside-table .RLDatePicker thead th {
+    border-top: 0px solid transparent !important;
+}
+.adc-sidebyside-table tbody tr:hover  .RLDatePicker td.is-empty {
+    background-color: transparent !important;
+}
 .adc-sidebyside-table .padRight {
     padding-right: 25px;
     /* padding-bottom: 0px; */

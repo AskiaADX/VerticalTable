@@ -50,11 +50,10 @@ Dim firstColumnWidth = CurrentADC.PropValue("firstColumnWidth")
 #adc_{%= CurrentADC.InstanceId %} .equalLimit {
     color: rgba({%= CurrentADC.PropValue("maxLimReachedColor") %},1);
 }
-#adc_{%= CurrentADC.InstanceId %} td:not(.cell-selected).response:hover {
+#adc_{%= CurrentADC.InstanceId %} td:not(.selected).response:hover {
     background-color: rgba({%= Theme.BlackColor.ToRGB() %},.1);
 }
-#adc_{%= CurrentADC.InstanceId %} .selected,
-#adc_{%= CurrentADC.InstanceId %} .cell-selected {
+#adc_{%= CurrentADC.InstanceId %} .selected {
     background-color: rgba({%= Theme.SecondaryColor.ToRGB() %},1) !important;
     color: rgba(255,255,255,1) !important;
 }

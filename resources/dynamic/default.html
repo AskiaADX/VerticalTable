@@ -1,5 +1,5 @@
 {%
-Dim COLUMN_NUMBER = 5
+Dim COLUMN_NUMBER = 1
 Dim inputName
 Dim inputId
 Dim imageId
@@ -13,16 +13,28 @@ Dim caption
 Dim i
 Dim j
 Dim k
+Dim l
 Dim attrMulti
 Dim attrChecked
 Dim boolColMerge = False
 Dim attrColMerge = ""
 Dim column
+Dim columnQuestion
 Dim displayRow = ""
 Dim showTotal = (CurrentADC.PropValue("showTotal") = "1")
 Dim totalCaption = CurrentADC.PropValue("totalCaption")
 Dim totalCaptionLeft = On(CurrentADC.PropValue("displayTotalCaption") = "0", totalCaption, "")
 Dim totalCaptionCol  = On(CurrentADC.PropValue("displayTotalCaption") = "1", totalCaption, "")
+Dim firstColumnWidth = CurrentADC.PropValue("firstColumnWidth")
+
+For l = 2 To 5
+    columnQuestion = CurrentADC.PropQuestion("questionCol"+l)
+    If columnQuestion.Id <> DK Then
+        COLUMN_NUMBER = l
+    Else
+        Break
+    EndIf
+Next l
 
 For i = 1 To COLUMN_NUMBER
     column = CurrentADC.PropQuestion("questionCol"+i)
@@ -44,7 +56,7 @@ Next
 
         		attrColMerge = On(((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox"+i) = "0")) or (column.Type = "multiple"), "colspan=" + column.AvailableResponses.Count, "")
     			If column.Id <> DK then %}
-                	<th class="otherColumn" {%= attrColMerge %}>
+                <th class="otherColumn" {%= attrColMerge %} width="{%:= ((100 - firstColumnWidth.ToNumber() ) / COLUMN_NUMBER).ToInt() %}%">
                         {%= column.LongCaption %}
             		</th>
             	{% Endif   
@@ -144,19 +156,19 @@ Next
     							inputValue  = column.AvailableResponses[j].InputValue()
                                 attrChecked = On(column.AvailableResponses[j].IsSelected, "checked=\"checked\"", "")
                                 caption     = column.AvailableResponses[j].Caption
-                                isExclusive = On((column.AvailableResponses[j].IsExclusive) or (column.Type = "single"), " exclusive", "")
-                                isAskiaExclusive = On((column.AvailableResponses[j].IsExclusive) or (column.Type = "single"), "askia-exclusive", "")
-								isSelected = On(column.Answers.Index Has column.AvailableResponses[j].Index, " cell-selected", "")
+                                isExclusive = On((column.AvailableResponses[j].IsExclusive), " exclusive", "")
+                                isAskiaExclusive = On((column.AvailableResponses[j].IsExclusive), "askia-exclusive", "")
+								isSelected = On(column.Answers.Index Has column.AvailableResponses[j].Index, " selected", "")
     						%}
                         	<td class="col{%= k %} response{%:= isExclusive %}{%:= isSelected %}">
                                     <input type="{%:= attrMulti %}" id="{%:= inputId %}" class="{%:= isAskiaExclusive %} askia-question-{%= inputCode %}" name="{%:= inputName %}" value="{%:= inputValue %}" {%:= attrChecked %}>
                                     <label for="{%= inputId %}" class="askia-{%:= attrMulti %} askia-question-{%= inputCode %}"></label>
                                     {% If CurrentADC.PropValue("respOnHeader") = "0" Then %}
                                         {% If column.AvailableResponses[j].ResourceURL <> "" and CurrentADC.PropValue("responsesColumn") <> "0" Then%}
-                                            <img src="{%= column.AvailableResponses[j].ResourceURL %}" class="image"><br />
+                                            <img src="{%= column.AvailableResponses[j].ResourceURL %}" class="image askia-question-{%= inputCode %}"><br />
                                         {% EndIf %}
                                 {% If CurrentADC.PropValue("responsesColumn") <> "1" or column.AvailableResponses[j].ResourceURL = "" Then %}
-                                       		<label for="{%:= inputId %}" class="text" askia-question-{%= inputCode %}>{%= caption %}</label>
+                                       		<label for="{%:= inputId %}" class="text askia-question-{%= inputCode %}">{%= caption %}</label>
                                         {% EndIf%}
                                     {% EndIf %}
                     	{% Next %}
@@ -193,13 +205,15 @@ Next
 						inputCode	 = column.InputCode
 						Dim attrMin = On(column.MinDate.ToNumber() <> DK, "min=\"" + column.MinDate.Format("dd/MM/yyyy") + "\"", "")
     					Dim attrMax = On(column.MaxDate.ToNumber() <> DK, "max=\"" + column.MaxDate.Format("dd/MM/yyyy") + "\"", "")
+						Dim dateOnly = On(column.IsDateOnly, " dateonly", "")
+						Dim showSeconds = On(CurrentADC.PropValue("showSeconds") = "1", " showSeconds", "")
 						If (Not(column.IsTimeOnly)) Then %}
-                        	<div class="RLDatePicker">
-                            	<input type="text" id="{%= inputIdDate %}" class="askia-question-{%= inputCode %}" name="{%= inputNameDate %}" value="{%= column.InputValue("date") %}" {%:= attrMin %} {%:= attrMax %} readonly="true"/>
+                        	<div class="RLDatePicker askia-question-{%= inputCode %}">
+                            	<input type="text" id="{%= inputIdDate %}" class="askia-question-{%= inputCode %}{%= dateOnly %}{%= showSeconds %}" name="{%= inputNameDate %}" value="{%= column.InputValue("date") %}" {%:= attrMin %} {%:= attrMax %} readonly="true"/>
                              </div>
                         {%	Endif %}
                         {% If (Not(column.IsDateOnly)) Then  %}
-                             <div class="RLTimePicker">
+                             <div class="RLTimePicker askia-question-{%= inputCode %}">
                              	<select id="hour_{%= CurrentADC.InstanceId %}" name="hour"></select>
                                 <span class="timeSeparator_{%= CurrentADC.InstanceId %}"></span>
                                 <select id="minutes_{%= CurrentADC.InstanceId %}" name="minutes"></select>
@@ -208,7 +222,7 @@ Next
                                     <select id="seconds_{%= CurrentADC.InstanceId %}" name="seconds"></select>
                                 </span>
                                 <!--<input type="text" id="time" name="time" readonly="readonly" hidden=true/> -->
-                                <input id="{%=inputId%}" class="askia-question-{%= inputCode %} time_{%= CurrentADC.InstanceId %}" hidden type="text" name="{%= inputNameTime %}" value="{%= column.InputValue("date") %}" />
+                                <input id="{%=inputId%}" class="askia-question-{%= inputCode %} time_{%= CurrentADC.InstanceId %}{%= showSeconds %}" hidden type="text" name="{%= inputNameTime %}" value="{%= column.InputValue("date") %}" />
                                 <span class="imperial" {%If CurrentADC.PropValue("imperial") = "false" Then %} hidden {% EndIf %} id="ampm_{%= CurrentADC.InstanceId %}"></span>
                             </div>
                 		{%	Endif %}

@@ -121,14 +121,12 @@
 
         function triggerRouting() {
             var routing_bool = false;
-            console.dir(options.questions);
             for(i=0; i<options.questions.length; i++){
                 routing_bool = routing_bool || (window.askia 
                 && window.arrLiveRoutingShortcut 
                 && window.arrLiveRoutingShortcut.length > 0 &&
                 window.arrLiveRoutingShortcut.indexOf(options.questions[i]) >= 0);
             }
-            console.log("trigger Routing: ", routing_bool);
             if (window.askia 
                 && window.arrLiveRoutingShortcut 
                 && window.arrLiveRoutingShortcut.length > 0
@@ -136,19 +134,27 @@
                 askia.triggerAnswer();
             }
         }
+        
+        /**
+    	* add the eventlistener to select question
+    	*/
+        var selectElmt = document.querySelectorAll('select');
+        for(i = 0; i<selectElmt.length; i++) {
+            selectElmt[i].addEventListener("change", triggerRouting);    
+        }
 
         /**
         * Handle exclusive response in multicoded questions
         */
         function exclusiveChangeEvent(event) {
             var elTarg = event.target || event.srcElement;
-            elTarg.checked ? AddClass(elTarg.parentElement,"cell-selected") : RemoveClass(elTarg.parentElement,"cell-selected");
+            elTarg.checked ? AddClass(elTarg.parentElement,"selected") : RemoveClass(elTarg.parentElement,"selected");
             var el = document.getElementById(elTarg.id);
             if(HasClass(el,'askia-exclusive') && (el.checked == true)){
                 var filtered = Array.prototype.filter.call(document.querySelectorAll('[id^="'+ el.id.split("_")[0] +'_"]' ), function (elem) {return elem !== el;});
                 filtered.forEach(function(element) {
                     element.checked = false;
-                    RemoveClass(element.parentElement,"cell-selected");
+                    RemoveClass(element.parentElement,"selected");
                 });
                 /*document.querySelectorAll('[name^="'+ el.name.split(" ")[0] +'"]' ).filter(function (elem) {return elem !== el;}).forEach(function(element) {
                         element.checked = false;
@@ -157,7 +163,7 @@
                 var element = document.querySelectorAll('[id^="'+ el.id.split("_")[0] +'_"].askia-exclusive' );
                 Array.prototype.forEach.call(element, function(element) {
                     element.checked = false;
-                    RemoveClass(element.parentElement,"cell-selected");
+                    RemoveClass(element.parentElement,"selected");
                 });
             }
             triggerRouting();
@@ -240,20 +246,32 @@
             var test2 = true;
             for(j=1; j<=nbCol; j++) {
                 var elt = document.querySelector("[id='row" + idRow + "']").querySelectorAll(".col"+j);
+                if (elt.length === 0) break;
                 var test1 = false
                 for(i=0; i<elt.length; i++) {
                     var input = elt[i].firstElementChild;
-                    if (HasClass(input,"number-element")) input = elt[i].firstElementChild.firstElementChild;
-                    if ((input.id.substring(0, 16) === "askia-input-open") || (input.id.substring(0, 18) === "askia-input-number")) {
+                    if (HasClass(input,"number-element")) input = elt[i].firstElementChild.children[1];
+                    if (HasClass(input,"RLDatePicker")) input = elt[i].firstElementChild.children[0];
+                    if (HasClass(input,"RLTimePicker")) input = elt[i].firstElementChild.children[elt[i].firstElementChild.children.length - 2];
+                    if (input.id.substring(0, 16) === "askia-input-open") {
                         test1 = test1 || elt[i].firstElementChild.value != "";
+                    } else if (input.id.substring(0, 18) === "askia-input-number") {
+                        test1 = test1 || elt[i].firstElementChild.children[1].value != "";
                     } else if (input.id.substring(0, 18) === "askia-input-select") {
                         test1 = test1 || elt[i].firstElementChild.value != 0;
+                    } else if (input.id.substring(0, 17) === "askia-input-dateO" && !HasClass(input,"dateonly")) {
+                        test1 = test1 || (elt[i].children[0].children[0].value != "" && elt[i].children[1].children[elt[i].children[1].children.length - 2].value.length >= (HasClass(input,"showSeconds") ? 8 : 5));
+                    } else if (input.id.substring(0, 17) === "askia-input-dateO" && HasClass(input,"dateonly")) {
+                        test1 = test1 || elt[i].children[0].children[0].value != "";
+                    } else if (input.id.substring(0, 16) === "askia-input-date") {
+                        test1 = test1 || (elt[i].children[0].children[elt[i].firstElementChild.children.length - 2].value.length >= (HasClass(input,"showSeconds") ? 8 : 5));
                     } else {
                         test1 = test1 || elt[i].firstElementChild.checked;
                     }
                 }
                 test2 = test2 && test1;
             }
+            
             var achieveLim = true;
             if(options.blockLimit){
                 achieveLim = false;
@@ -361,11 +379,11 @@
         var el = event.target || event.srcElement;
         if (el.firstElementChild != null) {
             el.firstElementChild.checked = !el.firstElementChild.checked;
-            el.firstElementChild.checked ? AddClass(el,"cell-selected") : RemoveClass(el,"cell-selected");
+            el.firstElementChild.checked ? AddClass(el,"selected") : RemoveClass(el,"selected");
             // Create the event
             if ("createEvent" in document) {
                 var evt = document.createEvent("HTMLEvents");
-                evt.initEvent("change", false, true);
+                evt.initEvent("change", true, true);
                 el.firstElementChild.dispatchEvent(evt);
             } else {
                 el.firstElementChild.fireEvent("onchange");
@@ -378,17 +396,17 @@
     */
     var inputElmt = document.querySelectorAll('.response');
     for(i = 0; i<inputElmt.length; i++) {
-        inputElmt[i].addEventListener("click", clickCellEvent);    
+        inputElmt[i].addEventListener("click", clickCellEvent);
     }
     
     function clickImgEvent(event){
         var el = event.target || event.srcElement;
         el.parentElement.firstElementChild.checked = !el.parentElement.firstElementChild.checked;
-        el.parentElement.firstElementChild.checked ? AddClass(el.parentElement,"cell-selected") : RemoveClass(el.parentElement,"cell-selected");
+        el.parentElement.firstElementChild.checked ? AddClass(el.parentElement,"selected") : RemoveClass(el.parentElement,"selected");
         // Create the event
         if ("createEvent" in document) {
             var evt = document.createEvent("HTMLEvents");
-            evt.initEvent("change", false, true);
+            evt.initEvent("change", true, true);
             el.parentElement.firstElementChild.dispatchEvent(evt);
         } else {
             el.parentElement.firstElementChild.fireEvent("onchange");
@@ -400,7 +418,7 @@
     */
     var imgElmt = document.querySelectorAll('td.response img');
     for(i = 0; i<imgElmt.length; i++) {
-        imgElmt[i].addEventListener("click", clickImgEvent);    
+        imgElmt[i].addEventListener("click", clickImgEvent);
     }
 
 

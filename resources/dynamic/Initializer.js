@@ -33,7 +33,7 @@ dim maxBound
 (function () {
     var sidebysidetable = new SideBySideTable({
         instanceId: {%= CurrentADC.InstanceId %},
-        nbCol: {%= nb %},
+        nbCol: {%= COLUMN_NUMBER %},
         showSum: {%= On(CurrentADC.PropValue("showTotal") = "1", true, false)%},
         stepByStep: {%= On(CurrentADC.PropValue("stepByStep") = "1", true, false)%},
         blockLimit: {%= On(CurrentADC.PropValue("blockLimit") = "1", true, false)%},
@@ -47,9 +47,13 @@ dim maxBound
     %}{%:= On((column.Id <> DK), "'" + column.Shortcut + "'", "null")%}{%= On(i<>5, ",", "") 
 		%}{%Next%} ],
         maxLimit: [{% For i=1 To COLUMN_NUMBER
-    varLim = CurrentADC.PropValue("maxNumLimit"+i) %} {%= On((varLim <> ""), varLim, "null")%}{%= On(i<>5, ",", "") %}{%Next%} ],
+    	column = CurrentADC.PropQuestion("questionCol"+i)
+            If column.Id = DK and i=1 Then
+                column = CurrentQuestion
+            Endif
+    varLim = CurrentADC.PropValue("maxNumLimit"+i) %} {%= On((varLim <> "" and column.Type = "numeric" ), varLim, "null")%}{%= On(i<>5, ",", "") %}{%Next%} ],
         rankingBox: [{% For i=1 To COLUMN_NUMBER
-    ranking = CurrentADC.PropValue("colAsComboBox"+i) %} {%= On((ranking = "2"), true, false)%}{%= On(i<>5, ",", "") %}{%Next%} ]
+    	ranking = CurrentADC.PropValue("colAsComboBox"+i) %} {%= On((ranking = "2"), true, false)%}{%= On(i<>5, ",", "") %}{%Next%} ]
     });
     
     {% 

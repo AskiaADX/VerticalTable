@@ -113,10 +113,18 @@
       </property>
       <property xsi:type="standardProperty" id="stepByStep" name="Step by Step table" type="string" require="false" visible="true">
         <description><![CDATA[]]></description>
-        <value></value>
+        <value><![CDATA[0]]></value>
         <options>
           <option value="1" text="Yes" />
           <option value="0" text="No" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="blockLimit" name="Step by Step block on limit" type="string" require="false" visible="true">
+        <description><![CDATA[]]></description>
+        <value></value>
+        <options>
+          <option value="0" text="No" />
+          <option value="1" text="Yes" />
         </options>
       </property>
       <property xsi:type="standardProperty" id="headerFixed" name="Header Always visible" type="string" require="false" visible="true">
@@ -190,14 +198,6 @@
       <property xsi:type="standardProperty" id="maxLimitExceededColor" name="Max Limit Exceeded Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[]]></description>
         <value><![CDATA[{%= Theme.ErrorColor %}]]></value>
-      </property>
-      <property xsi:type="standardProperty" id="blockLimit" name="Block on limit" type="string" require="false" visible="true">
-        <description><![CDATA[]]></description>
-        <value></value>
-        <options>
-          <option value="0" text="No" />
-          <option value="1" text="Yes" />
-        </options>
       </property>
     </category>
     <category id="timePicker" name="Time Picker">
