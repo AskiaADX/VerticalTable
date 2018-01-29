@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Side by side</title>
+  <link rel="stylesheet" type="text/css" href="sidebyside.css">
+  <link rel="stylesheet" type="text/css" href="default.css">
+  <script type="text/javascript" src="./moment.min.js"></script>
+  <script type="text/javascript" src="./pikaday.js"></script>
+</head>
+
+<body>
+
+  <div id="adc_1" class="sidebyside">
+    <table cellspacing="0">
+      <thead>
+        <tr>
+          <th rowspan="2">&nbsp;</th>
+          <th>Do you like these brands?</th>
+          <th rowspan="2">Quantity</th>
+          <th rowspan="2">Comment</th>
+          <th>YesNo</th>
+          <th rowspan="2">Time</th>
+        </tr>
+        <tr>
+          <th>
+            <div class="header-responses-container">
+              <label class="header-response-container">
+                <label>
+                  <img src="./Resources/flat-smiley-adc-happy-plus.png">
+                  <br>
+                  <span class="caption">Yes</span>
+                </label>
+              </label>
+              <label class="header-response-container">
+                <label>
+                  <img src="./Resources/flat-smiley-adc-medium.png">
+                  <br>
+                  <span class="caption">Maybe</span>
+                </label>
+              </label>
+              <label class="header-response-container">
+                <label>
+                  <span class="caption">No</span>
+                </label>
+              </label>
+            </div>
+          </th>
+          <th>
+            <div class="header-responses-container">
+              <label class="header-response-container">
+                <label>
+                  <span class="caption">Yes</span>
+                </label>
+              </label>
+              <label class="header-response-container">
+                <label>
+                  <span class="caption">No</span>
+                </label>
+              </label>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-id="imgZoom_1_1">
+          <td class="paddingZoom">
+            <img src="./Resources/Asahi_logo.svg.png" class="image">
+            <a href="./Resources/Asahi_logo.svg.png" target="_blank" data-simplbox="imgZoom_1_1"><div class="imgZoom"></div></a>
+            <br>
+            <span class="caption">Asahi</span>
+          </td>
+          <td class="closed">
+            <div class="question-container askia-question-1">
+              <div class="question-label">Do you like these brands?</div>
+              <div class="responses-container">
+                <label class="response-container selected">
+                  <input type="checkbox" id="askia-input1_4" name="M1 4" value="4" checked="checked">
+                  <label for="askia-input1_4" class="askia-radio"></label>
+                  <label for="askia-input1_4" class="content">
+                    <img src="./Resources/flat-smiley-adc-happy-plus.png">
+                    <br>
+                    <span class="caption">Yes</span>
+                  </label>
+                </label>
+                <label class="response-container">
+                  <input type="checkbox" id="askia-input1_10" class="askia-exclusive" name="M1 10" value="10">
+                  <label for="askia-input1_10" class="askia-radio"></label>
+                  <label for="askia-input1_10" class="content">
+                    <img src="./Resources/flat-smiley-adc-medium.png">
+                    <br>
+                    <span class="caption">Maybe</span>
+                  </label>
+                </label>
+                <label class="response-container">
+                  <input type="checkbox" id="askia-input1_5" name="M1 5" value="5">
+                  <label for="askia-input1_5" class="askia-radio"></label>
+                  <label for="askia-input1_5" class="content">
+                    <span class="caption">No</span>
+                  </label>
+                </label>
+              </div>
+            </div>
+          </td>
+          <td class="numeric">
+            <div class="question-container askia-question-2">
+              <div class="question-label">Quantity</div>
+              <div class="responses-container">
+                <span class="prefix"></span>
+                <input type="number" id="askia-input-number2" class="input_1_2" name="C2" value="3">
+                <span class="suffix">%</span>
+              </div>
+              <div class="sum-container sum">
+                <span class="caption_1_2">Sum :</span>
+                <span class="sum_1_2 resultSum">
+                  <span class="prefix_1_2"></span>
+                  <span class="result_1_2">0</span>
+                  <span class="suffix_1_2">%</span>
+                </span>
+              </div>
+            </div>
+          </td>
+          <td class="open">
+            <div class="question-container askia-question-3">
+              <div class="question-label">Comment</div>
+              <div class="responses-container">
+                <input type="text" id="askia-input-open3" name="S3" value="">
+              </div>
+            </div>
+          </td>
+          <td class="closed">
+            <div class="question-container askia-question-4">
+              <div class="question-label">YesNo</div>
+              <div class="responses-container">
+                <label class="response-container selected">
+                  <input type="radio" id="askia-input4_21" name="U4" value="21" checked="checked">
+                  <label for="askia-input4_21" class="askia-radio"></label>
+                  <label for="askia-input4_21" class="content">
+                    <span class="caption">Yes</span>
+                  </label>
+                </label>
+                <label class="response-container">
+                  <input type="radio" id="askia-input4_22" name="U4" value="22">
+                  <label for="askia-input4_22" class="askia-radio"></label>
+                  <label for="askia-input4_22" class="content">
+                    <span class="caption">No</span>
+                  </label>
+                </label>
+              </div>
+            </div>
+          </td>
+          <td class="date">
+            <div class="question-container askia-question-5">
+              <div class="question-label">Time</div>
+              <div class="responses-container">
+                <div class="RLDatePicker">
+                  <input type="text" id="askia-input-date5" class="askia-question-5" name="D5" value="" readonly="true">
+                </div>
+                <div class="RLTimePicker">
+                  <select id="hour_5" name="hour">
+                    <option>hh</option>
+                    <option value="0">00</option>
+                    <option value="1">01</option>
+                    <option value="2">02</option>
+                    <option value="3">03</option>
+                    <option value="4">04</option>
+                    <option value="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                  </select>
+                  <span class="timeSeparator_5">:</span>
+                  <select id="minutes_5" name="minutes">
+                    <option>mm</option>
+                    <option value="0">00</option>
+                    <option value="1">01</option>
+                    <option value="2">02</option>
+                    <option value="3">03</option>
+                    <option value="4">04</option>
+                    <option value="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    <option value="38">38</option>
+                    <option value="39">39</option>
+                    <option value="40">40</option>
+                    <option value="41">41</option>
+                    <option value="42">42</option>
+                    <option value="43">43</option>
+                    <option value="44">44</option>
+                    <option value="45">45</option>
+                    <option value="46">46</option>
+                    <option value="47">47</option>
+                    <option value="48">48</option>
+                    <option value="49">49</option>
+                    <option value="50">50</option>
+                    <option value="51">51</option>
+                    <option value="52">52</option>
+                    <option value="53">53</option>
+                    <option value="54">54</option>
+                    <option value="55">55</option>
+                    <option value="56">56</option>
+                    <option value="57">57</option>
+                    <option value="58">58</option>
+                    <option value="59">59</option>
+                  </select>
+                  <span id="secsContainer_5" class="secsContainer"></span>
+                  <!--<input type="text" id="time" name="time" readonly="readonly" hidden=true/> -->
+                  <input id="askia-input-time5" class="askia-question-5 time_5" hidden="" type="text" name="T5" value="">
+                  <span class="imperial" hidden="" id="ampm_5"></span>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="caption">Desperados</span>
+          </td>
+          <td class="closed">
+            <div class="question-container askia-question-7">
+              <div class="question-label">Do you like these brands?</div>
+              <div class="responses-container">
+                <label class="response-container">
+                  <input type="checkbox" id="askia-input7_4" name="M7 4" value="4">
+                  <label for="askia-input7_4" class="askia-radio"></label>
+                  <label for="askia-input7_4" class="content">
+                    <img src="./Resources/flat-smiley-adc-happy-plus.png">
+                    <br>
+                    <span class="caption">Yes</span>
+                  </label>
+                </label>
+                <label class="response-container">
+                  <input type="checkbox" id="askia-input7_10" class="askia-exclusive" name="M7 10" value="10">
+                  <label for="askia-input7_10" class="askia-radio"></label>
+                  <label for="askia-input7_10" class="content">
+                    <img src="./Resources/flat-smiley-adc-medium.png">
+                    <br>
+                    <span class="caption">Maybe</span>
+                  </label>
+                </label>
+                <label class="response-container selected">
+                  <input type="checkbox" id="askia-input7_5" name="M7 5" value="5" checked="checked">
+                  <label for="askia-input7_5" class="askia-radio"></label>
+                  <label for="askia-input7_5" class="content">
+                    <span class="caption">No</span>
+                  </label>
+                </label>
+              </div>
+            </div>
+          </td>
+          <td class="numeric">
+            <div class="question-container askia-question-8">
+              <div class="question-label">Quantity</div>
+              <div class="responses-container">
+                <span class="prefix"></span>
+                <input type="number" id="askia-input-number8" class="input_1_2" name="C8" value="">
+                <span class="suffix">%</span>
+              </div>
+              <div class="sum-container sum">
+                <span class="caption_1_2">Sum :</span>
+                <span class="sum_1_2 resultSum">
+                  <span class="prefix_1_2"></span>
+                  <span class="result_1_2">0</span>
+                  <span class="suffix_1_2">%</span>
+                </span>
+              </div>
+            </div>
+          </td>
+          <td class="open">
+            <div class="question-container askia-question-9">
+              <div class="question-label">Comment</div>
+              <div class="responses-container">
+                <input type="text" id="askia-input-open9" name="S9" value="">
+              </div>
+            </div>
+          </td>
+          <td class="closed">
+            <div class="question-container askia-question-10">
+              <div class="question-label">YesNo</div>
+              <div class="responses-container">
+                <label class="response-container">
+                  <input type="radio" id="askia-input10_21" name="U10" value="21">
+                  <label for="askia-input10_21" class="askia-radio"></label>
+                  <label for="askia-input10_21" class="content">
+                    <span class="caption">Yes</span>
+                  </label>
+                </label>
+                <label class="response-container selected">
+                  <input type="radio" id="askia-input10_22" name="U10" value="22" checked="checked">
+                  <label for="askia-input10_22" class="askia-radio"></label>
+                  <label for="askia-input10_22" class="content">
+                    <span class="caption">No</span>
+                  </label>
+                </label>
+              </div>
+            </div>
+          </td>
+          <td class="date">
+            <div class="question-container askia-question-11">
+              <div class="question-label">Time</div>
+              <div class="responses-container">
+                <div class="RLDatePicker">
+                  <input type="text" id="askia-input-date11" class="askia-question-11" name="D11" value="" readonly="true">
+                </div>
+                <div class="RLTimePicker">
+                  <select id="hour_11" name="hour">
+                    <option>hh</option>
+                    <option value="0">00</option>
+                    <option value="1">01</option>
+                    <option value="2">02</option>
+                    <option value="3">03</option>
+                    <option value="4">04</option>
+                    <option value="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                  </select>
+                  <span class="timeSeparator_11">:</span>
+                  <select id="minutes_11" name="minutes">
+                    <option>mm</option>
+                    <option value="0">00</option>
+                    <option value="1">01</option>
+                    <option value="2">02</option>
+                    <option value="3">03</option>
+                    <option value="4">04</option>
+                    <option value="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    <option value="38">38</option>
+                    <option value="39">39</option>
+                    <option value="40">40</option>
+                    <option value="41">41</option>
+                    <option value="42">42</option>
+                    <option value="43">43</option>
+                    <option value="44">44</option>
+                    <option value="45">45</option>
+                    <option value="46">46</option>
+                    <option value="47">47</option>
+                    <option value="48">48</option>
+                    <option value="49">49</option>
+                    <option value="50">50</option>
+                    <option value="51">51</option>
+                    <option value="52">52</option>
+                    <option value="53">53</option>
+                    <option value="54">54</option>
+                    <option value="55">55</option>
+                    <option value="56">56</option>
+                    <option value="57">57</option>
+                    <option value="58">58</option>
+                    <option value="59">59</option>
+                  </select>
+                  <span id="secsContainer_11" class="secsContainer"></span>
+                  <!--<input type="text" id="time" name="time" readonly="readonly" hidden=true/> -->
+                  <input id="askia-input-time11" class="askia-question-11 time_11" hidden="" type="text" name="T11" value="">
+                  <span class="imperial" hidden="" id="ampm_11"></span>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th></th>
+          <th></th>
+          <th class="sum">
+            <span class="caption_1_2">Sum :</span>
+            <span class="sum_1_2 resultSum">
+              <span class="prefix_1_2"></span>
+              <span class="result_1_2">0</span>
+              <span class="suffix_1_2">%</span>
+            </span>
+          </th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <script type="text/javascript" src="./simplbox.js"></script>
+  <script type="text/javascript" src="./time_picker.js"></script>
+  <script type="text/javascript" src="./date_picker.js"></script>
+  <script type="text/javascript" src="./sidebyside.js"></script>
+  <script type="text/javascript" src="./Initializer.js"></script>
+</body>
+
+</html>

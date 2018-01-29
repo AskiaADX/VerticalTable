@@ -1,0 +1,198 @@
+#adc_1 * {
+  font-family: Arial, Helvetica, sans-serif;
+}
+#adc_1 table {
+  width: 100%;
+  max-width: 100%;
+  background-color: rgb(255,255,255);
+  color: rgb(34,34,34);
+  border: 1px solid rgba(170,170,170,1);
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(34,34,34,.2);
+}
+#adc_1 table thead tr:first-child th:last-child {
+  border-top-right-radius: 5px;
+}
+#adc_1 tr:nth-child(even) {
+  background-color: rgba(238,238,238,1.0);
+  color: rgba(34,34,34,1.0);
+}
+#adc_1 tbody > tr > td:first-child {
+  background-color: rgb(255,255,255);
+  color: rgb(34,34,34);
+}
+/* TODO % Calculation */
+#adc_1 thead > tr > th {
+  width: 15%;
+}
+#adc_1 thead > tr > th:first-child {
+  width: 25%;
+}
+#adc_1 tr:first-child th:first-child,
+#adc_1 td:first-child {
+  text-align: left;
+}
+#adc_1 tbody > tr > td,
+#adc_1 tfoot > tr > th {
+  border-top: 1px solid rgba(170,170,170,1);
+}
+#adc_1 .question-label {
+  border-bottom: 1px solid rgba(170,170,170,1);
+}
+#adc_1 thead tr:first-child th:not(:first-child),
+#adc_1 thead tr:not(:first-child) th {
+	z-index: 3;
+  position: relative;
+  /* if headerFix then */
+  background-color: rgb(255,255,255);
+}
+/* If Column borders */
+#adc_1 thead > tr > th:not(:first-child),
+#adc_1 tbody > tr > td:not(:first-child) {
+  border-left: 1px solid rgba(170,170,170,1);
+}
+/* If Column borders and responses on headers */
+#adc_1 thead > tr:nth-child(2) > th {
+  border-left: 1px solid rgba(170,170,170,1);
+}
+/* If browser support touch false and javascript true */
+#adc_1 .response-container:hover {
+  background-color: rgba(34,34,34,.1);
+}
+/* If responses on headers */
+#adc_1 .response-container .content {
+  display: none;
+}
+
+#adc_1 input[type=number],
+#adc_1 input[type=text] {
+  color: rgba(34,34,34,1);
+  background-color: rgba(255,255,255,1);
+  font-size: 1.05rem;
+  border: 0.0625em solid rgba(221,221,221,1);
+  padding: 0.5em 0.5em;
+}
+#adc_1 input[type=number] {
+  text-align: right;
+}
+#adc_1 select {
+  font-size: 1.05rem;
+}
+#adc_1 .sum-container {
+  display: none;
+  text-align: center;
+}
+#adc_1 .response-container.selected {
+  background-color: rgba(223,67,53,1);
+  color: rgba(255,255,255,1);
+}
+#adc_1 .sum {
+  color: rgba(34,34,34,.6);
+}
+#adc_1 .equalLimit {
+  color: rgba(141,198,63,1);
+}
+#adc_1 .aboveLimit {
+  color: rgba(192,57,43,1);
+}
+#adc_1 .RLTimePicker select {
+  color: rgba(34,34,34,1) !important;
+}
+#adc_1 .RLTimePicker,
+#adc_1 .RLTimePicker option {
+  color: rgba(34,34,34,1) !important;
+  background-color: rgba(255,255,255,1) !important;
+}
+#adc_1 span[class^="timeSeparator_"] {
+  line-height: 2;
+}
+#picker1 .is-today .pika-button {
+  color: rgba(223,67,53,1) !important;
+}
+#picker1 .is-selected .pika-button,
+#picker1 .is-inrange .pika-button,
+#picker1 .is-startrange .pika-button,
+#picker1 .is-endrange .pika-button {
+  background-color: rgba(223,67,53,1) !important;
+  color: rgba(255,255,255,1) !important;
+}
+#picker1 .pika-button:hover {
+  background-color: rgba(40,59,73,1) !important;
+  color: rgba(255,255,255,1) !important;
+}
+
+
+@media screen and (max-width: 600px) {
+  #adc_1 thead,
+  #adc_1 tfoot {
+    display: none;
+  }
+  #adc_1 table {
+    border: 0px solid transparent;
+    border-radius: 0px;
+    box-shadow: none;
+  }
+  #adc_1 table tbody tr td:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  #adc_1 tr:nth-child(even) {
+    background-color: rgba(255,255,255,1.0);
+    color: rgba(34,34,34,1.0);
+  }
+  #adc_1 tbody > tr > td:first-child,
+  #adc_1 tfoot > tr > th:first-child {
+    border-bottom: 1px solid rgba(170,170,170,1);
+    border-top: 0px solid transparent;
+    text-align: center;
+  }
+  #adc_1 tbody > tr > td {
+    display: block;
+  }
+  #adc_1 tr {
+    display: block;
+    height: 100%;
+    border: 1px solid rgba(170,170,170,1);
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(34,34,34,.2);
+    margin-bottom: 10px;
+  }
+  #adc_1 thead > tr > th:not(:first-child),
+  #adc_1 tbody > tr > td:not(:first-child) {
+    border-left: 0px solid transparent;
+    border-top: 0px solid transparent;
+  }
+  #adc_1 .question-label {
+    display: block;
+    border-bottom: 0px solid transparent;
+    text-align: left;
+  }
+  #adc_1 .question-container {
+    margin-bottom: 10px;
+  }
+  #adc_1 .responses-container {
+    justify-content: flex-start;
+  }
+  #adc_1 .response-container {
+    background-color: rgba(34,34,34,.05);
+  }
+  #adc_1 .responses-container .response-container:last-child {
+    border-right: 0px solid transparent;
+  }
+  #adc_1 .response-container .content {
+    display: block;
+  }
+  #adc_1 input[type="text"] {
+    max-width: 97%;
+  }
+  #adc_1 input[type="radio"],
+  #adc_1 input[type="checkbox"],
+  #adc_1 .askia-radio,
+  #adc_1 .askia-checkbox {
+    display: none;
+  }
+  #adc_1 .sum-container {
+    display: block;
+    text-align: left;
+  }
+}

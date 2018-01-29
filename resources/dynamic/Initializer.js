@@ -1,147 +1,123 @@
 {%
-Dim nb = 1
-Dim COLUMN_NUMBER = 5
+Dim i1
+Dim i2
+Dim i3
+Dim i4
+Dim i5
+Dim i6
+Dim i7
+Dim i8
+Dim i9
 Dim varLim
-Dim ranking
 Dim column
-Dim inputName
-Dim inputId
-Dim i
-Dim j
-
-'DATEPCIKER OPTIONS
-
-dim inputNameX 
-dim defaultDate
-dim bound 
-dim position
-dim setDefaultDate 
-dim firstDay 
-dim dpTheme
-dim disableWeekends 
-dim showWeekNumber 
-dim showMonthAfterYear 
-dim numberOfMonths 
-dim mainCalendar
-dim minDate
-dim maxDate
-dim minBound
-dim maxBound
-
+Dim columnQuestion
+Dim ranking
+Dim columnNumber = 1
+For i1 = 2 To 5
+    columnQuestion = CurrentADC.PropQuestion("questionCol" + i1)
+    If columnQuestion.Id <> DK Then
+        columnNumber = i1
+    Else
+        Break
+    EndIf
+Next i1
 %}
 
 (function () {
-    var sidebysidetable = new SideBySideTable({
-        instanceId: {%= CurrentADC.InstanceId %},
-        nbCol: {%= COLUMN_NUMBER %},
-        showSum: {%= On(CurrentADC.PropValue("showTotal") = "1", true, false)%},
-        stepByStep: {%= On(CurrentADC.PropValue("stepByStep") = "1", true, false)%},
-        blockLimit: {%= On(CurrentADC.PropValue("blockLimit") = "1", true, false)%},
-        respOnHeader: {%= On(CurrentADC.PropValue("respOnHeader") = "1", true, false)%},
-        headerFixed: {%= On(CurrentADC.PropValue("headerFixed") = "1", true, false)%},
-        questions: [{% For i=1 To COLUMN_NUMBER
-    	column = CurrentADC.PropQuestion("questionCol"+i)
-            If column.Id = DK and i=1 Then
+  var sidebyside = new SideBySide({
+    instanceId: {%= CurrentADC.InstanceId %},
+    showTotal: {%= CurrentADC.PropValue("showTotal") %},
+    headerFixed: {%= On(CurrentADC.PropValue("headerFixed") = "1", true, false)%},
+    questions: [{% For i5 = 1 To columnNumber
+    	column = CurrentADC.PropQuestion("questionCol" + i5)
+            If ((column.Id = DK) and (i5 = 1)) Then
+                column = CurrentQuestion
+            EndIf
+    %}{%:= On((column.Id <> DK), "'" + column.Shortcut + "'", "null")%}{%= On(i5 <> columnNumber, ",", "") 
+		%}{%Next i5 %}],
+    maxLimit: [{% For i6 = 1 To columnNumber
+    	column = CurrentADC.PropQuestion("questionCol" + i6)
+            If ((column.Id = DK) and (i6 = 1)) Then
                 column = CurrentQuestion
             Endif
-    %}{%:= On((column.Id <> DK), "'" + column.Shortcut + "'", "null")%}{%= On(i<>5, ",", "") 
-		%}{%Next%} ],
-        maxLimit: [{% For i=1 To COLUMN_NUMBER
-    	column = CurrentADC.PropQuestion("questionCol"+i)
-            If column.Id = DK and i=1 Then
+    varLim = CurrentADC.PropValue("maxNumLimit" + i6) %}{%= On((varLim <> "" and column.Type = "numeric" ), varLim, "undefined")%}{%= On(i6 <> columnNumber, ",", "") %}{% Next i6 %}],
+    rankingBox: [{% For i7 = 1 To columnNumber
+    	column = CurrentADC.PropQuestion("questionCol" + i7)
+            If ((column.Id = DK) and (i7 = 1)) Then
                 column = CurrentQuestion
             Endif
-    varLim = CurrentADC.PropValue("maxNumLimit"+i) %} {%= On((varLim <> "" and column.Type = "numeric" ), varLim, "null")%}{%= On(i<>5, ",", "") %}{%Next%} ],
-        rankingBox: [{% For i=1 To COLUMN_NUMBER
-    	ranking = CurrentADC.PropValue("colAsComboBox"+i) %} {%= On((ranking = "2"), true, false)%}{%= On(i<>5, ",", "") %}{%Next%} ]
-    });
-    
-    {% 
-	For i = 1 to COLUMN_NUMBER 
-    	column = CurrentADC.PropQuestion("questionCol"+i)
+    ranking = CurrentADC.PropValue("colAsComboBox" + i7) %}{%= On((ranking = "2") and (column.Type = "single"), true, false)%}{%= On(i7 <> columnNumber, ",", "") %}{% Next i7 %}],
+    suffixes: [{% For i8 = 1 To columnNumber
+    	column = CurrentADC.PropQuestion("questionCol" + i8)
+            If ((column.Id = DK) and (i8 = 1)) Then
+                column = CurrentQuestion
+            EndIf
+    %}{%:= On((column.Type = "numeric"), "'" + CurrentADC.PropValue("numBoxSuffix" + i8) + "'", "''")%}{%= On(i8 <> columnNumber, ",", "") 
+		%}{%Next i8 %}],
+    decimals: [{% For i9 = 1 To columnNumber
+    	column = CurrentADC.PropQuestion("questionCol" + i9)
+            If ((column.Id = DK) and (i9 = 1)) Then
+                column = CurrentQuestion
+            EndIf
+    %}{%:= On((column.Type = "numeric"), column.Decimals + "", "")%}{%= On(i9 <> columnNumber, ",", "") 
+		%}{%Next i9 %}]
+  });
+  {% 
+	For i2 = 1 to columnNumber 
+    	column = CurrentADC.PropQuestion("questionCol"+i2)
     	If column.Type = "datetime" Then 
         	If(Not(column.IsDateOnly)) Then
-                For j=1 to CurrentQuestion.ParentLoop.Answers.Count
-    				column = CurrentADC.PropQuestion("questionCol"+i)
-					column = column.AllIterations[j] %}
-                    var timePickerR{%= j%}C{%= i%} = new TimePicker({
-                        showSeconds: {%=CurrentADC.PropValue("showSeconds")%},
-                        stepMinutes: {%=CurrentADC.PropValue("stepMinutes")%},
-                        stepSeconds: {%=CurrentADC.PropValue("stepSeconds")%},
-                        imperial: {%=CurrentADC.PropValue("imperial")%},
-                        hideInput: true,
-                        minHour: {%= Hour(column.MinDate) %},
-                        maxHour: {%= Hour(column.MaxDate) %},
-                        selected_hour: "{%= Hour(column.Iteration(column.ParentLoop.Answers[j].Index).Value.ToDate()) %}",
-                        selected_min: "{%= Minute(column.Iteration(column.ParentLoop.Answers[j].Index).Value.ToDate()) %}",
-                        selected_sec: "{%= Second(column.Iteration(column.ParentLoop.Answers[j].Index).Value.ToDate()) %}",
-                        question: "{%= column.Shortcut %}",
-                        adcId: {%= CurrentADC.InstanceId%},
-                        row: {%= j %},
-                        col: {%= i%}
-                    });
-        {% 	  Next
-			EndIf
-			column = CurrentADC.PropQuestion("questionCol"+i)
+                For i3 = 1 to CurrentQuestion.ParentLoop.Answers.Count
+    				column = CurrentADC.PropQuestion("questionCol"+i2)
+					column = column.AllIterations[i3] %}
+  var timePicker{%= column.InputCode %} = new TimePicker({
+    showSeconds: {%= CurrentADC.PropValue("showSeconds") %},
+    stepMinutes: {%= CurrentADC.PropValue("stepMinutes") %},
+    stepSeconds: {%= CurrentADC.PropValue("stepSeconds") %},
+    imperial: {%= CurrentADC.PropValue("imperial")%},
+    hideInput: true,
+    minHour: {%= Hour(column.MinDate) %},
+    maxHour: {%= Hour(column.MaxDate) %},
+    selectedHour: '{%= Hour(column.Iteration(column.ParentLoop.Answers[i3].Index).Value.ToDate()) %}',
+    selectedMin: '{%= Minute(column.Iteration(column.ParentLoop.Answers[i3].Index).Value.ToDate()) %}',
+    selectedSec: '{%= Second(column.Iteration(column.ParentLoop.Answers[i3].Index).Value.ToDate()) %}',
+    question: '{%= column.Shortcut %}',
+    adcId: {%= CurrentADC.InstanceId %},
+    inputCode: {%= column.InputCode %}
+  });
+{%            Next i3
+        	EndIf
+			column = CurrentADC.PropQuestion("questionCol"+i2)
 			If (Not(column.IsTimeOnly)) Then 
-				'DATEPCIKER OPTIONS
-
-                inputNameX = column.InputName("date")
-                defaultDate = CurrentADC.PropValue("defaultDate").ToString()
-                bound = CurrentADC.PropValue("bound")
-                position = "'"+CurrentADC.PropValue("position").ToString()+"'"
-                setDefaultDate = CurrentADC.PropValue("setDefaultDate")
-                firstDay = CurrentADC.PropValue("firstDay").ToNumber()
-                dpTheme = "'"+CurrentADC.PropValue("theme").ToString()+"'"
-                disableWeekends = CurrentADC.PropValue("disableWeekends")
-                showWeekNumber = CurrentADC.PropValue("showWeekNumber")
-                showMonthAfterYear = CurrentADC.PropValue("showMonthAfterYear")
-                numberOfMonths = CurrentADC.PropValue("numberOfMonths")
-                mainCalendar = "'"+CurrentADC.PropValue("mainCalendar")+"'"
-                minDate = column.MinDate.Format("yyyy-MM-dd")
-                maxDate = column.MaxDate.Format("yyyy-MM-dd")
-
-             	minBound = column.MinDate.Format("yyyy").ToNumber()
-                maxBound = column.MaxDate.Format("yyyy").ToNumber()
-
-                if CvDkNa(minBound) < 1 Then
-                    minBound = 1900
-                EndIf
-
-                if CvDkNa(maxBound) < 1 Then
-                    maxBound = 2100
-                EndIf
-				For j=1 to CurrentQuestion.ParentLoop.Answers.Count 
-    				column = CurrentADC.PropQuestion("questionCol"+i)
-					column = column.AllIterations[j]
-                    inputName = column.InputName()
-                    inputId     = (inputName + "_" + i).Replace("D", "askia-input-dateO")%}
-                	var datePickerR{%= j%}C{%= i%} = new DatePicker({
-                        adcId: {%= CurrentADC.InstanceId %},
-                        inputNameX: "{%= inputId %}",
-                        defaultDate: "{%= defaultDate %}",
-                        bound: {%= bound%},
-                        position: {%= position %},
-                        setDefaultDate:{%= setDefaultDate%},
-                        firstDay: {%= firstDay%},
-                        dpTheme: {%= dpTheme%},
-                        disableWeekends: {%= disableWeekends %},
-                        showWeekNumber: {%= showWeekNumber %},
-                        showMonthAfterYear: {%= showMonthAfterYear%},
-                        numberOfMonths: {%= numberOfMonths %},
-                        mainCalendar: {%= mainCalendar%},
-                        minDate:'{%=minDate%}',
-                        maxDate:'{%= maxDate%}',
-                        minBound:{%= minBound%},
-                        maxBound:{%= maxBound%},
-                        xdefaultDate: '{%=defaultDate.ToString()%}',
-                        xminBound: '{%=minBound%}',
-                        xmaxBound: '{%=maxBound%}',
-                        lang: {%= Interview.Language.Id %},
-                        question: '{%:= column.Shortcut %}'
-                	});
-        {% 	  Next 	
-			EndIf
+				For i4 = 1 to CurrentQuestion.ParentLoop.Answers.Count
+    				column = CurrentADC.PropQuestion("questionCol"+i2)
+					column = column.AllIterations[i4] %}
+  var datePicker{%= column.InputCode %} = new DatePicker({
+    adcId: {%= CurrentADC.InstanceId%},
+    inputNameX: 'askia-input-date{%= column.InputCode %}',
+    defaultDate: '{%= CurrentADC.PropValue("defaultDate").ToString() %}',
+    bound: {%= CurrentADC.PropValue("bound") %},
+    position: '{%= CurrentADC.PropValue("position").ToString() %}',
+    setDefaultDate: {%= CurrentADC.PropValue("setDefaultDate") %},
+    firstDay: {%= CurrentADC.PropValue("firstDay").ToNumber() %},
+    dpTheme: '{%= CurrentADC.PropValue("theme").ToString() %}',
+    disableWeekends: {%= CurrentADC.PropValue("disableWeekends") %},
+    showWeekNumber: {%= CurrentADC.PropValue("showWeekNumber") %},
+    showMonthAfterYear: {%= CurrentADC.PropValue("showMonthAfterYear") %},
+    numberOfMonths: {%= CurrentADC.PropValue("numberOfMonths") %},
+    mainCalendar: '{%= CurrentADC.PropValue("mainCalendar") %}',
+    minDate: '{%= column.MinDate.Format("yyyy-MM-dd") %}',
+    maxDate: '{%= column.MaxDate.Format("yyyy-MM-dd") %}',
+    minBound: {%= On(CvDkNa(column.MinDate.Format("yyyy").ToNumber()) < 1,1900,column.MinDate.Format("yyyy").ToNumber()) %},
+    maxBound: {%= On(CvDkNa(column.MaxDate.Format("yyyy").ToNumber()) < 1,2100,column.MaxDate.Format("yyyy").ToNumber()) %},
+    xdefaultDate: '{%= CurrentADC.PropValue("defaultDate").ToString() %}',
+    xminBound: '{%= On(CvDkNa(column.MinDate.Format("yyyy").ToNumber()) < 1,1900,column.MinDate.Format("yyyy").ToNumber()) %}',
+    xmaxBound: '{%= On(CvDkNa(column.MaxDate.Format("yyyy").ToNumber()) < 1,2100,column.MaxDate.Format("yyyy").ToNumber()) %}',
+    lang: {%= Interview.Language.Id %},
+    question: '{%:= column.Shortcut %}'
+  });
+    {% 	  		Next i4
+        	EndIf
 		EndIf
-	Next%}
+	Next i2 %}
 } ());

@@ -1,260 +1,267 @@
 {%
-Dim COLUMN_NUMBER = 1
-Dim inputName
-Dim inputId
-Dim imageId
-Dim inputIdDate
-Dim inputCode
-Dim inputValue
-Dim isExclusive
-Dim isAskiaExclusive
-Dim isSelected
-Dim caption
-Dim i
-Dim j
-Dim k
-Dim l
-Dim attrMulti
-Dim attrChecked
-Dim boolColMerge = False
-Dim attrColMerge = ""
+Dim i1
+Dim i2
+Dim i3
+Dim i4
+Dim i5
+Dim j1
+Dim j2
+Dim j3
+Dim j4
+Dim j5
+Dim k1
 Dim column
 Dim columnQuestion
-Dim displayRow = ""
-Dim showTotal = (CurrentADC.PropValue("showTotal") = "1")
+Dim columnNumber = 1
+Dim hasClosedQuestion = 0
+Dim loopQuestion = CurrentQuestion.ParentLoop
+Dim attrChecked
+Dim attrExclusive
+Dim attrSelected
+Dim imgZoom
+Dim paddingZoom
+Dim minVal
+Dim maxVal
+Dim useSlider
+Dim step
 Dim totalCaption = CurrentADC.PropValue("totalCaption")
-Dim totalCaptionLeft = On(CurrentADC.PropValue("displayTotalCaption") = "0", totalCaption, "")
-Dim totalCaptionCol  = On(CurrentADC.PropValue("displayTotalCaption") = "1", totalCaption, "")
-Dim firstColumnWidth = CurrentADC.PropValue("firstColumnWidth")
-
-For l = 2 To 5
-    columnQuestion = CurrentADC.PropQuestion("questionCol"+l)
+For i1 = 2 To 5
+    columnQuestion = CurrentADC.PropQuestion("questionCol" + i1)
     If columnQuestion.Id <> DK Then
-        COLUMN_NUMBER = l
+        columnNumber = i1
     Else
         Break
     EndIf
-Next l
-
-For i = 1 To COLUMN_NUMBER
-    column = CurrentADC.PropQuestion("questionCol"+i)
-    if ((i = 1) And (column.Id = DK)) Then column = CurrentQuestion EndIf
-
-    boolColMerge = boolColMerge Or (CurrentADC.PropValue("respOnHeader") = "1" And (column.Type = "single" Or column.Type="multiple"))
-Next
-%}
-<div id="adc_{%= CurrentADC.InstanceId %}" class="adc-sidebyside">
-	<table class="adc-sidebyside-table" cellspacing="0">
-        {%If CurrentADC.PropValue("showTitle") = "1"  Then%}
-    	<thead id="adc_{%= CurrentADC.InstanceId %}_thead">
-            <tr>
-                    <th class="firstColumn">&nbsp;</th>
-            {%
-			For i = 1 to COLUMN_NUMBER
-    			column = CurrentADC.PropQuestion("questionCol"+i)
-    			if ((i = 1) and (column.Id = DK)) Then	column = CurrentQuestion	EndIf
-
-        		attrColMerge = On(((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox"+i) = "0")) or (column.Type = "multiple"), "colspan=" + column.AvailableResponses.Count, "")
-    			If column.Id <> DK then %}
-                <th class="otherColumn" {%= attrColMerge %} width="{%:= ((100 - firstColumnWidth.ToNumber() ) / COLUMN_NUMBER).ToInt() %}%">
-                        {%= column.LongCaption %}
-            		</th>
-            	{% Endif   
-			Next
-			%}
-        	</tr>
-    {%
-		EndIf
-		if boolColMerge Then
-    %}
-            <tr>
-                <th class="firstColumn">&nbsp;</th>
-     {%	  	For i = 1 to COLUMN_NUMBER
-    				column = CurrentADC.PropQuestion("questionCol"+i)
-    				if ((i = 1) And (column.Id = DK)) Then column = CurrentQuestion EndIf
-    				Dim padRightHead = ""
-                    If column.Id <> DK then %}                        
-                            {% If ((CurrentADC.PropValue("respOnHeader") = "1") and ((column.Type = "multiple") or ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox"+i) = "0")))) Then%}
-                                {% For k = 1 To column.AvailableResponses.Count
-    								padRightHead = On(column.AvailableResponses[k].ResourceURL <> "" and CurrentADC.PropValue("imgZoomColumn") = "1" and CurrentADC.PropValue("respOnHeader") = "1"," padRight","")
-    								imageId = column.AvailableResponses[k].InputName() %}
-                					<th class="otherColumn{%:= padRightHead %}">
-                                        {% If column.AvailableResponses[k].ResourceURL <> "" and CurrentADC.PropValue("responsesColumn") <> "0" Then%}
-                                        	<img src="{%= column.AvailableResponses[k].ResourceURL %}" data-id="head{%= CurrentADC.InstanceId.ToString() + k %}" class="image"><br />
-                                        {%If CurrentADC.PropValue("imgZoomColumn") = "1" Then %}<a href="{%= column.AvailableResponses[k].ResourceURL %}" target="_blank" data-simplbox="head{%= CurrentADC.InstanceId.ToString() + k %}" class="zoomLink"><div class="imgZoom"></div></a>{%EndIf%}
-                                        {% EndIf %}
-                                        {% If CurrentADC.PropValue("responsesColumn") <> "1" or column.AvailableResponses[k].ResourceURL = "" Then %}
-                                        	{%= column.AvailableResponses[k].Caption %}
-                                        {% EndIf%}
-                                    </th>
-                                {% Next %}
-                			{%Else%}
-                					<th class="otherColumn">&nbsp;</th>
-                            {%EndIf%}
-                    {% Endif   
-                Next %}
-			</tr>
-			{% EndIf %}
-  		</thead>
-    
-        <tbody>        	            
-           
-        {%For i = 1 To CurrentQuestion.ParentLoop.Answers.Count
-            displayRow = On((CurrentADC.PropValue("stepByStep") = "1" And i>1), "hidden", "" )
-            imageId = CurrentQuestion.ParentLoop.Answers[i].InputName() %}
-            <tr id="row{%= i%}" {%= displayRow %} data-id='row{%= CurrentADC.InstanceId.ToString() + i %}'>
-            
-            {%Dim select = CurrentQuestion.ParentLoop
-				Dim padRightIteration = On(select.Answers[i].ResourceURL <> "" and CurrentADC.PropValue("imgZoomRow") = "1","padRight","")
-				If select.Id<>DK Then 
-    				attrChecked = On(select.Answers[i].IsSelected, "checked", "") %}
-                <td class="{%= padRightIteration %}">
-                    {% If select.Answers[i].ResourceURL <> "" and CurrentADC.PropValue("iterationColumn") <> "0" Then%}
-                    	<img src="{%= select.Answers[i].ResourceURL %}" class="image" width="100%"><br />
-                    	{% If CurrentADC.PropValue("imgZoomRow") = "1" Then %}<a href="{%= select.Answers[i].ResourceURL %}" target="_blank" data-simplbox="row{%= CurrentADC.InstanceId.ToString() + i %}" class="zoomLink"><div class="imgZoom"></div></a>{% EndIf %}
-                    {% EndIf %}
-                   	{% If CurrentADC.PropValue("iterationColumn") <> "1" or select.Answers[i].ResourceURL = "" Then %}
-    					{%:= select.Answers[i].Caption %}
-                    {% EndIf%}
-                </td>
-            {%EndIf  %}
-            
-            {%
-            For k = 1 To COLUMN_NUMBER
-    			column = CurrentADC.PropQuestion("questionCol"+k)
-    			if ((k = 1) And (column.Id = DK)) Then column = CurrentQuestion EndIf
-    			If (column.Id <> DK) then
-        			column = column.Alliterations[i]
-        			If (column.Type = "single") Or (column.Type = "multiple") Then                        			
-            			attrMulti = On((column.Type = "single"), "radio", "checkbox")
-            			attrChecked = On(column.AvailableResponses[i].IsSelected, "checked", "")
-              %}
-                	
-                        {% If (CurrentADC.PropValue("colAsComboBox"+k) >= "1") And column.Type = "single" Then 
-            				inputName = column.InputName()
-    						inputId     = (inputName + "_" + k).Replace("U", "askia-input-select")
-            				inputCode = column.inputCode %}
-            			<td class="col{%= k %}">
-                            <select class="askia-question-{%= inputCode %}" id="{%= inputId%}" name="{%:= column.InputName()%}">
-                            <option value="0">{%:= CurrentADC.PropValue("firstOptionCombo"+k) %}</option>
-                            {% For j=1 to column.AvailableResponses.Count
-    							 	Dim attrSelected = On(column.AvailableResponses[j].IsSelected, "selected=\"selected\"", "")%}
-                            		<option {%:= attrSelected %} value="{%:= column.AvailableResponses[j].InputValue() %}">{%= column.AvailableResponses[j].Caption %}</option>
-                    		{% Next %}
-                        </select>
-            			</td>
-                   	{% Else %}
-                        {% For j=1 to column.AvailableResponses.Count %}
-                                {%If (column.Type = "single") Then
-                                    inputName = column.AvailableResponses[j].InputName()
-                                    inputId     = (inputName + "_" + j).Replace("U", "askia-input")
-                                Else
-                                    inputName = column.AvailableResponses[j].InputName()
-                                    inputId     = inputName.Replace(" ", "_").Replace("M", "askia-input")
-                                EndIf
-    							inputCode = column.InputCode
-    							inputValue  = column.AvailableResponses[j].InputValue()
-                                attrChecked = On(column.AvailableResponses[j].IsSelected, "checked=\"checked\"", "")
-                                caption     = column.AvailableResponses[j].Caption
-                                isExclusive = On((column.AvailableResponses[j].IsExclusive), " exclusive", "")
-                                isAskiaExclusive = On((column.AvailableResponses[j].IsExclusive), "askia-exclusive", "")
-								isSelected = On(column.Answers.Index Has column.AvailableResponses[j].Index, " selected", "")
-    						%}
-                        	<td class="col{%= k %} response{%:= isExclusive %}{%:= isSelected %}">
-                                    <input type="{%:= attrMulti %}" id="{%:= inputId %}" class="{%:= isAskiaExclusive %} askia-question-{%= inputCode %}" name="{%:= inputName %}" value="{%:= inputValue %}" {%:= attrChecked %}>
-                                    <label for="{%= inputId %}" class="askia-{%:= attrMulti %} askia-question-{%= inputCode %}"></label>
-                                    {% If CurrentADC.PropValue("respOnHeader") = "0" Then %}
-                                        {% If column.AvailableResponses[j].ResourceURL <> "" and CurrentADC.PropValue("responsesColumn") <> "0" Then%}
-                                            <img src="{%= column.AvailableResponses[j].ResourceURL %}" class="image askia-question-{%= inputCode %}"><br />
-                                        {% EndIf %}
-                                {% If CurrentADC.PropValue("responsesColumn") <> "1" or column.AvailableResponses[j].ResourceURL = "" Then %}
-                                       		<label for="{%:= inputId %}" class="text askia-question-{%= inputCode %}">{%= caption %}</label>
-                                        {% EndIf%}
-                                    {% EndIf %}
-                    	{% Next %}
-                  	{% EndIf %}
-            		</td>
-            {%		
-					ElseIf (column.Type = "numeric") Then
-                        inputName 	= column.InputName()
-						inputId     	= (inputName + "_" + k).Replace("C", "askia-input-number")
-						inputCode	 = column.InputCode %}
-                            <td class="col{%= k %}">
-                                <span class="askia-question-{%= inputCode %} number-element">
-                                    <span class="prefix">{%= CurrentADC.PropValue("numBoxPrefix"+k) %}</span>
-                                    <input type ="number" id="{%= inputId %}" name="{%:= inputName %}" value="{%:= column.InputValue() %}">
-                                    <span class="suffix">{%= CurrentADC.PropValue("numBoxSuffix"+k) %}</span>
-                                </span>
-                            </td>
-                        {%
-					ElseIf (column.Type = "open") Then
-                        inputName = column.InputName()
-						inputId     = (inputName + "_" + k).Replace("S", "askia-input-open")
-						inputCode	 = column.InputCode %}
-                        <td class="col{%= k %}">
-                            <input type ="text" class="askia-question-{%= inputCode %}" id="{%= inputId %}" name="{%:= inputName %}" value="{%:= column.InputValue() %}">
-                        </td>
-                	{% ElseIf (column.type = "datetime") Then %}
-                	<td class="col{%= k %}">
-                	{%
-                        inputName = column.InputName()
-						Dim inputNameDate = column.InputName("date")
-						Dim inputNameTime = column.InputName("time")
-						inputId     = (inputName + "_" + k).Replace("D", "askia-input-date")
-						inputIdDate = (inputName + "_" + k).Replace("D", "askia-input-dateO")
-						inputCode	 = column.InputCode
-						Dim attrMin = On(column.MinDate.ToNumber() <> DK, "min=\"" + column.MinDate.Format("dd/MM/yyyy") + "\"", "")
-    					Dim attrMax = On(column.MaxDate.ToNumber() <> DK, "max=\"" + column.MaxDate.Format("dd/MM/yyyy") + "\"", "")
-						Dim dateOnly = On(column.IsDateOnly, " dateonly", "")
-						Dim showSeconds = On(CurrentADC.PropValue("showSeconds") = "1", " showSeconds", "")
-						If (Not(column.IsTimeOnly)) Then %}
-                        	<div class="RLDatePicker askia-question-{%= inputCode %}">
-                            	<input type="text" id="{%= inputIdDate %}" class="askia-question-{%= inputCode %}{%= dateOnly %}{%= showSeconds %}" name="{%= inputNameDate %}" value="{%= column.InputValue("date") %}" {%:= attrMin %} {%:= attrMax %} readonly="true"/>
-                             </div>
-                        {%	Endif %}
-                        {% If (Not(column.IsDateOnly)) Then  %}
-                             <div class="RLTimePicker askia-question-{%= inputCode %}">
-                             	<select id="hour_{%= CurrentADC.InstanceId %}" name="hour"></select>
-                                <span class="timeSeparator_{%= CurrentADC.InstanceId %}"></span>
-                                <select id="minutes_{%= CurrentADC.InstanceId %}" name="minutes"></select>
-                                <span id="secsContainer_{%= CurrentADC.InstanceId %}" class="secsContainer">
-                                	<span class="timeSeparator_{%= CurrentADC.InstanceId %}"></span>
-                                    <select id="seconds_{%= CurrentADC.InstanceId %}" name="seconds"></select>
-                                </span>
-                                <!--<input type="text" id="time" name="time" readonly="readonly" hidden=true/> -->
-                                <input id="{%=inputId%}" class="askia-question-{%= inputCode %} time_{%= CurrentADC.InstanceId %}{%= showSeconds %}" hidden type="text" name="{%= inputNameTime %}" value="{%= column.InputValue("date") %}" />
-                                <span class="imperial" {%If CurrentADC.PropValue("imperial") = "false" Then %} hidden {% EndIf %} id="ampm_{%= CurrentADC.InstanceId %}"></span>
-                            </div>
-                		{%	Endif %}
-                </td>
-                {%	Endif 
-    			EndIf
-			Next
-            %}
-            </tr>
-            {%
-	Next 
-%}
-    {% If showTotal Then%}
+Next i1
+For i3 = 1 To 5
+    columnQuestion = CurrentADC.PropQuestion("questionCol" + i3)
+    If ((columnQuestion.Id = DK) and (i3 = 1)) Then
+    	columnQuestion = CurrentQuestion
+    EndIf
+    If ((columnQuestion.Type = "single") Or (columnQuestion.Type = "multiple")) Then
+        hasClosedQuestion = 1
+        Break
+    EndIf
+Next i3
+Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQuestion = 1),"rowspan=\"2\"","")
+%}  
+<div id="adc_{%= CurrentADC.InstanceId %}" class="sidebyside">
+    <table cellspacing="0">
+      <thead>
         <tr>
-            <th>{%= totalCaptionLeft %}</th>
-                {% For i = 1 to COLUMN_NUMBER
-    				column = CurrentADC.PropQuestion("questionCol"+i)
-    				if ((i = 1) And (column.Id = DK)) Then column = CurrentQuestion EndIf
-                    If column.Id <> DK then %}                        
-                        {% If ((column.Type = "multiple") or ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox"+i) = "0"))) Then%}
-                            {% For k = 1 To column.AvailableResponses.Count%}
-                                <th></th>
-                            {% Next
-                        Elseif column.Type = "numeric" Then %}
-            				<th id="totalCell{%= CurrentADC.InstanceId %}_{%= i %}">{%= totalCaptionCol %}<span id="totalCol{%= CurrentADC.InstanceId %}_{%= i %}">{%= CurrentADC.PropValue("numBoxPrefix"+i)%}<span id="total{%= CurrentADC.InstanceId %}_{%= i %}">0</span>{%= CurrentADC.PropValue("numBoxSuffix"+i)%}</span></th>
-                        {% Else%}
-                            <th>&nbsp;</th>
-                        {%EndIf%}
-                    {% Endif   
-                Next %}
+          <th {%:= rowspan %}>&nbsp;</th>
+          {% For i2 = 1 To columnNumber
+    	column = CurrentADC.PropQuestion("questionCol" + i2)
+            If ((column.Id = DK) and (i2 = 1)) Then
+                column = CurrentQuestion
+            EndIf
+    %}<th {%:= On((column.Type = "single") Or (column.Type = "multiple"),"", rowspan) %}>{%:= column.LongCaption %}</th>{%Next i2 %}
         </tr>
-	{% EndIf %}
-    </tbody>
-</table>
-</div>
+        {% If ((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQuestion = 1)) Then %}
+        <tr>
+          {% For i4 = 1 To columnNumber
+    	column = CurrentADC.PropQuestion("questionCol" + i4)
+            If ((column.Id = DK) and (i4 = 1)) Then
+                column = CurrentQuestion
+            EndIf
+    		If ((column.Type = "single") Or (column.Type = "multiple")) Then
+    	  %}
+          <th>
+            <div class="header-responses-container">
+              {% For i5 = 1 To column.AvailableResponses.Count %}
+              <label class="header-response-container">
+                <label>
+                  {% If ((column.AvailableResponses[i5].ResourceURL <> "") and (CurrentADC.PropValue("responsesColumn") <> "0")) Then%}
+                  <img src="{%= column.AvailableResponses[i5].ResourceURL %}">
+                  {% EndIf %}
+                  {% If ((CurrentADC.PropValue("responsesColumn") <> "1") or (column.AvailableResponses[i5].ResourceURL = "")) Then %}
+                  <span class="caption">{%= column.AvailableResponses[i5].Caption %}</span>
+                  {% EndIf %}
+                </label>
+              </label>{% Next i5 %}
+            </div>
+          </th>{%EndIf
+			Next i4 %}</tr>
+          {% EndIf %}
+      </thead>
+      <tbody>
+        {% For j1 = 1 To loopQuestion.Answers.Count
+          imgZoom = On((loopQuestion.Answers[j1].ResourceURL <> "") and (CurrentADC.PropValue("imgZoomRow") = "1"),"data-id=\"imgZoom_" + CurrentADC.InstanceId + "_" + j1 + "\"","")
+    	  paddingZoom = On((loopQuestion.Answers[j1].ResourceURL <> "") and (CurrentADC.PropValue("imgZoomRow") = "1"),"class=\"paddingZoom\"","") %}
+        <tr {%:= imgZoom %}>
+            <td {%:= paddingZoom %}>
+            {% If ((loopQuestion.Answers[j1].ResourceURL <> "") and (CurrentADC.PropValue("iterationColumn") <> "0")) Then %}
+            <img src="{%= loopQuestion.Answers[j1].ResourceURL %}" class="image">
+            {% If (CurrentADC.PropValue("imgZoomRow") = "1") Then %}<a href="{%= loopQuestion.Answers[j1].ResourceURL %}" target="_blank" data-simplbox="imgZoom_{%= CurrentADC.InstanceId %}_{%= j1 %}"><div class="imgZoom"></div></a>{% EndIf %}
+            <br>
+            {% EndIf %}
+            {% If ((CurrentADC.PropValue("iterationColumn") <> "1") or (loopQuestion.Answers[j1].ResourceURL = "")) Then %}<span class="caption">{%:= loopQuestion.Answers[j1].Caption %}</span>{% EndIf %}
+          </td>
+           {% For j2 = 1 To columnNumber
+    	   column = CurrentADC.PropQuestion("questionCol" + j2)
+           If ((column.Id = DK) and (j2 = 1)) Then
+           	column = CurrentQuestion
+           EndIf
+    	   If (column.Type = "multiple") Then
+    	  %}
+          <td class="closed">
+              <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
+                  <div class="question-label">{%= column.LongCaption %}</div>
+              	  <div class="responses-container">
+                 {% For j3=1 to column.AvailableResponses.Count
+    			  attrSelected = On(column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j3].IsSelected, "selected", "")
+                  attrChecked = On(column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j3].IsSelected, "checked=\"checked\"", "")
+    			  attrExclusive = On(column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j3].IsExclusive , "class=\"askia-exclusive\"", "")%}
+                <label class="response-container {%:= attrSelected %}">
+                  <input type="checkbox" id="askia-input{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j3].InputValue() %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j3].InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j3].InputValue() %}" {%:= attrExclusive %} {%:= attrChecked %}>
+                  <label for="askia-input{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j3].InputValue() %}" class="askia-checkbox"></label>
+                  <label for="askia-input{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j3].InputValue() %}" class="content">
+                    {% If ((column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j3].ResourceURL <> "") and (CurrentADC.PropValue("responsesColumn") <> "0")) Then %}
+                    <img src="{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j3].ResourceURL %}">
+                    {% EndIf %}
+                    {% If ((CurrentADC.PropValue("responsesColumn") <> "1") or (column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j3].ResourceURL = "")) Then %}
+                    <span class="caption">{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j3].Caption %}</span>
+                      {% EndIf %}
+                  </label>
+                </label>
+                  {% Next j3 %}
+              </div>
+            </div>
+          </td>
+            {% EndIf 
+			If (column.Type = "numeric") Then 
+				attrChecked = On(column.Iteration(loopQuestion.Answers[j1].Index).Value = -999999.99, " checked=\"checked\"", "")
+				minVal = On(column.MinValue <> DK, " min=\"" + column.MinValue + "\"", "") 
+				maxVal = On(column.MaxValue <> DK, " max=\"" + column.MaxValue + "\"", "") 
+				step = On(CurrentADC.PropValue("step") <> "", " step=\"" + CurrentADC.PropValue("step").Replace(",",".") + "\"", "") %}
+          <td class="numeric">
+            <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
+              <div class="question-label">{%= column.LongCaption %}</div>
+              <div class="responses-container">
+                <span class="prefix">{%= CurrentADC.PropValue("numBoxPrefix" + j2) %}</span>
+                  <input type="number" id="askia-input-number{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" class="input_{%= CurrentADC.InstanceId %}_{%= j2 %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}>
+                  {% If (CurrentADC.PropValue("useSlider") = "1") Then %}
+                  <input type="range" id="askia-input-range_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" class="inputRange_{%= CurrentADC.InstanceId %}_{%= j2 %}" name="range{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}>
+                  {% EndIf %}
+                <span class="suffix">{% If (CurrentADC.PropValue("useSlider") = "1") Then %}{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}{% EndIf %}{%= CurrentADC.PropValue("numBoxSuffix" + j2) %}</span>
+              </div>
+              <div class="sum-container sum">
+                <span class="caption_{%= CurrentADC.InstanceId %}_{%= j2 %}">{%= totalCaption %}</span>
+                <span class="sum_{%= CurrentADC.InstanceId %}_{%= j2 %} resultSum">
+                  <span class="prefix_{%= CurrentADC.InstanceId %}_{%= j2 %}">{%= CurrentADC.PropValue("numBoxPrefix" + j2) %}</span>
+                  <span class="result_{%= CurrentADC.InstanceId %}_{%= j2 %}">0</span>
+                  <span class="suffix_{%= CurrentADC.InstanceId %}_{%= j2 %}">{%= CurrentADC.PropValue("numBoxSuffix" + j2) %}</span>
+                </span>
+              </div>
+            </div>
+          </td>
+            {% EndIf
+			If (column.Type = "open") Then %}
+          <td class="open">
+            <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
+              <div class="question-label">{%= column.LongCaption %}</div>
+              <div class="responses-container">
+                <input type="text" id="askia-input-open{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}">
+              </div>
+            </div>
+          </td>
+            {% EndIf
+			If ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + j2) = "0")) Then %}
+          <td class="closed">
+            <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
+              <div class="question-label">{%= column.LongCaption %}</div>
+              <div class="responses-container">
+                  {% For j4 = 1 to column.AvailableResponses.Count
+    			  attrSelected = On(column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j4].IsSelected, "selected", "")
+                  attrChecked = On(column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j4].IsSelected, "checked=\"checked\"", "") %}
+                <label class="response-container {%:= attrSelected %}">
+                  <input type="radio" id="askia-input{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j4].InputValue() %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j4].InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j4].InputValue() %}" {%:= attrChecked %}>
+                  <label for="askia-input{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j4].InputValue() %}" class="askia-radio"></label>
+                  <label for="askia-input{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j4].InputValue() %}" class="content">
+                    {% If ((column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j4].ResourceURL <> "") and (CurrentADC.PropValue("responsesColumn") <> "0")) Then %}
+                    <img src="{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j4].ResourceURL %}">
+                    {% EndIf %}
+                    {% If ((CurrentADC.PropValue("responsesColumn") <> "1") or (column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j4].ResourceURL = "")) Then %}
+                    <span class="caption">{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j4].Caption %}</span>
+                      {% EndIf %}
+                  </label>
+                </label>
+                  {% Next j4 %}
+              </div>
+            </div>
+          </td>
+            {% EndIf
+			If ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + j2) = "1" or CurrentADC.PropValue("colAsComboBox" + j2) = "2")) Then %}
+          <td class="select">
+            <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
+              <div class="question-label">{%= column.LongCaption %}</div>
+              <div class="responses-container">
+                  <select id="askia-input-select{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" class="select_{%= CurrentADC.InstanceId %}_{%= j2 %}" name="{%:= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}">
+                      <option value="0">{%:= CurrentADC.PropValue("firstOptionCombo" + j2) %}</option>
+                      {% For j5=1 to column.AvailableResponses.Count
+    					attrSelected = On(column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j5].IsSelected, "selected=\"selected\"", "") %}
+                      <option {%:= attrSelected %} value="{%:= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j5].InputValue() %}">{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j5].Caption %}</option>
+                      {% Next j5 %}
+                  </select>
+              </div>
+            </div>
+          </td>
+            {% EndIf 
+			If (column.Type = "datetime") Then %}
+          <td class="date">
+            <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
+              <div class="question-label">{%= column.LongCaption %}</div>
+              <div class="responses-container">
+                  {% If (Not(column.IsTimeOnly)) Then %}
+                <div class="RLDatePicker">
+                  <input type="text" id="askia-input-date{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" class="askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName("date") %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue("date") %}" readonly="true">
+                </div>
+                  {% EndIf %}
+                  {% If (Not(column.IsDateOnly)) Then  %}
+                <div class="RLTimePicker">
+                  <select id="hour_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="hour">
+                  </select>
+                  <span class="timeSeparator_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">:</span>
+                  <select id="minutes_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="minutes">
+                  </select>
+                  <span id="secsContainer_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" class="secsContainer">
+                    <span class="timeSeparator_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">:</span>
+                    <select id="seconds_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="seconds"></select>
+                  </span>
+                  <!--<input type="text" id="time" name="time" readonly="readonly" hidden=true/> -->
+                  <input id="askia-input-time{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" class="askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %} time_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" hidden="" type="text" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName("time") %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue("time") %}">
+                  <span class="imperial" hidden="" id="ampm_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}"></span>
+                </div>
+                  {% EndIf %}
+              </div>
+            </div>
+          </td>
+            {% EndIf
+			Next j2 %}
+        </tr>
+          {% Next j1 %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th></th>
+            {% For k1 = 1 To columnNumber
+    	column = CurrentADC.PropQuestion("questionCol" + k1)
+            If ((column.Id = DK) and (k1 = 1)) Then
+                column = CurrentQuestion
+            EndIf
+    		If (column.Type = "numeric") Then %}<th class="sum">
+            <span class="caption_{%= CurrentADC.InstanceId %}_{%= k1 %}">{%= totalCaption %}</span>
+            <span class="sum_{%= CurrentADC.InstanceId %}_{%= k1 %} resultSum">
+              <span class="prefix_{%= CurrentADC.InstanceId %}_{%= k1 %}">{%= CurrentADC.PropValue("numBoxPrefix" + k1) %}</span>
+              <span class="result_{%= CurrentADC.InstanceId %}_{%= k1 %}">0</span>
+              <span class="suffix_{%= CurrentADC.InstanceId %}_{%= k1 %}">{%= CurrentADC.PropValue("numBoxSuffix" + k1) %}</span>
+            </span>
+          </th>
+            {% Else %}
+			<th></th>
+            {% EndIf 
+			Next k1 %}
+        </tr>
+      </tfoot>
+    </table>
+  </div>

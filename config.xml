@@ -11,14 +11,14 @@
     <date>2017-05-26</date>
     <description><![CDATA[Side by side vertical table]]></description>
     <company>Askia</company>
-    <author><![CDATA[Clément Salomon <clement@askia.com>, Jérôme Duparc <jeromed@askia.com>]]></author>
+    <author><![CDATA[Jérôme Duparc <jeromed@askia.com>, Clément Salomon <clement@askia.com>]]></author>
     <site>http://www.askia.com</site>
     <helpURL></helpURL>
     <categories>
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" chapter="false" single="true" multiple="true" numeric="true" date="false" open="true" requireParentLoop="true" />
+      <constraint on="questions" chapter="false" single="true" multiple="true" numeric="true" date="true" open="true" requireParentLoop="true" />
       <constraint on="controls" responseblock="true" label="false" textbox="false" checkbox="false" listbox="false" radiobutton="false" />
       <constraint on="responses" max="*" min="*" />
     </constraints>
@@ -26,7 +26,7 @@
   <outputs defaultOutput="default">
     <output id="default">
       <description><![CDATA[Default output]]></description>
-      <content fileName="SideBySideTable.css" type="css" mode="static" position="head" />
+      <content fileName="sidebyside.css" type="css" mode="static" position="head" />
       <content fileName="default.css" type="css" mode="dynamic" position="head" />
       <content fileName="moment.min.js" type="javascript" mode="static" position="head" />
       <content fileName="pikaday.js" type="javascript" mode="static" position="head" />
@@ -35,17 +35,17 @@
       <content fileName="simplbox.js" type="javascript" mode="static" position="foot" />
       <content fileName="time_picker.js" type="javascript" mode="static" position="foot" />
       <content fileName="date_picker.js" type="javascript" mode="static" position="foot" />
-      <content fileName="SideBySideTable.js" type="javascript" mode="static" position="foot" />
+      <content fileName="sidebyside.js" type="javascript" mode="static" position="foot" />
       <content fileName="Initializer.js" type="javascript" mode="dynamic" position="foot" />
     </output>
   </outputs>
   <properties>
     <category id="general" name="General">
-      <property xsi:type="standardProperty" id="controlWidth" name="Control Max Width" type="string" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="controlWidth" name="Control max width" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[The max width of the control]]></description>
         <value><![CDATA[100%]]></value>
       </property>
-      <property xsi:type="standardProperty" id="controlAlign" name="Control Alignment" type="string" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="controlAlign" name="Control alignment" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[The alignment of the control]]></description>
         <value><![CDATA[center]]></value>
         <options>
@@ -54,7 +54,24 @@
           <option value="right" text="Right" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="firstColumnWidth" name="First Column Width" type="string" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="responsesDirection" name="Responses direction" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Show the responses horizontally or vertically]]></description>
+        <value><![CDATA[1]]></value>
+        <options>
+          <option value="0" text="Horizontal" />
+          <option value="1" text="Vertical" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="responsesAlignement" name="Responses alignement" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[The alignement of the responses]]></description>
+        <value><![CDATA[left]]></value>
+        <options>
+          <option value="left" text="Left" />
+          <option value="center" text="Center" />
+          <option value="right" text="Right" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="firstColumnWidth" name="First column width" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[The size in percentage of the first column of the table]]></description>
         <value><![CDATA[20]]></value>
         <options>
@@ -79,7 +96,16 @@
           <option value="95" text="95%" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="showTitle" name="Show Title" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="firstColumnAlign" name="First column alignment" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The alignment of the first column]]></description>
+        <value><![CDATA[left]]></value>
+        <options>
+          <option value="left" text="Left" />
+          <option value="center" text="Center" />
+          <option value="right" text="Right" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="showTitle" name="Show title" type="string" require="false" visible="true">
         <description><![CDATA[Sets if the caption of the question is written in the header of the table or not]]></description>
         <value></value>
         <options>
@@ -87,7 +113,7 @@
           <option value="0" text="No" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="respOnHeader" name="Show Response on Header" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="respOnHeader" name="Show response on header" type="string" require="false" visible="true">
         <description><![CDATA[]]></description>
         <value><![CDATA[1]]></value>
         <options>
@@ -95,57 +121,8 @@
           <option value="0" text="No" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="sameSize" name="Same width for columns" type="string" mode="dynamic" require="false" visible="true">
-        <description><![CDATA[Use the same width for all columns]]></description>
-        <value><![CDATA[0]]></value>
-        <options>
-          <option value="1" text="On" />
-          <option value="0" text="Off" />
-        </options>
-      </property>
-      <property xsi:type="standardProperty" id="hightlightRowOnHover" name="Hightlight Row on Hover" type="string" mode="dynamic" require="true" visible="true">
-        <description><![CDATA[Hightlight Row on Hover]]></description>
-        <value><![CDATA[no]]></value>
-        <options>
-          <option value="yes" text="Yes" />
-          <option value="no" text="No" />
-        </options>
-      </property>
-      <property xsi:type="standardProperty" id="stepByStep" name="Step by Step table" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="headerFixed" name="Header always visible" type="string" require="false" visible="true">
         <description><![CDATA[]]></description>
-        <value><![CDATA[0]]></value>
-        <options>
-          <option value="1" text="Yes" />
-          <option value="0" text="No" />
-        </options>
-      </property>
-      <property xsi:type="standardProperty" id="blockLimit" name="Step by Step block on limit" type="string" require="false" visible="true">
-        <description><![CDATA[]]></description>
-        <value></value>
-        <options>
-          <option value="0" text="No" />
-          <option value="1" text="Yes" />
-        </options>
-      </property>
-      <property xsi:type="standardProperty" id="headerFixed" name="Header Always visible" type="string" require="false" visible="true">
-        <description><![CDATA[]]></description>
-        <value><![CDATA[0]]></value>
-        <options>
-          <option value="1" text="Yes" />
-          <option value="0" text="No" />
-        </options>
-      </property>
-      <property xsi:type="standardProperty" id="iterationColumn" name="Iteration display" type="string" require="false" visible="true">
-        <description><![CDATA[]]></description>
-        <value><![CDATA[2]]></value>
-        <options>
-          <option value="0" text="Just text" />
-          <option value="1" text="Just image" />
-          <option value="2" text="Image and text" />
-        </options>
-      </property>
-      <property xsi:type="standardProperty" id="imgZoomRow" name="Iteration Image Zoom" type="string" mode="dynamic" require="false" visible="true">
-        <description><![CDATA[Iteration Image Zoom]]></description>
         <value><![CDATA[0]]></value>
         <options>
           <option value="1" text="Yes" />
@@ -161,41 +138,170 @@
           <option value="2" text="Image and text" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="imgZoomColumn" name="Responses Image Zoom" type="string" mode="dynamic" require="false" visible="true">
-        <description><![CDATA[Responses Image Zoom]]></description>
+      <property xsi:type="standardProperty" id="iterationColumn" name="Iteration display" type="string" require="false" visible="true">
+        <description><![CDATA[]]></description>
+        <value><![CDATA[2]]></value>
+        <options>
+          <option value="0" text="Just text" />
+          <option value="1" text="Just image" />
+          <option value="2" text="Image and text" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="imgZoomRow" name="Iteration image zoom" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Iteration Image Zoom]]></description>
         <value><![CDATA[0]]></value>
         <options>
           <option value="1" text="Yes" />
           <option value="0" text="No" />
         </options>
       </property>
+      <property xsi:type="standardProperty" id="dropShadow" name="Drop shadow" type="string" mode="dynamic" require="true" visible="false">
+        <description><![CDATA[Drop Shadow]]></description>
+        <value><![CDATA[yes]]></value>
+        <options>
+          <option value="yes" text="On" />
+          <option value="no" text="Off" />
+        </options>
+      </property>
+    </category>
+    <category id="Responsive" name="Responsive">
+      <property xsi:type="standardProperty" id="responsiveWidth" name="Responsive width" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The width value for the table to be splitted (media queries)]]></description>
+        <value><![CDATA[600px]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="responsiveResponsesDirection" name="Responses direction" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Show the responses horizontally or vertically]]></description>
+        <value><![CDATA[1]]></value>
+        <options>
+          <option value="0" text="Horizontal" />
+          <option value="1" text="Vertical" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="responsiveResponsesAlignement" name="Responses alignement" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[The alignement of the responses]]></description>
+        <value><![CDATA[left]]></value>
+        <options>
+          <option value="left" text="Left" />
+          <option value="center" text="Center" />
+          <option value="right" text="Right" />
+        </options>
+      </property>
+    </category>
+    <category id="Border" name="Border">
+      <property xsi:type="standardProperty" id="borderRadius" name="Border radius" type="string" mode="dynamic" require="true" visible="false">
+        <description><![CDATA[The amount of curve on the table corners]]></description>
+        <value><![CDATA[{%= Theme.BorderRadius %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="borderColour" name="Border colour" type="color" mode="dynamic" require="true" visible="false">
+        <description><![CDATA[The border colour]]></description>
+        <value><![CDATA[{%= Theme.NeutralDarkColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="borderThickness" name="Border thickness" type="string" mode="dynamic" require="true" visible="false">
+        <description><![CDATA[The thickness of the border]]></description>
+        <value><![CDATA[{%= Theme.BorderWidth %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="borderStyle" name="Border style" type="string" mode="dynamic" require="true" visible="false">
+        <description><![CDATA[The style of the border]]></description>
+        <value><![CDATA[solid]]></value>
+        <options>
+          <option value="none" text="None" />
+          <option value="solid" text="Solid" />
+          <option value="dashed" text="Dashed" />
+          <option value="dotted" text="Dotted" />
+          <option value="double" text="Double" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="showBorderColumn" name="Show border on columns" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Show Border on Columns]]></description>
+        <value><![CDATA[yes]]></value>
+        <options>
+          <option value="yes" text="Yes" />
+          <option value="no" text="No" />
+        </options>
+      </property>
+    </category>
+    <category id="Styles" name="Styles">
+      <property xsi:type="standardProperty" id="headFontColor" name="Head font color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
+        <description><![CDATA[The font color of the head]]></description>
+        <value><![CDATA[{%= Theme.BlackColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="headBgPrimaryColor" name="Head background color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
+        <description><![CDATA[Head Background Color]]></description>
+        <value><![CDATA[{%= Theme.WhiteColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="oddFontColor" name="Odd font color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
+        <description><![CDATA[The font color of the odd responses]]></description>
+        <value><![CDATA[{%= Theme.BlackColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="oddBgPrimaryColor" name="Odd background color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
+        <description><![CDATA[Odd Background Color]]></description>
+        <value><![CDATA[{%= Theme.WhiteColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="evenFontColor" name="Even font color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
+        <description><![CDATA[The font color of the even responses]]></description>
+        <value><![CDATA[{%= Theme.BlackColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="evenBgPrimaryColor" name="Even background color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
+        <description><![CDATA[Even Background Color]]></description>
+        <value><![CDATA[{%= Theme.WhiteColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="hoverFontColor" name="Hover font color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
+        <description><![CDATA[The font color of the hover responses]]></description>
+        <value><![CDATA[{%= Theme.BlackColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="hoverBgPrimaryColor" name="Hover background color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
+        <description><![CDATA[Hover Background Color]]></description>
+        <value><![CDATA[{%= Theme.BlackColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="selectedFontColor" name="Selected font color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
+        <description><![CDATA[The font color of the selected responses]]></description>
+        <value><![CDATA[{%= Theme.WhiteColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="selectedBgPrimaryColor" name="Selected background color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
+        <description><![CDATA[Selected Background Color]]></description>
+        <value><![CDATA[{%= Theme.SecondaryColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="useHeaderStyleFirstColumn" name="Use header style first column" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Use the header style for the first column]]></description>
+        <value><![CDATA[yes]]></value>
+        <options>
+          <option value="yes" text="Yes" />
+          <option value="no" text="No" />
+        </options>
+      </property>
     </category>
     <category id="numeric" name="Numeric">
-      <property xsi:type="standardProperty" id="showTotal" name="Show Total" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="useSlider" name="Use a slider" type="string" require="false" visible="true">
+        <description><![CDATA[Use a slider instead of input number]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="step" name="Step" type="number" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[The step used
+For instance 1 or 0.1 or 5 etc.]]></description>
+        <value><![CDATA[1]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="showTotal" name="Show total" type="string" require="false" visible="true">
         <description><![CDATA[]]></description>
-        <value></value>
+        <value><![CDATA[0]]></value>
         <options>
           <option value="0" text="No" />
-          <option value="1" text="Yes" />
+          <option value="1" text="Yes, ascending" />
+          <option value="2" text="Yes, descending" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="totalCaption" name="Total Caption" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="totalCaption" name="Total caption" type="string" require="false" visible="true">
         <description><![CDATA[]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="displayTotalCaption" name="Total Caption Position" type="string" require="false" visible="true">
-        <description><![CDATA[]]></description>
-        <value></value>
-        <options>
-          <option value="0" text="Left" />
-          <option value="1" text="Each Column" />
-        </options>
-      </property>
-      <property xsi:type="standardProperty" id="maxLimReachedColor" name="Max Limit Reached Color" type="color" require="false" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="maxLimReachedColor" name="Max limit reached color" type="color" require="false" visible="true" colorFormat="rgb">
         <description><![CDATA[]]></description>
         <value><![CDATA[141,198,63]]></value>
       </property>
-      <property xsi:type="standardProperty" id="maxLimitExceededColor" name="Max Limit Exceeded Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="maxLimitExceededColor" name="Max limit exceeded color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[]]></description>
         <value><![CDATA[{%= Theme.ErrorColor %}]]></value>
       </property>
@@ -209,7 +315,7 @@
           <option value="true" text="12 Hour clock" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="showSeconds" name="Show Seconds" type="string" mode="dynamic" require="false" visible="true">
+      <property xsi:type="standardProperty" id="showSeconds" name="Show seconds" type="string" mode="dynamic" require="false" visible="true">
         <description><![CDATA[Option to show/hide seconds counter]]></description>
         <value><![CDATA[false]]></value>
         <options>
@@ -217,11 +323,11 @@
           <option value="false" text="Hide" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="stepMinutes" name="Minutes Intervals" type="number" mode="dynamic" require="false" visible="true" min="1" max="59">
+      <property xsi:type="standardProperty" id="stepMinutes" name="Minutes intervals" type="number" mode="dynamic" require="false" visible="true" min="1" max="59">
         <description><![CDATA[Step intervals for minute counter]]></description>
         <value><![CDATA[1]]></value>
       </property>
-      <property xsi:type="standardProperty" id="stepSeconds" name="Seconds Intervals" type="number" mode="dynamic" require="false" visible="true" min="1" max="59">
+      <property xsi:type="standardProperty" id="stepSeconds" name="Seconds intervals" type="number" mode="dynamic" require="false" visible="true" min="1" max="59">
         <description><![CDATA[Step intervals for seconds counter]]></description>
         <value><![CDATA[1]]></value>
       </property>
@@ -266,7 +372,7 @@ Format: MM/DD/YYYY]]></description>
           <option value="1" text="Yes" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="firstDay" name="First Day of the month" type="number" mode="dynamic" require="false" visible="true">
+      <property xsi:type="standardProperty" id="firstDay" name="First day of the month" type="number" mode="dynamic" require="false" visible="true">
         <description><![CDATA[Select the first day of the month:
 0 = Sunday, 1 = Monday etc.]]></description>
         <value><![CDATA[1]]></value>
@@ -280,7 +386,7 @@ Format: MM/DD/YYYY]]></description>
           <option value="6" text="Saturday" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="disableWeekends" name="Disable Weekends" type="string" mode="dynamic" require="false" visible="true">
+      <property xsi:type="standardProperty" id="disableWeekends" name="Disable weekends" type="string" mode="dynamic" require="false" visible="true">
         <description><![CDATA[Option to disable the selection of weekends]]></description>
         <value><![CDATA[0]]></value>
         <options>
@@ -288,7 +394,7 @@ Format: MM/DD/YYYY]]></description>
           <option value="0" text="Allow Weekends" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="showWeekNumber" name="Show Week Number" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="showWeekNumber" name="Show week number" type="string" require="false" visible="true">
         <description><![CDATA[Show the ISO week number at the head of the row (default false)]]></description>
         <value><![CDATA[0]]></value>
         <options>
@@ -296,7 +402,7 @@ Format: MM/DD/YYYY]]></description>
           <option value="0" text="Hide" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="showMonthAfterYear" name="Month After Year" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="showMonthAfterYear" name="Month after year" type="string" require="false" visible="true">
         <description><![CDATA[Render the month after year in the title (default false)]]></description>
         <value><![CDATA[0]]></value>
         <options>
@@ -304,11 +410,11 @@ Format: MM/DD/YYYY]]></description>
           <option value="0" text="Month first (mm yyyy)" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="numberOfMonths" name="Number of Months" type="number" mode="dynamic" require="false" visible="true" min="1" max="3">
+      <property xsi:type="standardProperty" id="numberOfMonths" name="Number of months" type="number" mode="dynamic" require="false" visible="true" min="1" max="3">
         <description><![CDATA[Number of months visible at a time]]></description>
         <value><![CDATA[1]]></value>
       </property>
-      <property xsi:type="standardProperty" id="mainCalendar" name="Main Calendar" type="string" mode="dynamic" require="false" visible="true">
+      <property xsi:type="standardProperty" id="mainCalendar" name="Main calendar" type="string" mode="dynamic" require="false" visible="true">
         <description><![CDATA[When "Number of Months" is used, this will help you to choose where the main calendar will be (default left, can be set to right). Only used for the first display or when a selected date is not already visible]]></description>
         <value><![CDATA[left]]></value>
         <options>
@@ -323,7 +429,7 @@ Format: MM/DD/YYYY]]></description>
         <value></value>
       </property>
       <property xsi:type="standardProperty" id="colAsComboBox1" name="Use combo box" type="string" require="false" visible="true">
-        <description><![CDATA[If the question in this column is a closed question sets if it's a combo box or a radio button]]></description>
+        <description><![CDATA[If the question in this column is a single closed question sets if it's a combo box or a radio button]]></description>
         <value></value>
         <options>
           <option value="0" text="Radio Button" />
@@ -335,15 +441,15 @@ Format: MM/DD/YYYY]]></description>
         <description><![CDATA[The text of the first option in the combo box]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="numBoxPrefix1" name="Numerical Box Prefix" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="numBoxPrefix1" name="Numerical box prefix" type="string" require="false" visible="true">
         <description><![CDATA[Prefix for numerical box in this column only]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="numBoxSuffix1" name="Numerical Box Suffix" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="numBoxSuffix1" name="Numerical box suffix" type="string" require="false" visible="true">
         <description><![CDATA[]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="maxNumLimit1" name="Maximal Numeric Limit" type="number" require="false" visible="true" decimal="0">
+      <property xsi:type="standardProperty" id="maxNumLimit1" name="Maximal numeric limit" type="number" require="false" visible="true" decimal="0">
         <description><![CDATA[]]></description>
         <value></value>
       </property>
@@ -354,7 +460,7 @@ Format: MM/DD/YYYY]]></description>
         <value></value>
       </property>
       <property xsi:type="standardProperty" id="colAsComboBox2" name="Use combo box" type="string" require="false" visible="true">
-        <description><![CDATA[If the question in this column is a closed question sets if it's a combo box or a radio button]]></description>
+        <description><![CDATA[If the question in this column is a single closed question sets if it's a combo box or a radio button]]></description>
         <value></value>
         <options>
           <option value="0" text="Radio Button" />
@@ -366,15 +472,15 @@ Format: MM/DD/YYYY]]></description>
         <description><![CDATA[The text of the first option in the combo box]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="numBoxPrefix2" name="Numerical Box Prefix" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="numBoxPrefix2" name="Numerical box prefix" type="string" require="false" visible="true">
         <description><![CDATA[Prefix for numerical box in this column only]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="numBoxSuffix2" name="Numerical Box Suffix" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="numBoxSuffix2" name="Numerical box suffix" type="string" require="false" visible="true">
         <description><![CDATA[]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="maxNumLimit2" name="Maximal Numeric Limit" type="number" require="false" visible="true" decimal="0">
+      <property xsi:type="standardProperty" id="maxNumLimit2" name="Maximal numeric limit" type="number" require="false" visible="true" decimal="0">
         <description><![CDATA[]]></description>
         <value></value>
       </property>
@@ -385,7 +491,7 @@ Format: MM/DD/YYYY]]></description>
         <value></value>
       </property>
       <property xsi:type="standardProperty" id="colAsComboBox3" name="Use combo box" type="string" require="false" visible="true">
-        <description><![CDATA[If the question in this column is a closed question sets if it's a combo box or a radio button]]></description>
+        <description><![CDATA[If the question in this column is a single closed question sets if it's a combo box or a radio button]]></description>
         <value></value>
         <options>
           <option value="0" text="Radio Button" />
@@ -397,15 +503,15 @@ Format: MM/DD/YYYY]]></description>
         <description><![CDATA[The text of the first option in the combo box]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="numBoxPrefix3" name="Numerical Box Prefix" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="numBoxPrefix3" name="Numerical box prefix" type="string" require="false" visible="true">
         <description><![CDATA[Prefix for numerical box in this column only]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="numBoxSuffix3" name="Numerical Box Suffix" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="numBoxSuffix3" name="Numerical box suffix" type="string" require="false" visible="true">
         <description><![CDATA[]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="maxNumLimit3" name="Maximal Numeric Limit" type="number" require="false" visible="true" decimal="0">
+      <property xsi:type="standardProperty" id="maxNumLimit3" name="Maximal numeric limit" type="number" require="false" visible="true" decimal="0">
         <description><![CDATA[]]></description>
         <value></value>
       </property>
@@ -416,7 +522,7 @@ Format: MM/DD/YYYY]]></description>
         <value></value>
       </property>
       <property xsi:type="standardProperty" id="colAsComboBox4" name="Use combo box" type="string" require="false" visible="true">
-        <description><![CDATA[If the question in this column is a closed question sets if it's a combo box or a radio button]]></description>
+        <description><![CDATA[If the question in this column is a single closed question sets if it's a combo box or a radio button]]></description>
         <value></value>
         <options>
           <option value="0" text="Radio Button" />
@@ -428,15 +534,15 @@ Format: MM/DD/YYYY]]></description>
         <description><![CDATA[The text of the first option in the combo box]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="numBoxPrefix4" name="Numerical Box Prefix" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="numBoxPrefix4" name="Numerical box prefix" type="string" require="false" visible="true">
         <description><![CDATA[Prefix for numerical box in this column only]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="numBoxSuffix4" name="Numerical Box Suffix" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="numBoxSuffix4" name="Numerical box suffix" type="string" require="false" visible="true">
         <description><![CDATA[]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="maxNumLimit4" name="Maximal Numeric Limit" type="number" require="false" visible="true" decimal="0">
+      <property xsi:type="standardProperty" id="maxNumLimit4" name="Maximal numeric limit" type="number" require="false" visible="true" decimal="0">
         <description><![CDATA[]]></description>
         <value></value>
       </property>
@@ -447,7 +553,7 @@ Format: MM/DD/YYYY]]></description>
         <value></value>
       </property>
       <property xsi:type="standardProperty" id="colAsComboBox5" name="Use combo box" type="string" require="false" visible="true">
-        <description><![CDATA[If the question in this column is a closed question sets if it's a combo box or a radio button]]></description>
+        <description><![CDATA[If the question in this column is a single closed question sets if it's a combo box or a radio button]]></description>
         <value></value>
         <options>
           <option value="0" text="Radio Button" />
@@ -459,15 +565,15 @@ Format: MM/DD/YYYY]]></description>
         <description><![CDATA[The text of the first option in the combo box]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="numBoxPrefix5" name="Numerical Box Prefix" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="numBoxPrefix5" name="Numerical box prefix" type="string" require="false" visible="true">
         <description><![CDATA[Prefix for numerical box in this column only]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="numBoxSuffix5" name="Numerical Box Suffix" type="string" require="false" visible="true">
+      <property xsi:type="standardProperty" id="numBoxSuffix5" name="Numerical box suffix" type="string" require="false" visible="true">
         <description><![CDATA[]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="maxNumLimit5" name="Maximal Numeric Limit" type="number" require="false" visible="true" decimal="0">
+      <property xsi:type="standardProperty" id="maxNumLimit5" name="Maximal numeric limit" type="number" require="false" visible="true" decimal="0">
         <description><![CDATA[]]></description>
         <value></value>
       </property>
