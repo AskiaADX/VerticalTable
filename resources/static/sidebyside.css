@@ -133,6 +133,7 @@ body {
 
 .sidebyside tbody td:first-child img {
   width: 100%;
+  min-width: 40px;
   max-width: 200px;
 }
 

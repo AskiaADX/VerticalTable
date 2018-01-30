@@ -242,7 +242,7 @@ EndIf %}
   height: 14px;
   width: 30px;
   border-radius: {%= Theme.BorderRadius %};
-  background-color: rgb({%= Theme.NeutralLightColor.ToRGB() %});
+  background-color: rgb({%= Theme.NeutralColor.ToRGB() %});
   cursor: pointer;
   -webkit-appearance: none;
 }
@@ -263,7 +263,7 @@ EndIf %}
   height: 14px;
   width: 30px;
   border-radius: {%= Theme.BorderRadius %};
-  background: rgb({%= Theme.NeutralLightColor.ToRGB() %});
+  background: rgb({%= Theme.NeutralColor.ToRGB() %});
   cursor: pointer;
 }
 #adc_{%= CurrentADC.InstanceId %} input[type=range]::-ms-track {
@@ -290,7 +290,7 @@ EndIf %}
   height: 14px;
   width: 30px;
   border-radius: {%= Theme.BorderRadius %};
-  background: rgb({%= Theme.NeutralLightColor.ToRGB() %});
+  background: rgb({%= Theme.NeutralColor.ToRGB() %});
   cursor: pointer;
 }
 
