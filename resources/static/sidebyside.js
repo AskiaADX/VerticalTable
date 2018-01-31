@@ -145,7 +145,7 @@
         var suffix = that.suffixes[parseInt(split[2], 10) - 1];
         var inputNumber = document.querySelector('#adc_' + that.instanceId + ' #askia-input-number' + el.id.split('_')[1]);
         inputNumber.value = el.value;
-        el.nextElementSibling.innerHTML = el.value + suffix;
+        el.parentElement.nextElementSibling.innerHTML = el.value + suffix;
         if ('createEvent' in document) {
             var evt = document.createEvent('HTMLEvents');
             evt.initEvent('input', false, true);

@@ -141,7 +141,9 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
                 <span class="prefix">{%= CurrentADC.PropValue("numBoxPrefix" + j2) %}</span>
                   <input type="number" id="askia-input-number{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" class="input_{%= CurrentADC.InstanceId %}_{%= j2 %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}>
                   {% If (CurrentADC.PropValue("useSlider") = "1") Then %}
+                  <div class="range"{%:= minVal %}{%:= maxVal %}> 
                   <input type="range" id="askia-input-range_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" class="inputRange_{%= CurrentADC.InstanceId %}_{%= j2 %}" name="range{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}>
+                  </div>
                   {% EndIf %}
                 <span class="suffix">{% If (CurrentADC.PropValue("useSlider") = "1") Then %}{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}{% EndIf %}{%= CurrentADC.PropValue("numBoxSuffix" + j2) %}</span>
               </div>

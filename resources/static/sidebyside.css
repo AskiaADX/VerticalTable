@@ -62,38 +62,25 @@ body {
   background: transparent;
   border: 0px solid white;
 }
-@media screen and (min-width:0\0) {
-  /* IE9 and IE10 rule sets go here */
-  .sidebyside input[type=range] {
-    max-width: 200px;
-  }
-}
-
-@media all and (-ms-high-contrast:none) {
-  /* IE11 rule sets go here */
-  *::-ms-backdrop, .sidebyside input[type=range] {
-    max-width: 200px;
-  } /* IE11 */
-}
 .sidebyside input[type=range]:focus {
   outline: none;
 }
 
-
-.sidebyside input[type="range"] {
+.sidebyside .range {
     position: relative;
     margin-left: 1em;
+    width: 100%;
 }
-.sidebyside input[type="range"]::after,
-.sidebyside input[type="range"]::before {
+.sidebyside .range:after,
+.sidebyside .range:before {
     position: absolute;
-    top: 1em;
+    top: 1.2em;
 }
-.sidebyside input[type="range"]::before {
+.sidebyside .range:before {
     left: 0em;
     content: attr(min);
 }
-.sidebyside input[type="range"]::after {
+.sidebyside .range:after {
     right: 0em;
     content: attr(max);
 }

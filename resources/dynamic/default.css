@@ -230,6 +230,11 @@ EndIf %}
 #adc_{%= CurrentADC.InstanceId %} input[type=range] {
   border-radius: {%= Theme.BorderRadius %};
 }
+#adc_{%= CurrentADC.InstanceId %} .range:after,
+#adc_{%= CurrentADC.InstanceId %} .range:before {
+    font-size: {%= Theme.SmallFS %};
+    color: rgb({%= Theme.NeutralDarkColor.ToRGB() %});
+}
 #adc_{%= CurrentADC.InstanceId %} input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 14px;
