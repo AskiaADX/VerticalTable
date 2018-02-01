@@ -336,6 +336,12 @@ EndIf %}
     }
 }
 
+@media screen and (max-width: {%= CurrentADC.PropValue("responsiveWidth") %}) and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    #adc_{%= CurrentADC.InstanceId %} .date .responses-container {
+  		flex-direction: row;
+	}
+}
+
 @media screen and (max-width: {%= CurrentADC.PropValue("responsiveWidth") %}) {
   #adc_{%= CurrentADC.InstanceId %} thead,
   #adc_{%= CurrentADC.InstanceId %} tfoot {
