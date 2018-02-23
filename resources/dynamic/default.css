@@ -237,19 +237,25 @@ EndIf %}
 }
 #adc_{%= CurrentADC.InstanceId %} input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
-  height: 14px;
+  height: 8px;
   cursor: pointer;
   border-radius: {%= Theme.BorderRadius %};
   border: 0px solid #010101;
 }
 #adc_{%= CurrentADC.InstanceId %} input[type=range]::-webkit-slider-thumb {
+  position: relative;
   border: 1px solid rgb({%= Theme.NeutralDarkColor.ToRGB() %});
-  height: 14px;
+  height: 30px;
   width: 30px;
-  border-radius: {%= Theme.BorderRadius %};
+  border-radius: 50%;
   background-color: rgb({%= Theme.NeutralColor.ToRGB() %});
+  top: -10px;
   cursor: pointer;
   -webkit-appearance: none;
+}
+#adc_{%= CurrentADC.InstanceId %} input[type=range].selected::-webkit-slider-thumb {
+    border: 1px solid rgb({%= Theme.SecondaryColor.ToRGB() %});
+    background-color: rgb({%= Theme.SecondaryColor.ToRGB() %});
 }
 @supports (-ms-ime-align: auto) {
  #adc_{%= CurrentADC.InstanceId %} input[type=range]::-ms-thumb {
@@ -258,22 +264,26 @@ EndIf %}
 }
 #adc_{%= CurrentADC.InstanceId %} input[type=range]::-moz-range-track {
   width: 100%;
-  height: 14px;
+  height: 8px;
   cursor: pointer;
   border-radius: {%= Theme.BorderRadius %};
   border: 0px solid rgb({%= Theme.NeutralDarkColor.ToRGB() %});
 }
 #adc_{%= CurrentADC.InstanceId %} input[type=range]::-moz-range-thumb {
   border: 1px solid rgb({%= Theme.NeutralDarkColor.ToRGB() %});
-  height: 14px;
+  height: 30px;
   width: 30px;
-  border-radius: {%= Theme.BorderRadius %};
+  border-radius: 50%;
   background: rgb({%= Theme.NeutralColor.ToRGB() %});
   cursor: pointer;
 }
+#adc_{%= CurrentADC.InstanceId %} input[type=range].selected::-moz-range-thumb {
+    border: 1px solid rgb({%= Theme.SecondaryColor.ToRGB() %});
+    background: rgb({%= Theme.SecondaryColor.ToRGB() %});
+}
 #adc_{%= CurrentADC.InstanceId %} input[type=range]::-ms-track {
   width: 100%;
-  height: 14px;
+  height: 8px;
   cursor: pointer;
   background: transparent;
   border-color: transparent;
@@ -281,40 +291,52 @@ EndIf %}
   border-radius: {%= Theme.BorderRadius %};
 }
 #adc_{%= CurrentADC.InstanceId %} input[type=range]::-ms-fill-lower {
-  height: 14px; 
+  height: 8px; 
   border: 0px solid rgb({%= Theme.NeutralDarkColor.ToRGB() %});
   border-radius: {%= Theme.BorderRadius %};
 }
 #adc_{%= CurrentADC.InstanceId %} input[type=range]::-ms-fill-upper {
-  height: 14px;
+  height: 8px;
   border: 0px solid rgb({%= Theme.NeutralDarkColor.ToRGB() %});
   border-radius: {%= Theme.BorderRadius %};
 }
 #adc_{%= CurrentADC.InstanceId %} input[type=range]::-ms-thumb {
   border: 1px solid rgb({%= Theme.NeutralDarkColor.ToRGB() %});
-  height: 14px;
+  height: 30px;
   width: 30px;
-  border-radius: {%= Theme.BorderRadius %};
+  border-radius: 50%;
   background: rgb({%= Theme.NeutralColor.ToRGB() %});
   cursor: pointer;
+}
+#adc_{%= CurrentADC.InstanceId %} input[type=range].selected::-ms-thumb {
+    border: 1px solid rgb({%= Theme.SecondaryColor.ToRGB() %});
+    background: rgb({%= Theme.SecondaryColor.ToRGB() %});
+}
+
+#adc_{%= CurrentADC.InstanceId %} .preBar {
+    height: 8px;
+    line-height: 8px;
+    border-radius: {%= Theme.BorderRadius %};
+}
+
+#adc_{%= CurrentADC.InstanceId %} .selected + .preBar {
+    background-color: rgb({%= Theme.SecondaryColor.ToRGB() %});
 }
 
 /** Chrome*/
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     #adc_{%= CurrentADC.InstanceId %} input[type='range']::-webkit-slider-runnable-track {
-      overflow: hidden;
       background-color: rgb({%= Theme.NeutralLightColor.ToRGB() %});
-    }
-    /** Selected color */
-    #adc_{%= CurrentADC.InstanceId %} input[type='range']::-webkit-slider-thumb {
-        box-shadow: -10002px 0 0 10000px rgb({%= Theme.SecondaryColor.ToRGB() %});
     }
 }
 /** FF*/
 #adc_{%= CurrentADC.InstanceId %} input[type="range"]::-moz-range-progress {
   /** Selected color */
-  height: 14px;
+  height: 8px;
   border-radius: {%= Theme.BorderRadius %};
+}
+#adc_{%= CurrentADC.InstanceId %} input[type="range"].selected::-moz-range-progress {
+  /** Selected color */
   background-color: rgb({%= Theme.SecondaryColor.ToRGB() %}); 
 }
 #adc_{%= CurrentADC.InstanceId %} input[type="range"]::-moz-range-track {  
@@ -323,17 +345,14 @@ EndIf %}
 /* IE*/
 #adc_{%= CurrentADC.InstanceId %} input[type="range"]::-ms-fill-lower {
   /** Selected color */
+  background-color: rgb({%= Theme.NeutralLightColor.ToRGB() %}); 
+}
+#adc_{%= CurrentADC.InstanceId %} input[type="range"].selected::-ms-fill-lower {
+  /** Selected color */
   background-color: rgb({%= Theme.SecondaryColor.ToRGB() %}); 
 }
 #adc_{%= CurrentADC.InstanceId %} input[type="range"]::-ms-fill-upper {  
   background-color: rgb({%= Theme.NeutralLightColor.ToRGB() %});
-}
-
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-     /* IE10 IE11 CSS styles go here */
-    #adc_{%= CurrentADC.InstanceId %} input[type=range]::-ms-thumb {
-        height: 14px;
-    }
 }
 
 @media screen and (max-width: {%= CurrentADC.PropValue("responsiveWidth") %}) and (-ms-high-contrast: none), (-ms-high-contrast: active) {

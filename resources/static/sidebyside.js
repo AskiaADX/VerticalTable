@@ -146,6 +146,8 @@
         var inputNumber = document.querySelector('#adc_' + that.instanceId + ' #askia-input-number' + el.id.split('_')[1]);
         inputNumber.value = el.value;
         el.parentElement.nextElementSibling.innerHTML = el.value + suffix;
+        addClass(el,'selected');
+        document.querySelector('#adc_' + that.instanceId + ' #' + el.id + ' + .preBar').style.width = widthRange(el) + 'px';
         if ('createEvent' in document) {
             var evt = document.createEvent('HTMLEvents');
             evt.initEvent('input', false, true);
@@ -153,6 +155,20 @@
         } else {
             inputNumber.fireEvent('oninput');
         }
+    }
+    
+    /**
+   * Return width of the left side of the input range
+   *
+   * @param {Object} inputRange input range
+   */
+    function widthRange (inputRange) {
+        var min = (inputRange.min) ? parseInt(inputRange.min, 10) : 0;
+        var max = (inputRange.max) ? parseInt(inputRange.max, 10) : 100;
+        var range = max - min;
+        var w = parseInt(inputRange.clientWidth, 10);
+        var t = ~~(w * (parseInt(inputRange.value, 10) - min) / range);
+        return t;
     }
 
     
@@ -340,6 +356,7 @@
                     onInputRanges(e, passedInElement); 
                 };
             }(this)));
+            document.querySelector('#adc_' + this.instanceId + ' #' + inputRanges[l].id + ' + .preBar').style.width = widthRange(inputRanges[l]) + 'px';
         }
         
         // Input event (live sum) on input range
