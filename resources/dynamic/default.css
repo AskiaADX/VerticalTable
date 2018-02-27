@@ -248,9 +248,9 @@ EndIf %}
   height: 30px;
   width: 30px;
   border-radius: 50%;
-  background-color: rgb({%= Theme.NeutralColor.ToRGB() %});
+  background-color: rgb({%= Theme.NeutralLightColor.ToRGB() %});
   top: -10px;
-  cursor: pointer;
+  cursor: ew-resize;
   -webkit-appearance: none;
 }
 #adc_{%= CurrentADC.InstanceId %} input[type=range].selected::-webkit-slider-thumb {
@@ -274,8 +274,8 @@ EndIf %}
   height: 30px;
   width: 30px;
   border-radius: 50%;
-  background: rgb({%= Theme.NeutralColor.ToRGB() %});
-  cursor: pointer;
+  background: rgb({%= Theme.NeutralLightColor.ToRGB() %});
+  cursor: ew-resize;
 }
 #adc_{%= CurrentADC.InstanceId %} input[type=range].selected::-moz-range-thumb {
     border: 1px solid rgb({%= Theme.SecondaryColor.ToRGB() %});
@@ -305,8 +305,8 @@ EndIf %}
   height: 30px;
   width: 30px;
   border-radius: 50%;
-  background: rgb({%= Theme.NeutralColor.ToRGB() %});
-  cursor: pointer;
+  background: rgb({%= Theme.NeutralLightColor.ToRGB() %});
+  cursor: ew-resize;
 }
 #adc_{%= CurrentADC.InstanceId %} input[type=range].selected::-ms-thumb {
     border: 1px solid rgb({%= Theme.SecondaryColor.ToRGB() %});
@@ -385,11 +385,14 @@ EndIf %}
     border-top: 0px solid transparent;
     text-align: center;
   }
-    {% If ( CurrentADC.PropValue("responsiveResponsesDirection") = "1" ) Then %}
   #adc_{%= CurrentADC.InstanceId %} .closed .responses-container {
+      {% If ( CurrentADC.PropValue("responsiveResponsesDirection") = "1" ) Then %}
   	display: inline-block;
+      {% Else %}
+    display: flex;
+      {% EndIf %}
   }
-    {% EndIf %}
+    
   #adc_{%= CurrentADC.InstanceId %} .closed .response-container {
       {% If ((CurrentADC.PropValue("responsiveResponsesAlignement") = "left" or CurrentADC.PropValue("responsiveResponsesAlignement") = "right") and CurrentADC.PropValue("responsiveResponsesDirection") = "1") Then %}
       text-align: {%= CurrentADC.PropValue("responsiveResponsesAlignement") %};
