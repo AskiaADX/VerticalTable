@@ -168,7 +168,8 @@
         var range = max - min;
         var w = parseInt(inputRange.clientWidth, 10);
         var t = ~~(w * (parseInt(inputRange.value, 10) - min) / range);
-        return t;
+        
+        return (((t / w) * 100) < 16 && ((t / w) * 100) > 0) ? t + 4 : t;
     }
 
     
@@ -368,6 +369,13 @@
                 };
             }(this)));
         }
+        
+        // Resize event on input range
+        window.addEventListener("resize", function() {
+            for (var l2 = 0; l2 < inputRanges.length; l2++) {
+                document.querySelector('#adc_' + options.instanceId + ' #' + inputRanges[l2].id + ' + .preBar').style.width = widthRange(inputRanges[l2]) + 'px';
+            }
+        });
         
         for(var i1 = 0; i1 < this.rankingBox.length ; i1++){
             if (this.rankingBox[i1]) {

@@ -245,11 +245,11 @@ EndIf %}
 #adc_{%= CurrentADC.InstanceId %} input[type=range]::-webkit-slider-thumb {
   position: relative;
   border: 1px solid rgb({%= Theme.NeutralDarkColor.ToRGB() %});
-  height: 30px;
-  width: 30px;
+  height: 26px;
+  width: 26px;
   border-radius: 50%;
   background-color: rgb({%= Theme.NeutralLightColor.ToRGB() %});
-  top: -10px;
+  top: -9px;
   cursor: ew-resize;
   -webkit-appearance: none;
 }
@@ -271,8 +271,8 @@ EndIf %}
 }
 #adc_{%= CurrentADC.InstanceId %} input[type=range]::-moz-range-thumb {
   border: 1px solid rgb({%= Theme.NeutralDarkColor.ToRGB() %});
-  height: 30px;
-  width: 30px;
+  height: 26px;
+  width: 26px;
   border-radius: 50%;
   background: rgb({%= Theme.NeutralLightColor.ToRGB() %});
   cursor: ew-resize;
@@ -302,8 +302,8 @@ EndIf %}
 }
 #adc_{%= CurrentADC.InstanceId %} input[type=range]::-ms-thumb {
   border: 1px solid rgb({%= Theme.NeutralDarkColor.ToRGB() %});
-  height: 30px;
-  width: 30px;
+  height: 26px;
+  width: 26px;
   border-radius: 50%;
   background: rgb({%= Theme.NeutralLightColor.ToRGB() %});
   cursor: ew-resize;
