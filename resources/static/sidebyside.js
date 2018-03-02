@@ -110,12 +110,12 @@
         for (var j = 0; j < results.length; j++) {
             // Update the live sum result
             if (that.showTotal === 1) {
-                results[j].innerHTML = sum.toFixed(decimals);
+                results[j].innerHTML = sum.toLocaleString(undefined, {minimumFractionDigits: decimals,maximumFractionDigits: decimals});
             } else if (that.showTotal === 2) {
                 if (isNaN(maxLimit) === false) {
-                    results[j].innerHTML = (maxLimit  - sum).toFixed(decimals);  
+                    results[j].innerHTML = (maxLimit  - sum).toLocaleString(undefined, {minimumFractionDigits: decimals,maximumFractionDigits: decimals});  
                 } else {
-                    results[j].innerHTML = (sum).toFixed(decimals);
+                    results[j].innerHTML = (sum).toLocaleString(undefined, {minimumFractionDigits: decimals,maximumFractionDigits: decimals});
                 }
             }
             // Update the class if equal or above limit
@@ -143,9 +143,10 @@
         var el = event.target || event.srcElement;
         var split = el.className.split('_')
         var suffix = that.suffixes[parseInt(split[2], 10) - 1];
+        var decimals = that.decimals[parseInt(split[2], 10) - 1] || 0;
         var inputNumber = document.querySelector('#adc_' + that.instanceId + ' #askia-input-number' + el.id.split('_')[1]);
         inputNumber.value = el.value;
-        el.parentElement.nextElementSibling.innerHTML = el.value + suffix;
+        el.parentElement.nextElementSibling.innerHTML = parseFloat(el.value).toLocaleString(undefined, {minimumFractionDigits: decimals,maximumFractionDigits: decimals}) + suffix;
         addClass(el,'selected');
         document.querySelector('#adc_' + that.instanceId + ' #' + el.id + ' + .preBar').style.width = widthRange(el) + 'px';
         if ('createEvent' in document) {
