@@ -487,8 +487,13 @@ EndIf %}
       {% EndIf %}
   }
     {% EndIf %}
-  #adc_{%= CurrentADC.InstanceId %} input[type="text"] {
+  #adc_{%= CurrentADC.InstanceId %} input[type="text"],
+  #adc_{%= CurrentADC.InstanceId %} input[type="email"],
+  #adc_{%= CurrentADC.InstanceId %} input[type="url"] {
     max-width: 97%;
+  }
+  #adc_{%= CurrentADC.InstanceId %} textarea {
+    width: 95%;
   }
   #adc_{%= CurrentADC.InstanceId %} input[type="radio"],
   #adc_{%= CurrentADC.InstanceId %} .askia-radio,

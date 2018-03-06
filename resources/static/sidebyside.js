@@ -138,6 +138,32 @@
             }
         }
     }
+    
+    /**
+   * Manage the change event on input DK for open
+   *
+   * @param {Object} event Change event of the input DK for open
+   */
+    function onOpenInputDK (event, that) {
+        var el = event.target || event.srcElement;
+        var inputValue = el.id.split('_')[1];
+        var inputOpen = document.getElementById('askia-input-open' + inputValue);
+        if (el.nodeName === 'INPUT' && (el.type === 'checkbox')) {
+            if (el.checked) {
+                inputOpen.value = '';
+                inputOpen.setAttribute('readonly', 'readonly');
+            } else if (!el.checked) {
+                inputOpen.removeAttribute('readonly');
+            }
+            if ('createEvent' in document) {
+                var evt = document.createEvent('HTMLEvents');
+                evt.initEvent('input', false, true);
+                inputOpen.dispatchEvent(evt);
+            } else {
+                inputOpen.fireEvent('oninput');
+            }
+        }
+    }
 
     /**
    * Manage the input event on input numbers - live sum
@@ -436,6 +462,7 @@
         var inputNumbers = document.querySelectorAll('#adc_' + this.instanceId + ' input[type="number"]');
         var inputRanges = document.querySelectorAll('#adc_' + this.instanceId + ' input[type="range"]');
         var numInputDK = document.querySelectorAll('#adc_' + this.instanceId + ' .numeric .DK input[type="checkbox"]');
+        var openInputDK = document.querySelectorAll('#adc_' + this.instanceId + ' .open .DK input[type="checkbox"]');
 
         // Change event on input radio
         for (var i = 0; i < radios.length; i++) {
@@ -463,6 +490,16 @@
                      (function (passedInElement) {
                 return function (e) {
                     onNumericInputDK(e, passedInElement); 
+                };
+            }(this)));
+        }
+        
+        // Change event on input DK checkbox for open variable
+        for (var j2 = 0; j2 < openInputDK.length; j2++) {
+            addEvent(openInputDK[j2], 'change', 
+                     (function (passedInElement) {
+                return function (e) {
+                    onOpenInputDK(e, passedInElement); 
                 };
             }(this)));
         }

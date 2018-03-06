@@ -30,6 +30,9 @@ body {
 .sidebyside .thousand {
     text-align: right;
 }
+.sidebyside textarea {
+	resize: vertical;   
+}
 
 .sidebyside .DK {
     padding: 5px 5px 5px 5px;
@@ -316,7 +319,9 @@ body {
   padding: .3em;
 }
 
-.sidebyside input[type=text] {
+.sidebyside input[type=text],
+.sidebyside input[type=email],
+.sidebyside input[type=url] {
   width: 100%;
   min-width: auto;
   max-width: 85%;
