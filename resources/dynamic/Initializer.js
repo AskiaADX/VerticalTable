@@ -27,6 +27,7 @@ Next i1
   var sidebyside = new SideBySide({
     instanceId: {%= CurrentADC.InstanceId %},
     showTotal: {%= CurrentADC.PropValue("showTotal") %},
+    useSlider: {%= CurrentADC.PropValue("useSlider") %},
     headerFixed: {%= On(CurrentADC.PropValue("headerFixed") = "1", true, false)%},
     questions: [{% For i5 = 1 To columnNumber
     	column = CurrentADC.PropQuestion("questionCol" + i5)

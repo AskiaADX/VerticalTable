@@ -20,12 +20,19 @@ body {
 }
 
 .sidebyside input[type="radio"],
-.sidebyside input[type="checkbox"] {
+.sidebyside input[type="checkbox"],
+.sidebyside .DK,
+.sidebyside .askia-response-label {
   cursor: pointer;
 }
 
-.sidebyside input[type=number] {
-  text-align: right;
+.sidebyside input[type=number],
+.sidebyside .thousand {
+    text-align: right;
+}
+
+.sidebyside .DK {
+    padding: 5px 5px 5px 5px;
 }
 
 .sidebyside select {
@@ -64,6 +71,26 @@ body {
   background: transparent;
   border: 0px solid white;
 }
+.sidebyside input[type=range][disabled=disabled]::-webkit-slider-thumb {
+    display: none;
+}
+.sidebyside input[type=range][disabled=disabled]::-ms-thumb {
+    display: none;
+}
+.sidebyside input[type=range][disabled=disabled]::-moz-range-thumb {
+    display: none;
+    opacity: 0;
+}
+.sidebyside input[type=range]:not([disabled=disabled])::-webkit-slider-thumb {
+    display: block;
+}
+.sidebyside input[type=range]:not([disabled=disabled])::-ms-thumb {
+    display: block;
+}
+.sidebyside input[type=range]:not([disabled=disabled])::-moz-range-thumb {
+    display: block;
+    opacity: 1;
+}
 
 .sidebyside input[type=range]:focus {
   outline: none;
@@ -76,7 +103,8 @@ body {
 }
 @media screen and (min-width:0\0) {
   /* IE9 and IE10 rule sets go here */
-  .sidebyside .range {
+  .sidebyside .range,
+  .sidebyside .numeric .DK{
     width: 200px;
   }
 }

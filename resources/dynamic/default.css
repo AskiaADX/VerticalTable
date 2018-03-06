@@ -30,6 +30,11 @@ Dim othersColumnWidth = ((100 - firstColumnWidth.ToNumber() ) / columnNumber).Fl
     display: none;
 }
 {% EndIf %}
+{% If (CurrentADC.PropValue("useSlider") = "2") Then %}
+#adc_{%= CurrentADC.InstanceId %} input[type=number] {
+    display: none;
+}
+{% EndIf %}
 {% If (CurrentADC.PropValue("showTotal") = "0") Then %}
 #adc_{%= CurrentADC.InstanceId %} .sum-container,
 #adc_{%= CurrentADC.InstanceId %} tfoot {
@@ -361,6 +366,15 @@ EndIf %}
 	}
 }
 
+#adc_{%= CurrentADC.InstanceId %} .DK {
+      text-align: center;
+  }
+
+#adc_{%= CurrentADC.InstanceId %} input[readonly=readonly],
+#adc_{%= CurrentADC.InstanceId %} textarea[readonly=readonly] {
+    background-color: rgba({%= Theme.BlackColor.ToRGB() %},0.05);
+}
+
 @media screen and (max-width: {%= CurrentADC.PropValue("responsiveWidth") %}) {
   #adc_{%= CurrentADC.InstanceId %} thead,
   #adc_{%= CurrentADC.InstanceId %} tfoot {
@@ -470,10 +484,15 @@ EndIf %}
     max-width: 97%;
   }
   #adc_{%= CurrentADC.InstanceId %} input[type="radio"],
-  #adc_{%= CurrentADC.InstanceId %} input[type="checkbox"],
   #adc_{%= CurrentADC.InstanceId %} .askia-radio,
   #adc_{%= CurrentADC.InstanceId %} .askia-checkbox {
     display: none;
+  }
+  #adc_{%= CurrentADC.InstanceId %} .DK .askia-checkbox {
+    display: inline-block;
+  }
+  #adc_{%= CurrentADC.InstanceId %} .DK {
+      text-align: center;
   }
   #adc_{%= CurrentADC.InstanceId %} .sum-container {
     {% If (CurrentADC.PropValue("showTotal") = "1") Then %}

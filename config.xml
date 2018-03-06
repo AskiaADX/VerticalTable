@@ -271,12 +271,13 @@
       </property>
     </category>
     <category id="numeric" name="Numeric">
-      <property xsi:type="standardProperty" id="useSlider" name="Use a slider" type="string" require="false" visible="true">
-        <description><![CDATA[Use a slider instead of input number]]></description>
+      <property xsi:type="standardProperty" id="useSlider" name="Use" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Use an input number or slider or currency]]></description>
         <value><![CDATA[0]]></value>
         <options>
-          <option value="1" text="Yes" />
-          <option value="0" text="No" />
+          <option value="0" text="Input number" />
+          <option value="1" text="Slider" />
+          <option value="2" text="Currency" />
         </options>
       </property>
       <property xsi:type="standardProperty" id="step" name="Step" type="number" mode="dynamic" require="false" visible="true">
@@ -304,6 +305,18 @@ For instance 1 or 0.1 or 5 etc.]]></description>
       <property xsi:type="standardProperty" id="maxLimitExceededColor" name="Max limit exceeded color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[]]></description>
         <value><![CDATA[{%= Theme.ErrorColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="numDkButton" name="Add DK button" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Add a don't know button]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="numDkCaption" name="DK caption" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[The caption of the don't know button]]></description>
+        <value><![CDATA[Don&#39;t know]]></value>
       </property>
     </category>
     <category id="timePicker" name="Time Picker">

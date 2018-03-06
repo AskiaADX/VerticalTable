@@ -18,6 +18,8 @@ Dim loopQuestion = CurrentQuestion.ParentLoop
 Dim attrChecked
 Dim attrExclusive
 Dim attrSelected
+Dim attrReadOnly
+Dim attrDisabled
 Dim imgZoom
 Dim paddingZoom
 Dim minVal
@@ -132,6 +134,8 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
             {% EndIf 
 			If (column.Type = "numeric") Then 
 				attrChecked = On(column.Iteration(loopQuestion.Answers[j1].Index).HasDK and column.Iteration(loopQuestion.Answers[j1].Index).HasAnswered, " checked=\"checked\"", "")
+				attrReadOnly = On(column.Iteration(loopQuestion.Answers[j1].Index).HasDK and column.Iteration(loopQuestion.Answers[j1].Index).HasAnswered and CurrentADC.PropValue("numDkButton") = "1", " readonly=\"readonly\"", "")
+				attrDisabled = On(column.Iteration(loopQuestion.Answers[j1].Index).HasDK and column.Iteration(loopQuestion.Answers[j1].Index).HasAnswered and CurrentADC.PropValue("numDkButton") = "1", " disabled=\"disabled\"", "")
 				clsSelected = On((column.Iteration(loopQuestion.Answers[j1].Index).HasDK = false) and (column.Iteration(loopQuestion.Answers[j1].Index).HasAnswered), " selected", "")
 				minVal = On(column.MinValue <> DK, " min=\"" + column.MinValue + "\"", "") 
 				maxVal = On(column.MaxValue <> DK, " max=\"" + column.MaxValue + "\"", "") 
@@ -141,15 +145,27 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
               <div class="question-label">{%= column.LongCaption %}</div>
               <div class="responses-container">
                 <span class="prefix">{%= CurrentADC.PropValue("numBoxPrefix" + j2) %}</span>
-                  <input type="number" id="askia-input-number{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" class="input_{%= CurrentADC.InstanceId %}_{%= j2 %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}>
+                  <input type="number" id="askia-input-number{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" class="input_{%= CurrentADC.InstanceId %}_{%= j2 %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}{%:= attrReadOnly %}>
+                  {% If (CurrentADC.PropValue("useSlider") = "2") Then %}
+				  <input type="text" id="askia-input-currency{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="currency_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}" {%:= attrReadOnly %} class="thousand" />
+				  {% EndIf %}
                   {% If (CurrentADC.PropValue("useSlider") = "1") Then %}
                   <div class="range"{%:= minVal %}{%:= maxVal %}> 
-                  <input type="range" id="askia-input-range_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" class="inputRange_{%= CurrentADC.InstanceId %}_{%= j2 %}{%:= clsSelected %}" name="range{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}>
+                  <input type="range" id="askia-input-range_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" class="inputRange_{%= CurrentADC.InstanceId %}_{%= j2 %}{%:= clsSelected %}" name="range{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}{%:= attrDisabled %}>
                    <p class="preBar"></p>
                   </div>
                   {% EndIf %}
                 <span class="suffix">{% If (CurrentADC.PropValue("useSlider") = "1") Then %}{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}{% EndIf %}{%= CurrentADC.PropValue("numBoxSuffix" + j2) %}</span>
               </div>
+              {% If (CurrentADC.PropValue("numDkButton") = "1") Then %}
+              <label class="DK">
+                  <input type="checkbox" id="askia-input-number_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" name="M{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %} -1" {%:= attrChecked %}>
+                  <label for="askia-input-number_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" class="askia-checkbox"></label>
+                  <label for="askia-input-number_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" class="askia-response-label">
+                      <span class="caption">{%:= CurrentADC.PropValue("numDkCaption") %}</span>
+                  </label>
+              </label>
+              {% EndIf %}
               <div class="sum-container sum">
                 <span class="caption_{%= CurrentADC.InstanceId %}_{%= j2 %}">{%= totalCaption %}</span>
                 <span class="sum_{%= CurrentADC.InstanceId %}_{%= j2 %} resultSum">
