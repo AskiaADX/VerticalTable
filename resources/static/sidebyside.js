@@ -101,14 +101,13 @@
         var inputNumber = document.getElementById('askia-input-number' + inputValue);
         var inputRange = document.getElementById('askia-input-range_' + inputValue);
         var inputCurrency = document.getElementById('askia-input-currency' + inputValue);
-        var split = inputRange.className.split('_')
-        var suffix = that.suffixes[parseInt(split[2], 10) - 1];
         if (el.nodeName === 'INPUT' && (el.type === 'checkbox')) {
             if (el.checked) {
                 inputNumber.value = '';
                 inputNumber.setAttribute('readonly', 'readonly');
                 // If use slider
                 if (that.useSlider === 1) {
+        			var suffix = that.suffixes[parseInt(inputRange.className.split('_')[2], 10) - 1];
                 	inputRange.value = '';
                 	inputRange.setAttribute('disabled', 'disabled');
                     removeClass(inputRange,'selected');

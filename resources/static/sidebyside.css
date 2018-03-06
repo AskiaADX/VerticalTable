@@ -103,11 +103,11 @@ body {
 }
 @media screen and (min-width:0\0) {
   /* IE9 and IE10 rule sets go here */
-  .sidebyside .range,
-  .sidebyside .numeric .DK{
+  .sidebyside .range {
     width: 200px;
   }
 }
+
 .sidebyside .range:after,
 .sidebyside .range:before {
     position: absolute;
@@ -336,7 +336,7 @@ body {
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
      /* IE10+ CSS styles go here */
     .sidebyside input[type=number] {
-  		max-width: 3em;
+  		max-width: 5em;
 	}
     .sidebyside input[type=text] {
         max-width: 8em;

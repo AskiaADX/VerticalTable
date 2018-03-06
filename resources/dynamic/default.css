@@ -365,7 +365,14 @@ EndIf %}
   		flex-direction: row;
 	}
 }
-
+{% If (CurrentADC.PropValue("useSlider") = "1") Then %}
+@media screen and (max-width: {%= CurrentADC.PropValue("responsiveWidth") %}) and (min-width:0\0) {
+  /* IE9 and IE10 rule sets go here */
+  #adc_{%= CurrentADC.InstanceId %} .numeric .DK{
+    width: 200px;
+  }
+}
+{% EndIf %}
 #adc_{%= CurrentADC.InstanceId %} .DK {
       text-align: center;
   }
@@ -492,7 +499,11 @@ EndIf %}
     display: inline-block;
   }
   #adc_{%= CurrentADC.InstanceId %} .DK {
+      {% If (CurrentADC.PropValue("useSlider") = "0") Then %}
+      text-align: left;
+      {% Else %}
       text-align: center;
+      {% EndIf %}
   }
   #adc_{%= CurrentADC.InstanceId %} .sum-container {
     {% If (CurrentADC.PropValue("showTotal") = "1") Then %}
