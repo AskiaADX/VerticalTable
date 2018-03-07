@@ -52,6 +52,20 @@
     }
 
     /**
+   * Trigger the ajax request for live routings
+   *
+   * @param {String} shortcut Shortcut of the question
+   */
+    function triggerRouting(shortcut) {
+        if (window.askia 
+            && window.arrLiveRoutingShortcut 
+            && window.arrLiveRoutingShortcut.length > 0
+            && window.arrLiveRoutingShortcut.indexOf(shortcut) >= 0) {
+            askia.triggerAnswer();
+        }
+    }
+
+    /**
    * Manage the exclusive responses or single question
    *
    * @param {HTMLElement} obj HTMLElement (input) changed
@@ -77,6 +91,7 @@
    * Manage the change event on input radio and checkbox
    *
    * @param {Object} event Change event of the input radio and checkbox
+   * @param {Object} that SideBySide object, same as options
    */
     function onChange (event, that) {
         var el = event.target || event.srcElement;
@@ -87,13 +102,18 @@
                 removeClass(el.parentNode, 'selected');
             }
             manageExclusive(el);
+             if (el.className !== 'dkbutton') {
+                var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
+             	triggerRouting(shortcut);   
+             }
         }
     }
-    
+
     /**
    * Manage the change event on input DK for numeric
    *
    * @param {Object} event Change event of the input DK for numeric
+   * @param {Object} that SideBySide object, same as options
    */
     function onNumericInputDK (event, that) {
         var el = event.target || event.srcElement;
@@ -107,26 +127,26 @@
                 inputNumber.setAttribute('readonly', 'readonly');
                 // If use slider
                 if (that.useSlider === 1) {
-        			var suffix = that.suffixes[parseInt(inputRange.className.split('_')[2], 10) - 1];
-                	inputRange.value = '';
-                	inputRange.setAttribute('disabled', 'disabled');
+                    var suffix = that.suffixes[parseInt(inputRange.className.split('_')[2], 10) - 1];
+                    inputRange.value = '';
+                    inputRange.setAttribute('disabled', 'disabled');
                     removeClass(inputRange,'selected');
                     inputRange.parentElement.nextElementSibling.innerHTML = suffix;
                 }
                 // If use currency
                 if (that.useSlider === 2) {
-                	inputCurrency.value = '';
-                	inputCurrency.setAttribute('readonly', 'readonly');
+                    inputCurrency.value = '';
+                    inputCurrency.setAttribute('readonly', 'readonly');
                 }
             } else if (!el.checked) {
                 inputNumber.removeAttribute('readonly');
                 // If use slider
                 if (that.useSlider === 1) {
-                	inputRange.removeAttribute('disabled');
+                    inputRange.removeAttribute('disabled');
                 }
                 // If use currency
                 if (that.useSlider === 2) {
-                	inputCurrency.removeAttribute('readonly');
+                    inputCurrency.removeAttribute('readonly');
                 }
             }
             if ('createEvent' in document) {
@@ -138,11 +158,12 @@
             }
         }
     }
-    
+
     /**
    * Manage the change event on input DK for open
    *
    * @param {Object} event Change event of the input DK for open
+   * @param {Object} that SideBySide object, same as options
    */
     function onOpenInputDK (event, that) {
         var el = event.target || event.srcElement;
@@ -169,12 +190,14 @@
    * Manage the input event on input numbers - live sum
    *
    * @param {Object} event Input event of the input numbers
+   * @param {Object} that SideBySide object, same as options
    */
     function onInputNumbers (event, that) {
         var el = event.target || event.srcElement;
         var split = el.className.split('_')
         var maxLimit = that.maxLimit[parseInt(split[2], 10) - 1];
         var decimals = that.decimals[parseInt(split[2], 10) - 1] || 0;
+        var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
         var sum = 0;
         var inputNumbers = document.querySelectorAll('#adc_' + that.instanceId + ' .' + el.className);
         for (var i = 0; i < inputNumbers.length; i++) {
@@ -207,12 +230,40 @@
                 }
             }
         }
+        triggerRouting(shortcut);
+    }
+    
+    /**
+   * Manage the input event on open ended (input text, email, url and textarea)
+   *
+   * @param {Object} event Input event of the open ended
+   * @param {Object} that SideBySide object, same as options
+   */
+    function onInputOpens (event, that) {
+        var el = event.target || event.srcElement;
+        var split = el.className.split('_')
+        var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
+        triggerRouting(shortcut);
+    }
+    
+    /**
+   * Manage the input event on date time
+   *
+   * @param {Object} event Input event of the date time
+   * @param {Object} that SideBySide object, same as options
+   */
+    function onInputDates (event, that) {
+        var el = event.target || event.srcElement;
+        var split = el.className.split('_')
+        var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
+        triggerRouting(shortcut);
     }
 
-     /**
+    /**
    * Manage the input event on input ranges - live sum
    *
    * @param {Object} event Input event of the input ranges
+   * @param {Object} that SideBySide object, same as options
    */
     function onInputRanges (event, that) {
         var el = event.target || event.srcElement;
@@ -232,7 +283,7 @@
             inputNumber.fireEvent('oninput');
         }
     }
-    
+
     /**
    * Return width of the left side of the input range
    *
@@ -244,11 +295,11 @@
         var range = max - min;
         var w = parseInt(inputRange.clientWidth, 10);
         var t = ~~(w * (parseInt(inputRange.value, 10) - min) / range);
-        
+
         return (((t / w) * 100) < 16 && ((t / w) * 100) > 0) ? t + 4 : t;
     }
 
-    
+
     /**
   * Calculate the offsetTop
   *
@@ -349,8 +400,15 @@
         }
     }
 
+    /**
+   * Update the combo box when using ranking
+   *
+   * @param {Object} event Change event of the select
+   * @param {Object} that SideBySide object, same as options
+   */
     function updateComboBox(event, that) {
         var el = event.target || event.srcElement;
+        var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
         var inputSelect = document.querySelectorAll("." + el.className);
         resetComboBox(inputSelect);
         var selectedIndex = 0;
@@ -364,8 +422,14 @@
                 }
             }
         }
+        triggerRouting(shortcut);
     }
-    
+
+    /**
+   * Get the position of the caret
+   *
+   * @param {Object} ctrl Input element
+   */
     function getCaretPosition (ctrl) {
         // IE < 9 Support
         if (document.selection) {
@@ -384,7 +448,13 @@
         }
     }
 
-
+    /**
+   * Set the new the position of the caret
+   *
+   * @param {Object} ctrl Input element
+   * @param {Number} start Start position of the caret
+   * @param {Number} end End position of the caret
+   */
     function setCaretPosition(ctrl, start, end) {
         // IE >= 9 and other browsers
         if(ctrl.setSelectionRange) {
@@ -399,6 +469,11 @@
         }
     }
 
+    /**
+   * Add space as thousand separator for numerical variable when using currency
+   *
+   * @param {Object} x Input element
+   */
     function numberWithThousandSeparator(x) {
         var currentPosition = getCaretPosition(x);
         var currentValue = x.value.toString();
@@ -430,6 +505,12 @@
         }
     }
 
+    /**
+   * Check if the key pressed is a number
+   *
+   * @param {Object} event Press event of the input
+   * @param {Object} x Input element
+   */
     function isNumberKey(evt, x){
         var charCode = (evt.which) ? evt.which : event.keyCode;
         if (((charCode != 46) && (charCode < 48 || charCode > 57)) || ((x.value.toString().indexOf(".") >= 0) && (charCode === 46  || charCode === 110  || charCode === 190 ))) {
@@ -462,7 +543,9 @@
         var inputNumbers = document.querySelectorAll('#adc_' + this.instanceId + ' input[type="number"]');
         var inputRanges = document.querySelectorAll('#adc_' + this.instanceId + ' input[type="range"]');
         var numInputDK = document.querySelectorAll('#adc_' + this.instanceId + ' .numeric .DK input[type="checkbox"]');
+        var inputOpens = document.querySelectorAll('#adc_' + this.instanceId + ' .open .inputopen');
         var openInputDK = document.querySelectorAll('#adc_' + this.instanceId + ' .open .DK input[type="checkbox"]');
+        var inputDates = document.querySelectorAll('#adc_' + this.instanceId + ' .date input[type="text"]');
 
         // Change event on input radio
         for (var i = 0; i < radios.length; i++) {
@@ -483,7 +566,7 @@
                 };
             }(this)));
         }
-        
+
         // Change event on input DK checkbox for numerical variable
         for (var j1 = 0; j1 < numInputDK.length; j1++) {
             addEvent(numInputDK[j1], 'change', 
@@ -493,7 +576,7 @@
                 };
             }(this)));
         }
-        
+
         // Change event on input DK checkbox for open variable
         for (var j2 = 0; j2 < openInputDK.length; j2++) {
             addEvent(openInputDK[j2], 'change', 
@@ -520,7 +603,7 @@
                 inputNumbers[k].fireEvent('oninput');
             }
         }
-        
+
         // Change event (live sum) on input range
         for (var l = 0; l < inputRanges.length; l++) {
             addEvent(inputRanges[l], 'change', 
@@ -531,7 +614,7 @@
             }(this)));
             document.querySelector('#adc_' + this.instanceId + ' #' + inputRanges[l].id + ' + .preBar').style.width = widthRange(inputRanges[l]) + 'px';
         }
-        
+
         // Input event (live sum) on input range
         for (var l1 = 0; l1 < inputRanges.length; l1++) {
             addEvent(inputRanges[l1], 'input', 
@@ -541,7 +624,7 @@
                 };
             }(this)));
         }
-        
+
         // Resize event on input range
         window.addEventListener("resize", function() {
             for (var l2 = 0; l2 < inputRanges.length; l2++) {
@@ -549,6 +632,40 @@
             }
         });
         
+        // Input event on open ended
+        for (var k1 = 0; k1 < inputOpens.length; k1++) {
+            addEvent(inputOpens[k1], 'input', 
+                     (function (passedInElement) {
+                return function (e) {
+                    onInputOpens(e, passedInElement); 
+                };
+            }(this)));
+            if ('createEvent' in document) {
+                var evt = document.createEvent('HTMLEvents');
+                evt.initEvent('input', false, true);
+                inputOpens[k1].dispatchEvent(evt);
+            } else {
+                inputOpens[k1].fireEvent('oninput');
+            }
+        }
+        
+        // Input event on date time
+        for (var k2 = 0; k2 < inputDates.length; k2++) {
+            addEvent(inputDates[k2], 'input', 
+                     (function (passedInElement) {
+                return function (e) {
+                    onInputDates(e, passedInElement); 
+                };
+            }(this)));
+            if ('createEvent' in document) {
+                var evt = document.createEvent('HTMLEvents');
+                evt.initEvent('input', false, true);
+                inputDates[k2].dispatchEvent(evt);
+            } else {
+                inputDates[k2].fireEvent('oninput');
+            }
+        }
+
         // Manage ranking combo box
         for(var i1 = 0; i1 < this.rankingBox.length ; i1++){
             if (this.rankingBox[i1]) {
@@ -570,7 +687,7 @@
                 }
             }   
         }
-        
+
         // If currency used for numerical variable
         if (this.useSlider === 2) {
             // Keypress event on input text currency
