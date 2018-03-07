@@ -21,10 +21,6 @@ EndIf
 Dim firstColumnWidth = CurrentADC.PropValue("firstColumnWidth")
 Dim othersColumnWidth = ((100 - firstColumnWidth.ToNumber() ) / columnNumber).Floor()
 %}
-
-#adc_{%= CurrentADC.InstanceId %} * {
-    font-family: {%= Theme.FontFamily %};
-}
 {% If (CurrentADC.PropValue("showTitle") = "0") Then %}
 #adc_{%= CurrentADC.InstanceId %} thead {
     display: none;
@@ -516,4 +512,22 @@ EndIf %}
     {% EndIf %}
     text-align: left;
   }
+}
+#adc_{%= CurrentADC.InstanceId %} * {
+    font-family: {%= Theme.FontFamily %};
+}
+#adc_{%= CurrentADC.InstanceId %} ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: rgba({%= Theme.BlackColor.ToRGB() %},0.3) !important;
+}
+#adc_{%= CurrentADC.InstanceId %} ::-moz-placeholder { /* Firefox 19+ */
+  	color: rgba({%= Theme.BlackColor.ToRGB() %},0.3) !important;
+}
+#adc_{%= CurrentADC.InstanceId %} :-ms-input-placeholder { /* IE 10+ */
+  	color: rgba({%= Theme.BlackColor.ToRGB() %},0.3) !important;
+}
+#adc_{%= CurrentADC.InstanceId %} :-moz-placeholder { /* Firefox 18- */
+  	color: rgba({%= Theme.BlackColor.ToRGB() %},0.3) !important;
+}
+#adc_{%= CurrentADC.InstanceId %} ::placeholder {
+  	color: rgba({%= Theme.BlackColor.ToRGB() %},0.3) !important;
 }

@@ -20,6 +20,10 @@ Dim attrExclusive
 Dim attrSelected
 Dim attrReadOnly
 Dim attrDisabled
+Dim placeholder
+Dim attrPlaceholder
+Dim maxValueOpen
+Dim attrMaxOpen
 Dim imgZoom
 Dim paddingZoom
 Dim minVal
@@ -179,15 +183,19 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
             {% EndIf
 			If (column.Type = "open") Then 
 				attrReadOnly = On(column.Iteration(loopQuestion.Answers[j1].Index).HasDK and column.Iteration(loopQuestion.Answers[j1].Index).HasAnswered and CurrentADC.PropValue("openDkButton") = "1", " readonly=\"readonly\"", "") 
-				attrChecked = On(column.Iteration(loopQuestion.Answers[j1].Index).HasDK and column.Iteration(loopQuestion.Answers[j1].Index).HasAnswered, " checked=\"checked\"", "") %}
+				attrChecked = On(column.Iteration(loopQuestion.Answers[j1].Index).HasDK and column.Iteration(loopQuestion.Answers[j1].Index).HasAnswered, " checked=\"checked\"", "") 
+				placeholder = CurrentADC.PropValue("placeholder")
+				attrPlaceholder = On(placeholder <> "", " placeholder=\"" + placeholder + "\"", "")
+				maxValueOpen = column.Iteration(loopQuestion.Answers[j1].Index).MaxValue
+				attrMaxOpen  = On(maxValueOpen <> DK AND maxValueOpen > 0, " maxLength=\"" + maxValueOpen + "\"", "") %}
           <td class="open">
             <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
               <div class="question-label">{%= column.LongCaption %}</div>
               <div class="responses-container">
                 {% If (CurrentADC.PropValue("openUse") = "1") Then %}
-                <textarea id="askia-input-open{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" data-class="shortcut_{%= j2 %}" class="inputopen" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}"{%:= attrReadOnly %}>{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}</textarea>
+                <textarea id="askia-input-open{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" data-class="shortcut_{%= j2 %}" class="inputopen" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}"{%:= attrReadOnly %}{%:= attrMaxOpen %}{%:= attrPlaceholder %}>{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}</textarea>
                 {% Else %}
-                  <input type="{%= On(CurrentADC.PropValue("openUse") = "2","email",On(CurrentADC.PropValue("openUse") = "3","url","text")) %}" data-class="shortcut_{%= j2 %}" class="inputopen" id="askia-input-open{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= attrReadOnly %}>
+                <input type="{%= On(CurrentADC.PropValue("openUse") = "2","email",On(CurrentADC.PropValue("openUse") = "3","url","text")) %}" data-class="shortcut_{%= j2 %}" class="inputopen" id="askia-input-open{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= attrReadOnly %}{%:= attrMaxOpen %}{%:= attrPlaceholder %}>
                 {% EndIf %}
               </div>
                 {% If (CurrentADC.PropValue("openDkButton") = "1") Then %}

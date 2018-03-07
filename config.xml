@@ -342,6 +342,15 @@ For instance 1 or 0.1 or 5 etc.]]></description>
         <description><![CDATA[The caption of the don't know button]]></description>
         <value><![CDATA[Don't know]]></value>
       </property>
+      <property xsi:type="standardProperty" id="placeholder" name="Placeholder" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[
+          
+          Using HTML 5, in modern browser.
+          Helper text shows in the input when it's empty.
+        
+        ]]></description>
+        <value></value>
+      </property>
     </category>
     <category id="timePicker" name="Time Picker">
       <property xsi:type="standardProperty" id="imperial" name="Time format" type="string" mode="dynamic" require="true" visible="false">
