@@ -161,7 +161,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
                   {% EndIf %}
                 <span class="suffix">{% If (CurrentADC.PropValue("useSlider") = "1") Then %}{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}{% EndIf %}{%= CurrentADC.PropValue("numBoxSuffix" + j2) %}</span>
               </div>
-              {% If (CurrentADC.PropValue("numDkButton") = "1") Then %}
+                {% If (CurrentADC.PropValue("numDkButton") = "1" and column.IsAllowDK ) Then %}
               <label class="DK">
                   <input type="checkbox" id="askia-input-number_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" data-class="shortcut_{%= j2 %}" class="dkbutton" name="M{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %} -1" {%:= attrChecked %}>
                   <label for="askia-input-number_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" class="askia-checkbox"></label>
@@ -198,7 +198,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
                 <input type="{%= On(CurrentADC.PropValue("openUse") = "2","email",On(CurrentADC.PropValue("openUse") = "3","url","text")) %}" data-class="shortcut_{%= j2 %}" class="inputopen" id="askia-input-open{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= attrReadOnly %}{%:= attrMaxOpen %}{%:= attrPlaceholder %}>
                 {% EndIf %}
               </div>
-                {% If (CurrentADC.PropValue("openDkButton") = "1") Then %}
+                {% If (CurrentADC.PropValue("openDkButton") = "1" and column.IsAllowDK) Then %}
               <label class="DK">
                   <input type="checkbox" id="askia-input-open_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" data-class="shortcut_{%= j2 %}" class="dkbutton" name="M{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %} -1" {%:= attrChecked %}>
                   <label for="askia-input-open_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" class="askia-checkbox"></label>
