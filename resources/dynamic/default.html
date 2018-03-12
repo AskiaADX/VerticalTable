@@ -163,7 +163,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
               </div>
                 {% If (CurrentADC.PropValue("numDkButton") = "1" and column.IsAllowDK ) Then %}
               <label class="DK">
-                  <input type="checkbox" id="askia-input-number_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" data-class="shortcut_{%= j2 %}" class="dkbutton" name="M{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %} -1" {%:= attrChecked %}>
+                  <input type="checkbox" id="askia-input-number_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" data-class="shortcut_{%= j2 %}" class="dkbutton" name="B{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" {%:= attrChecked %}>
                   <label for="askia-input-number_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" class="askia-checkbox"></label>
                   <label for="askia-input-number_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" class="askia-response-label">
                       <span class="caption">{%:= CurrentADC.PropValue("numDkCaption") %}</span>
@@ -200,7 +200,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
               </div>
                 {% If (CurrentADC.PropValue("openDkButton") = "1" and column.IsAllowDK) Then %}
               <label class="DK">
-                  <input type="checkbox" id="askia-input-open_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" data-class="shortcut_{%= j2 %}" class="dkbutton" name="M{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %} -1" {%:= attrChecked %}>
+                  <input type="checkbox" id="askia-input-open_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" data-class="shortcut_{%= j2 %}" class="dkbutton" name="B{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" {%:= attrChecked %}>
                   <label for="askia-input-open_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" class="askia-checkbox"></label>
                   <label for="askia-input-open_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" class="askia-response-label">
                       <span class="caption">{%:= CurrentADC.PropValue("openDkCaption") %}</span>
