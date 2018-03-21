@@ -330,6 +330,15 @@ For instance 1 or 0.1 or 5 etc.]]></description>
           <option value="3" text="Input url" />
         </options>
       </property>
+      <property xsi:type="standardProperty" id="placeholder" name="Placeholder" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[
+          
+          Using HTML 5, in modern browser.
+          Helper text shows in the input when it's empty.
+        
+        ]]></description>
+        <value></value>
+      </property>
       <property xsi:type="standardProperty" id="openDkButton" name="Add DK button" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Add a don't know button]]></description>
         <value><![CDATA[0]]></value>
@@ -341,41 +350,6 @@ For instance 1 or 0.1 or 5 etc.]]></description>
       <property xsi:type="standardProperty" id="openDkCaption" name="DK caption" type="string" mode="dynamic" require="false" visible="true">
         <description><![CDATA[The caption of the don't know button]]></description>
         <value><![CDATA[Don't know]]></value>
-      </property>
-      <property xsi:type="standardProperty" id="placeholder" name="Placeholder" type="string" mode="dynamic" require="false" visible="true">
-        <description><![CDATA[
-          
-          Using HTML 5, in modern browser.
-          Helper text shows in the input when it's empty.
-        
-        ]]></description>
-        <value></value>
-      </property>
-    </category>
-    <category id="timePicker" name="Time Picker">
-      <property xsi:type="standardProperty" id="imperial" name="Time format" type="string" mode="dynamic" require="true" visible="false">
-        <description><![CDATA[Option to choose 24 hour clock or 12 hour clock]]></description>
-        <value><![CDATA[false]]></value>
-        <options>
-          <option value="false" text="24 Hour clock" />
-          <option value="true" text="12 Hour clock" />
-        </options>
-      </property>
-      <property xsi:type="standardProperty" id="showSeconds" name="Show seconds" type="string" mode="dynamic" require="true" visible="false">
-        <description><![CDATA[Option to show/hide seconds counter]]></description>
-        <value><![CDATA[false]]></value>
-        <options>
-          <option value="true" text="Show" />
-          <option value="false" text="Hide" />
-        </options>
-      </property>
-      <property xsi:type="standardProperty" id="stepMinutes" name="Minutes intervals" type="number" mode="dynamic" require="true" visible="false" min="1" max="59">
-        <description><![CDATA[Step intervals for minute counter]]></description>
-        <value><![CDATA[1]]></value>
-      </property>
-      <property xsi:type="standardProperty" id="stepSeconds" name="Seconds intervals" type="number" mode="dynamic" require="true" visible="false" min="1" max="59">
-        <description><![CDATA[Step intervals for seconds counter]]></description>
-        <value><![CDATA[1]]></value>
       </property>
     </category>
     <category id="Date" name="Date options">
@@ -467,6 +441,44 @@ Format: MM/DD/YYYY]]></description>
           <option value="left" text="Left" />
           <option value="right" text="Right" />
         </options>
+      </property>
+      <property xsi:type="standardProperty" id="dateDkButton" name="Add DK button" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Add a don't know button]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="dateDkCaption" name="DK caption" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[The caption of the don't know button]]></description>
+        <value><![CDATA[Don't know]]></value>
+      </property>
+    </category>
+    <category id="timePicker" name="Time Picker">
+      <property xsi:type="standardProperty" id="imperial" name="Time format" type="string" mode="dynamic" require="true" visible="false">
+        <description><![CDATA[Option to choose 24 hour clock or 12 hour clock]]></description>
+        <value><![CDATA[false]]></value>
+        <options>
+          <option value="false" text="24 Hour clock" />
+          <option value="true" text="12 Hour clock" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="showSeconds" name="Show seconds" type="string" mode="dynamic" require="true" visible="false">
+        <description><![CDATA[Option to show/hide seconds counter]]></description>
+        <value><![CDATA[false]]></value>
+        <options>
+          <option value="true" text="Show" />
+          <option value="false" text="Hide" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="stepMinutes" name="Minutes intervals" type="number" mode="dynamic" require="true" visible="false" min="1" max="59">
+        <description><![CDATA[Step intervals for minute counter]]></description>
+        <value><![CDATA[1]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="stepSeconds" name="Seconds intervals" type="number" mode="dynamic" require="true" visible="false" min="1" max="59">
+        <description><![CDATA[Step intervals for seconds counter]]></description>
+        <value><![CDATA[1]]></value>
       </property>
     </category>
     <category id="column1" name="Column 1">

@@ -38,6 +38,10 @@ body {
     padding: 5px 5px 5px 5px;
 }
 
+.sidebyside .date .DK {
+    padding: 5px 0 0px 0;
+}
+
 .sidebyside select {
   	width: 100%;
     -webkit-box-sizing: border-box;

@@ -253,32 +253,45 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
             </div>
           </td>
             {% EndIf 
-			If (column.Type = "datetime") Then %}
+			If (column.Type = "datetime") Then 
+				attrReadOnly = On(column.Iteration(loopQuestion.Answers[j1].Index).HasDK and column.Iteration(loopQuestion.Answers[j1].Index).HasAnswered and CurrentADC.PropValue("dateDkButton") = "1", " readonly=\"readonly\"", " readonly=\"true\"")
+				attrDisabled = On(column.Iteration(loopQuestion.Answers[j1].Index).HasDK and column.Iteration(loopQuestion.Answers[j1].Index).HasAnswered and CurrentADC.PropValue("dateDkButton") = "1", " disabled=\"disabled\"", "") %}
           <td class="date">
             <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
               <div class="question-label">{%= column.LongCaption %}</div>
               <div class="responses-container">
                   {% If (Not(column.IsTimeOnly)) Then %}
                 <div class="RLDatePicker">
-                  <input type="text" id="askia-input-date{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" data-class="shortcut_{%= j2 %}" class="askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName("date") %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue("date") %}" readonly="true">
+                  <input type="text" id="askia-input-date{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" data-class="shortcut_{%= j2 %}" class="askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName("date") %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue("date") %}"{%:= attrReadOnly %}{%:= attrDisabled %}>
                 </div>
                   {% EndIf %}
                   {% If (Not(column.IsDateOnly)) Then  %}
                 <div class="RLTimePicker">
-                  <select id="hour_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="hour">
+                  <select id="hour_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="hour"{%:= attrDisabled %}>
                   </select>
                   <span class="timeSeparator_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">:</span>
-                  <select id="minutes_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="minutes">
+                  <select id="minutes_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="minutes"{%:= attrDisabled %}>
                   </select>
                   <span id="secsContainer_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" class="secsContainer">
                     <span class="timeSeparator_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">:</span>
-                    <select id="seconds_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="seconds"></select>
+                    <select id="seconds_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="seconds"{%:= attrDisabled %}></select>
                   </span>
                   <!--<input type="text" id="time" name="time" readonly="readonly" hidden=true/> -->
-                  <input id="askia-input-time{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" data-class="shortcut_{%= j2 %}" class="askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %} time_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" hidden="" type="text" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName("time") %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue("time") %}">
-                  <span class="imperial" hidden="" id="ampm_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}"></span>
+                  <input id="askia-input-time{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" data-class="shortcut_{%= j2 %}" class="askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %} time_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" hidden="" type="text" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName("time") %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue("time") %}"{%:= attrReadOnly %}>
+                  <span class="imperial" {%If CurrentADC.PropValue("imperial") = "false" Then %} hidden {% EndIf %} id="ampm_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}"></span>
                 </div>
                   {% EndIf %}
+                  {% If (CurrentADC.PropValue("dateDkButton") = "1" and column.IsAllowDK ) Then 
+    					attrChecked = On(column.Iteration(loopQuestion.Answers[j1].Index).HasDK and column.Iteration(loopQuestion.Answers[j1].Index).HasAnswered, " checked=\"checked\"", "") %}
+                  <label class="DK">
+                      <input type="hidden" name="B{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
+                      <input type="checkbox" id="askia-input-date_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" data-class="shortcut_{%= j2 %}" class="dkbutton" name="M{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %} -1" {%:= attrChecked %}>
+                      <label for="askia-input-date_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" class="askia-checkbox"></label>
+                      <label for="askia-input-date_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}_-1" class="askia-response-label">
+                          <span class="caption">{%:= CurrentADC.PropValue("dateDkCaption") %}</span>
+                      </label>
+                  </label>
+              {% EndIf %}
               </div>
             </div>
           </td>
