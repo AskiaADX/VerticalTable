@@ -56,6 +56,10 @@ body {
     cursor: pointer;
 }
 
+.RLTimePicker select::-ms-expand {
+    display: none;
+}
+
 .sidebyside label img{
     pointer-events: none;
     display: block;
