@@ -45,7 +45,7 @@ For i3 = 1 To 5
     If ((columnQuestion.Id = DK) and (i3 = 1)) Then
     	columnQuestion = CurrentQuestion
     EndIf
-    If ((columnQuestion.Type = "single") Or (columnQuestion.Type = "multiple")) Then
+    If (((columnQuestion.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + i3) = "0")) Or (columnQuestion.Type = "multiple")) Then
         hasClosedQuestion = 1
         Break
     EndIf
@@ -62,7 +62,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
             If ((column.Id = DK) and (i2 = 1)) Then
                 column = CurrentQuestion
             EndIf
-    %}<th {%:= On((column.Type = "single") Or (column.Type = "multiple"),"", rowspan) %}>{%:= column.LongCaption %}</th>{%Next i2 %}
+    %}<th {%:= On(((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + i2) = "0")) Or (column.Type = "multiple"),"", rowspan) %}>{%:= column.LongCaption %}</th>{%Next i2 %}
         </tr>
         {% If ((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQuestion = 1)) Then %}
         <tr>
@@ -71,7 +71,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
             If ((column.Id = DK) and (i4 = 1)) Then
                 column = CurrentQuestion
             EndIf
-    		If ((column.Type = "single") Or (column.Type = "multiple")) Then
+    If (((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + i4) = "0")) Or (column.Type = "multiple")) Then
     	  %}
           <th>
             <div class="header-responses-container">
