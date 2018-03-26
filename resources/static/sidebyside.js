@@ -50,6 +50,19 @@
             obj.className = obj.className.replace(new RegExp('(^|\\b)' + clsName.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
         }
     }
+    
+     /**
+   * Verify the element has a class in DOMElement
+   *
+   * @param {HTMLElement} obj HTMLElement where the class should be present
+   * @param {String} clsName Name of the class to verify
+   */
+    function hasClass(obj,className) {
+        if (obj.classList)
+            return obj.classList.contains(className);
+        else
+            return new RegExp('(^| )' + className + '( |$)', 'gi').test(obj.className);
+    }
 
     /**
    * Trigger the ajax request for live routings
@@ -593,6 +606,35 @@
             return false;
         }
         return true;
+    }
+    
+    /**
+   * Step by step functionnality (Show or hide next row)
+   *
+   * @param {Object} that SideBySide object, same as options
+   */
+    function stepByStep (that) {
+        var trs = document.querySelectorAll('#adc_' + that.instanceId + ' tbody > tr');
+        var tds;
+        var dataFound = false;
+        // Iterate tr backwards
+    	for (var i = trs.length; i-- > 0; ) {
+            tds = trs[i].querySelectorAll('td');
+            // Iterate td backwards
+    		for (var j = tds.length; j-- > 1; ) {
+                if (hasClass(tds[j],'date')) {
+                    
+                } else if (hasClass(tds[j],'open')) {
+                    
+                } else if (hasClass(tds[j],'numeric')) {
+                    
+                } else if (hasClass(tds[j],'select')) {
+                    
+                } else if (hasClass(tds[j],'closed')) {
+                    
+                } 
+            }
+        }   
     }
 
     /**
