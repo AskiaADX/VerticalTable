@@ -609,6 +609,19 @@
     }
     
     /**
+   * Check if the date question has an answer
+   *
+   * @param {Object} td Date td
+   */
+    function checkAnswersDates (td) {
+        var inputDate = document.querySelector('.RLDatePicker input[type=text]');
+        var selectHour = document.querySelector('.RLTimePicker select[id^=hour]');
+        var selectMinute = document.querySelector('.RLTimePicker select[id^=minutes]');
+        var selectSecond = document.querySelector('.RLTimePicker select[id^=seconds]');
+        var inputDk = document.querySelector('.DK input[type=checkbox]');
+    }
+    
+    /**
    * Step by step functionnality (Show or hide next row)
    *
    * @param {Object} that SideBySide object, same as options
