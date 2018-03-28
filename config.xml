@@ -194,7 +194,7 @@
       </property>
       <property xsi:type="standardProperty" id="borderColour" name="Border colour" type="color" mode="dynamic" require="true" visible="false">
         <description><![CDATA[The border colour]]></description>
-        <value><![CDATA[{%= Theme.NeutralDarkColor %}]]></value>
+        <value><![CDATA[{%= Theme.NeutralColor %}]]></value>
       </property>
       <property xsi:type="standardProperty" id="borderThickness" name="Border thickness" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[The thickness of the border]]></description>

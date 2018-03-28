@@ -432,6 +432,9 @@ EndIf %}
       {% Else %}
       align-items: center;
       {% EndIf %}
+      border-top: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
+      border-bottom: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
+      border-right: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
   }
   #adc_{%= CurrentADC.InstanceId %} tbody > tr > td {
     display: block;
@@ -465,15 +468,13 @@ EndIf %}
     display: block;
     border-bottom: 0px solid transparent;
     text-align: left;
-  }
-  #adc_{%= CurrentADC.InstanceId %} .question-container {
-    margin-bottom: 10px;
+    margin: .3em 0;
   }
   #adc_{%= CurrentADC.InstanceId %} .responses-container {
     justify-content: flex-start;
   }
   #adc_{%= CurrentADC.InstanceId %} .response-container {
-    background-color: rgba({%= Theme.BlackColor.ToRGB() %},.05);
+    background-color: rgba({%= Theme.WhiteColor.ToRGB() %},1);
   }
   #adc_{%= CurrentADC.InstanceId %} .responses-container .response-container:last-child {
     border-right: 0px solid transparent;
