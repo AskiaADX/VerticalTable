@@ -614,11 +614,80 @@
    * @param {Object} td Date td
    */
     function checkAnswersDates (td) {
-        var inputDate = document.querySelector('.RLDatePicker input[type=text]');
-        var selectHour = document.querySelector('.RLTimePicker select[id^=hour]');
-        var selectMinute = document.querySelector('.RLTimePicker select[id^=minutes]');
-        var selectSecond = document.querySelector('.RLTimePicker select[id^=seconds]');
-        var inputDk = document.querySelector('.DK input[type=checkbox]');
+        var inputDate = td.querySelector('.RLDatePicker input[type=text]');
+        var selectHour = td.querySelector('.RLTimePicker select[id^=hour]');
+        var selectMinute = td.querySelector('.RLTimePicker select[id^=minutes]');
+        var selectSecond = td.querySelector('.RLTimePicker select[id^=seconds]');
+        var inputDk = td.querySelector('.DK input[type=checkbox]');
+        var result = true;
+        if (inputDk) {
+        	if (inputDate && selectHour) {
+                if (selectSecond && inputDk.checked === false && (inputDate.value === '' || selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm' || selectSecond.value.toLowerCase() === 'ss')) result = false;
+                if (!selectSecond && inputDk.checked === false && (inputDate.value === '' || selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm')) result = false;
+            } else if (inputDate && !selectHour) {
+                if (inputDk.checked === false && inputDate.value === '') result = false;
+            } else if (!inputDate && selectHour) {
+                if (selectSecond && inputDk.checked === false && (selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm' || selectSecond.value.toLowerCase() === 'ss')) result = false;
+                if (!selectSecond && inputDk.checked === false && (selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm')) result = false;
+            }
+        } else {
+            if (inputDate && selectHour) {
+                if (selectSecond && (inputDate.value === '' || selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm' || selectSecond.value.toLowerCase() === 'ss')) result = false;
+                if (!selectSecond && (inputDate.value === '' || selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm')) result = false;
+            } else if (inputDate && !selectHour) {
+                if (inputDate.value === '') result = false;
+            } else if (!inputDate && selectHour) {
+                if (selectSecond && (selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm' || selectSecond.value.toLowerCase() === 'ss')) result = false;
+                if (!selectSecond && (selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm')) result = false;
+            }
+        }
+        return result;
+    }
+    
+    /**
+   * Check if the open question has an answer
+   *
+   * @param {Object} td Open td
+   */
+    function checkAnswersOpens (td) {
+        var inputOpen = td.querySelector('.inputopen');
+        var inputDk = td.querySelector('.DK input[type=checkbox]');
+        var result = true;
+        if (inputDk) {
+        	if (inputDk.checked === false && inputOpen.value.trim().length < 2) result = false;
+        } else {
+            if (inputOpen.value.trim().length < 2) result = false;
+        }
+        return result;
+    }
+    
+    /**
+   * Check if the numerical question has an answer
+   *
+   * @param {Object} td Numeric td
+   */
+    function checkAnswersNumerics (td) {
+        var inputNumeric = td.querySelector('input[type=number]');
+        var inputDk = td.querySelector('.DK input[type=checkbox]');
+        var result = true;
+        if (inputDk) {
+        	if (inputDk.checked === false && inputNumeric.value === '') result = false;
+        } else {
+            if (inputNumeric.value === '') result = false;
+        }
+        return result;
+    }
+    
+    /**
+   * Check if the select question has an answer
+   *
+   * @param {Object} td Select td
+   */
+    function checkAnswersSelects (td) {
+        var inputSelect = td.querySelector('select');
+        var result = true;
+      	if (inputSelect.value === '0') result = false;
+        return result;
     }
     
     /**
@@ -636,7 +705,7 @@
             // Iterate td backwards
     		for (var j = tds.length; j-- > 1; ) {
                 if (hasClass(tds[j],'date')) {
-                    
+					
                 } else if (hasClass(tds[j],'open')) {
                     
                 } else if (hasClass(tds[j],'numeric')) {
