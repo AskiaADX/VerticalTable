@@ -163,6 +163,14 @@
           <option value="no" text="Off" />
         </options>
       </property>
+      <property xsi:type="standardProperty" id="stepByStep" name="Step by step" type="string" mode="dynamic" require="true" visible="false">
+        <description><![CDATA[Step by step]]></description>
+        <value><![CDATA[yes]]></value>
+        <options>
+          <option value="yes" text="Yes" />
+          <option value="no" text="No" />
+        </options>
+      </property>
     </category>
     <category id="Responsive" name="Responsive">
       <property xsi:type="standardProperty" id="responsiveWidth" name="Responsive width" type="string" mode="dynamic" require="true" visible="false">

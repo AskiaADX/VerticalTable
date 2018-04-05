@@ -77,6 +77,228 @@
             askia.triggerAnswer();
         }
     }
+    
+    /**
+   * Check if the date question has an answer
+   *
+   * @param {Object} td Date td
+   */
+    function checkAnswersDate (td) {
+        var inputDate = td.querySelector('.RLDatePicker input[type=text]');
+        var selectHour = td.querySelector('.RLTimePicker select[id^=hour]');
+        var selectMinute = td.querySelector('.RLTimePicker select[id^=minutes]');
+        var selectSecond = td.querySelector('.RLTimePicker select[id^=seconds]');
+        var inputDk = td.querySelector('.DK input[type=checkbox]');
+        var result = true;
+        if (inputDk) {
+        	if (inputDate && selectHour) {
+                if (selectSecond && inputDk.checked === false && (inputDate.value === '' || selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm' || selectSecond.value.toLowerCase() === 'ss')) result = false;
+                if (!selectSecond && inputDk.checked === false && (inputDate.value === '' || selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm')) result = false;
+            } else if (inputDate && !selectHour) {
+                if (inputDk.checked === false && inputDate.value === '') result = false;
+            } else if (!inputDate && selectHour) {
+                if (selectSecond && inputDk.checked === false && (selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm' || selectSecond.value.toLowerCase() === 'ss')) result = false;
+                if (!selectSecond && inputDk.checked === false && (selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm')) result = false;
+            }
+        } else {
+            if (inputDate && selectHour) {
+                if (selectSecond && (inputDate.value === '' || selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm' || selectSecond.value.toLowerCase() === 'ss')) result = false;
+                if (!selectSecond && (inputDate.value === '' || selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm')) result = false;
+            } else if (inputDate && !selectHour) {
+                if (inputDate.value === '') result = false;
+            } else if (!inputDate && selectHour) {
+                if (selectSecond && (selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm' || selectSecond.value.toLowerCase() === 'ss')) result = false;
+                if (!selectSecond && (selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm')) result = false;
+            }
+        }
+        return result;
+    }
+    
+    /**
+   * Check if the open question has an answer
+   *
+   * @param {Object} td Open td
+   */
+    function checkAnswersOpen (td) {
+        var inputOpen = td.querySelector('.inputopen');
+        var inputDk = td.querySelector('.DK input[type=checkbox]');
+        var result = true;
+        if (inputDk) {
+        	if (inputDk.checked === false && inputOpen.value.trim().length < 2) result = false;
+        } else {
+            if (inputOpen.value.trim().length < 2) result = false;
+        }
+        return result;
+    }
+    
+    /**
+   * Check if the numerical question has an answer
+   *
+   * @param {Object} td Numeric td
+   */
+    function checkAnswersNumeric (td) {
+        var inputNumeric = td.querySelector('input[type=number]');
+        var inputDk = td.querySelector('.DK input[type=checkbox]');
+        var result = true;
+        if (inputDk) {
+        	if (inputDk.checked === false && inputNumeric.value === '') result = false;
+        } else {
+            if (inputNumeric.value === '') result = false;
+        }
+        return result;
+    }
+    
+    /**
+   * Check if the select question has an answer
+   *
+   * @param {Object} td Select td
+   */
+    function checkAnswersSelect (td) {
+        var inputSelect = td.querySelector('select');
+        var result = true;
+      	if (inputSelect.value === '0') result = false;
+        return result;
+    }
+    
+    /**
+   * Check if the closed question has an answer
+   *
+   * @param {Object} td Closed td
+   */
+    function checkAnswersClosed (td) {
+        var inputsClosed = td.querySelectorAll('input[type=radio], input[type=checkbox]');
+        var result = false;
+        for (var i = 0; i < inputsClosed.length; i++) {
+            if (inputsClosed[i].checked === true) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+    
+    function scrollIt(destination, duration, easing, callback) {
+
+        var easings = {
+            linear: function linear(t)  {
+                return t;
+            },
+            easeInQuad: function easeInQuad(t) {
+                return t * t;
+            },
+            easeOutQuad: function easeOutQuad(t) {
+                return t * (2 - t);
+            },
+            easeInOutQuad: function easeInOutQuad(t) {
+                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+            },
+            easeInCubic: function easeInCubic(t) {
+                return t * t * t;
+            },
+            easeOutCubic: function easeOutCubic(t) {
+                return (--t) * t * t + 1;
+            },
+            easeInOutCubic: function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+            },
+            easeInQuart: function easeInQuart(t) {
+                return t * t * t * t;
+            },
+            easeOutQuart: function easeOutQuart(t) {
+                return 1 - (--t) * t * t * t;
+            },
+            easeInOutQuart: function easeInOutQuart(t) {
+                return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t;
+            },
+            easeInQuint: function easeInQuint(t) {
+                return t * t * t * t * t;
+            },
+            easeOutQuint: function easeOutQuint(t) {
+                return 1 + (--t) * t * t * t * t;
+            },
+            easeInOutQuint: function easeInOutQuint(t) {
+                return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * (--t) * t * t * t * t;
+            }
+        };
+
+        var start = window.pageYOffset;
+        var startTime = 'now' in window.performance ? performance.now() : new Date().getTime();
+
+        var documentHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
+        var windowHeight = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
+        var destinationOffset = typeof destination === 'number' ? destination : destination.offsetTop + 100;
+        var destinationOffsetToScroll = Math.round(documentHeight - destinationOffset < windowHeight ? documentHeight - windowHeight : destinationOffset);
+
+        if ('requestAnimationFrame' in window === false) {
+            window.scroll(0, destinationOffsetToScroll);
+            if (callback) {
+                callback();
+            }
+            return;
+        }
+
+        function scroll() {
+            var now = 'now' in window.performance ? performance.now() : new Date().getTime();
+            var time = Math.min(1, ((now - startTime) / duration));
+            var timeFunction = easings[easing](time);
+            window.scroll(0, Math.ceil((timeFunction * (destinationOffsetToScroll - start)) + start));
+
+            if (window.pageYOffset === destinationOffsetToScroll) {
+                if (callback) {
+                    callback();
+                }
+                return;
+            }
+
+            requestAnimationFrame(scroll);
+        }
+
+        scroll();
+    }
+    
+    /**
+   * Step by step functionnality (Show or hide next row)
+   *
+   * @param {Object} that SideBySide object, same as options
+   */
+    function stepByStepRows (that) {
+        var trs = document.querySelectorAll('#adc_' + that.instanceId + ' tbody > tr');
+        var tds;
+        var lastDataFound = 0;
+        var nbDataFound = 0;
+        // Iterate tr backwards
+    	for (var i = (trs.length); i-- > 0; ) {
+            tds = trs[i].querySelectorAll('td');
+            lastDataFound = nbDataFound;
+            nbDataFound = 0;
+            // Iterate td backwards
+    		for (var j = tds.length; j-- > 1; ) {
+                if (hasClass(tds[j],'date') && checkAnswersDate(tds[j])) {
+					nbDataFound = nbDataFound + 1
+                } else if (hasClass(tds[j],'open') && checkAnswersOpen(tds[j])) {
+                    nbDataFound = nbDataFound + 1
+                } else if (hasClass(tds[j],'numeric') && checkAnswersNumeric(tds[j])) {
+                    nbDataFound = nbDataFound + 1
+                } else if (hasClass(tds[j],'select') && checkAnswersSelect(tds[j])) {
+                    nbDataFound = nbDataFound + 1
+                } else if (hasClass(tds[j],'closed') && checkAnswersClosed(tds[j])) {
+                    nbDataFound = nbDataFound + 1
+                } 
+            }
+            if ((i === (trs.length - 1)) && (nbDataFound > 0)) break;
+            if ((i === (trs.length - 1)) && (nbDataFound === 0)) continue;
+            // Check if all questions have answers
+            if (nbDataFound !== (tds.length - 1) && lastDataFound === 0) {
+                trs[(i + 1)].style.display = 'none';
+            } else {
+                if (trs[(i + 1)].style.display === 'none') {
+                    trs[(i + 1)].style.display = '';
+                    scrollIt(trs[(i + 1)], 200, 'easeOutQuad');   
+                }
+                break;
+            }
+        }   
+    }
 
     /**
    * Manage the exclusive responses or single question
@@ -118,6 +340,7 @@
              if (el.className !== 'dkbutton') {
                 var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
              	triggerRouting(shortcut);   
+                if (that.stepByStep) stepByStepRows(that);
              }
         }
     }
@@ -319,6 +542,7 @@
             }
         }
         triggerRouting(shortcut);
+        if (that.stepByStep) stepByStepRows(that);
     }
     
     /**
@@ -332,6 +556,7 @@
         var split = el.className.split('_')
         var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
         triggerRouting(shortcut);
+        if (that.stepByStep) stepByStepRows(that);
     }
     
     /**
@@ -345,6 +570,7 @@
         var split = el.className.split('_')
         var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
         triggerRouting(shortcut);
+        if (that.stepByStep) stepByStepRows(that);
     }
 
     /**
@@ -511,6 +737,7 @@
             }
         }
         triggerRouting(shortcut);
+        if (that.stepByStep) stepByStepRows(that);
     }
 
     /**
@@ -607,117 +834,6 @@
         }
         return true;
     }
-    
-    /**
-   * Check if the date question has an answer
-   *
-   * @param {Object} td Date td
-   */
-    function checkAnswersDates (td) {
-        var inputDate = td.querySelector('.RLDatePicker input[type=text]');
-        var selectHour = td.querySelector('.RLTimePicker select[id^=hour]');
-        var selectMinute = td.querySelector('.RLTimePicker select[id^=minutes]');
-        var selectSecond = td.querySelector('.RLTimePicker select[id^=seconds]');
-        var inputDk = td.querySelector('.DK input[type=checkbox]');
-        var result = true;
-        if (inputDk) {
-        	if (inputDate && selectHour) {
-                if (selectSecond && inputDk.checked === false && (inputDate.value === '' || selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm' || selectSecond.value.toLowerCase() === 'ss')) result = false;
-                if (!selectSecond && inputDk.checked === false && (inputDate.value === '' || selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm')) result = false;
-            } else if (inputDate && !selectHour) {
-                if (inputDk.checked === false && inputDate.value === '') result = false;
-            } else if (!inputDate && selectHour) {
-                if (selectSecond && inputDk.checked === false && (selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm' || selectSecond.value.toLowerCase() === 'ss')) result = false;
-                if (!selectSecond && inputDk.checked === false && (selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm')) result = false;
-            }
-        } else {
-            if (inputDate && selectHour) {
-                if (selectSecond && (inputDate.value === '' || selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm' || selectSecond.value.toLowerCase() === 'ss')) result = false;
-                if (!selectSecond && (inputDate.value === '' || selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm')) result = false;
-            } else if (inputDate && !selectHour) {
-                if (inputDate.value === '') result = false;
-            } else if (!inputDate && selectHour) {
-                if (selectSecond && (selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm' || selectSecond.value.toLowerCase() === 'ss')) result = false;
-                if (!selectSecond && (selectHour.value.toLowerCase() === 'hh' || selectMinute.value.toLowerCase() === 'mm')) result = false;
-            }
-        }
-        return result;
-    }
-    
-    /**
-   * Check if the open question has an answer
-   *
-   * @param {Object} td Open td
-   */
-    function checkAnswersOpens (td) {
-        var inputOpen = td.querySelector('.inputopen');
-        var inputDk = td.querySelector('.DK input[type=checkbox]');
-        var result = true;
-        if (inputDk) {
-        	if (inputDk.checked === false && inputOpen.value.trim().length < 2) result = false;
-        } else {
-            if (inputOpen.value.trim().length < 2) result = false;
-        }
-        return result;
-    }
-    
-    /**
-   * Check if the numerical question has an answer
-   *
-   * @param {Object} td Numeric td
-   */
-    function checkAnswersNumerics (td) {
-        var inputNumeric = td.querySelector('input[type=number]');
-        var inputDk = td.querySelector('.DK input[type=checkbox]');
-        var result = true;
-        if (inputDk) {
-        	if (inputDk.checked === false && inputNumeric.value === '') result = false;
-        } else {
-            if (inputNumeric.value === '') result = false;
-        }
-        return result;
-    }
-    
-    /**
-   * Check if the select question has an answer
-   *
-   * @param {Object} td Select td
-   */
-    function checkAnswersSelects (td) {
-        var inputSelect = td.querySelector('select');
-        var result = true;
-      	if (inputSelect.value === '0') result = false;
-        return result;
-    }
-    
-    /**
-   * Step by step functionnality (Show or hide next row)
-   *
-   * @param {Object} that SideBySide object, same as options
-   */
-    function stepByStep (that) {
-        var trs = document.querySelectorAll('#adc_' + that.instanceId + ' tbody > tr');
-        var tds;
-        var dataFound = false;
-        // Iterate tr backwards
-    	for (var i = trs.length; i-- > 0; ) {
-            tds = trs[i].querySelectorAll('td');
-            // Iterate td backwards
-    		for (var j = tds.length; j-- > 1; ) {
-                if (hasClass(tds[j],'date')) {
-					
-                } else if (hasClass(tds[j],'open')) {
-                    
-                } else if (hasClass(tds[j],'numeric')) {
-                    
-                } else if (hasClass(tds[j],'select')) {
-                    
-                } else if (hasClass(tds[j],'closed')) {
-                    
-                } 
-            }
-        }   
-    }
 
     /**
    * Creates a new instance of the SideBySide
@@ -732,6 +848,7 @@
         this.questions = options.questions || [];
         this.maxLimit = options.maxLimit || [];
         this.headerFixed = options.headerFixed;
+        this.stepByStep = options.stepByStep;
         this.rankingBox = options.rankingBox || [];
         this.suffixes = options.suffixes || [];
         this.decimals = options.decimals || [];
@@ -927,6 +1044,12 @@
         for (var l1 = 0, k1 = zooms.length; l1 < k1; l1++) {
             simplboxConstructorCall(zooms[l1].getAttribute('data-id'));
         }
+        
+        // If step by step
+        if (this.stepByStep) {
+            stepByStepRows(this);
+        }
+        
     }
 
     /**
