@@ -153,14 +153,16 @@
                 }
             },
             onSelect: function(event) {
-            if (window.askia 
-                && window.arrLiveRoutingShortcut 
-                && window.arrLiveRoutingShortcut.length > 0
-                && window.arrLiveRoutingShortcut.indexOf(question) >= 0) {
-                	askia.triggerAnswer();
+                var inputDate = document.getElementById(inputNameX);
+                if ('createEvent' in document) {
+                    var evt = document.createEvent('HTMLEvents');
+                    evt.initEvent('input', false, true);
+                    inputDate.dispatchEvent(evt);
+                } else {
+                    inputDate.fireEvent('oninput');
                 }
-                },
-                onDraw: function(event) {
+            },
+            onDraw: function(event) {
                 var adcIndex = adcId;
                 var elms = document.getElementsByClassName('pika-title');
                 for (var i = 0; i<elms.length; i++) {

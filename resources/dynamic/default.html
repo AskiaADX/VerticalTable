@@ -276,7 +276,6 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
                     <span class="timeSeparator_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">:</span>
                     <select id="seconds_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="seconds"{%:= attrDisabled %}></select>
                   </span>
-                  <!--<input type="text" id="time" name="time" readonly="readonly" hidden=true/> -->
                   <input id="askia-input-time{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" data-class="shortcut_{%= j2 %}" class="askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %} time_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" hidden="" type="text" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName("time") %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue("time") %}"{%:= attrReadOnly %}>
                   <span class="imperial" {%If CurrentADC.PropValue("imperial") = "false" Then %} hidden {% EndIf %} id="ampm_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}"></span>
                 </div>
