@@ -111,7 +111,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
            EndIf
     	   If (column.Type = "multiple") Then
     	  %}
-          <td class="closed">
+          <td class="closed" data-class="inputcode_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
               <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
                   <div class="question-label">{%:= column.LongCaption %}</div>
               	  <div class="responses-container">
@@ -144,7 +144,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
 				minVal = On(column.MinValue <> DK, " min=\"" + column.MinValue + "\"", "") 
 				maxVal = On(column.MaxValue <> DK, " max=\"" + column.MaxValue + "\"", "") 
 				step = On(CurrentADC.PropValue("step") <> "", " step=\"" + CurrentADC.PropValue("step").Replace(",",".") + "\"", "") %}
-          <td class="numeric">
+          <td class="numeric" data-class="inputcode_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
             <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
               <div class="question-label">{%:= column.LongCaption %}</div>
               <div class="responses-container">
@@ -189,7 +189,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
 				attrPlaceholder = On(placeholder <> "", " placeholder=\"" + placeholder + "\"", "")
 				maxValueOpen = column.Iteration(loopQuestion.Answers[j1].Index).MaxValue
 				attrMaxOpen  = On(maxValueOpen <> DK AND maxValueOpen > 0, " maxLength=\"" + maxValueOpen + "\"", "") %}
-          <td class="open">
+          <td class="open" data-class="inputcode_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
             <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
               <div class="question-label">{%:= column.LongCaption %}</div>
               <div class="responses-container">
@@ -213,7 +213,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
           </td>
             {% EndIf
 			If ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + j2) = "0")) Then %}
-          <td class="closed">
+          <td class="closed" data-class="inputcode_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
             <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
               <div class="question-label">{%:= column.LongCaption %}</div>
               <div class="responses-container">
@@ -238,7 +238,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
           </td>
             {% EndIf
 			If ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + j2) = "1" or CurrentADC.PropValue("colAsComboBox" + j2) = "2")) Then %}
-          <td class="select">
+          <td class="select" data-class="inputcode_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
             <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
               <div class="question-label">{%:= column.LongCaption %}</div>
               <div class="responses-container">
@@ -256,7 +256,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
 			If (column.Type = "datetime") Then 
 				attrReadOnly = On(column.Iteration(loopQuestion.Answers[j1].Index).HasDK and column.Iteration(loopQuestion.Answers[j1].Index).HasAnswered and CurrentADC.PropValue("dateDkButton") = "1", " readonly=\"readonly\"", " readonly=\"true\"")
 				attrDisabled = On(column.Iteration(loopQuestion.Answers[j1].Index).HasDK and column.Iteration(loopQuestion.Answers[j1].Index).HasAnswered and CurrentADC.PropValue("dateDkButton") = "1", " disabled=\"disabled\"", "") %}
-          <td class="date">
+          <td class="date" data-class="inputcode_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
             <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
               <div class="question-label">{%:= column.LongCaption %}</div>
               <div class="responses-container">

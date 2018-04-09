@@ -266,29 +266,35 @@
         var tds;
         var lastDataFound = 0;
         var nbDataFound = 0;
+        var nbHiddenQuestions = 0;
+        
         // Iterate tr backwards
     	for (var i = (trs.length); i-- > 0; ) {
             tds = trs[i].querySelectorAll('td');
-            lastDataFound = nbDataFound;
+            lastDataFound = nbDataFound - nbHiddenQuestions;
             nbDataFound = 0;
+            nbHiddenQuestions = 0;
             // Iterate td backwards
     		for (var j = tds.length; j-- > 1; ) {
-                if (hasClass(tds[j],'date') && checkAnswersDate(tds[j])) {
-					nbDataFound = nbDataFound + 1
-                } else if (hasClass(tds[j],'open') && checkAnswersOpen(tds[j])) {
-                    nbDataFound = nbDataFound + 1
-                } else if (hasClass(tds[j],'numeric') && checkAnswersNumeric(tds[j])) {
-                    nbDataFound = nbDataFound + 1
-                } else if (hasClass(tds[j],'select') && checkAnswersSelect(tds[j])) {
-                    nbDataFound = nbDataFound + 1
-                } else if (hasClass(tds[j],'closed') && checkAnswersClosed(tds[j])) {
-                    nbDataFound = nbDataFound + 1
-                } 
+                if (hasClass(tds[j],'date') && (checkAnswersDate(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+					nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'open') && (checkAnswersOpen(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'numeric') && (checkAnswersNumeric(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'select') && (checkAnswersSelect(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'closed') && (checkAnswersClosed(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                }
+                if ((hasClass(tds[j],'date') || hasClass(tds[j],'open') || hasClass(tds[j],'numeric') || hasClass(tds[j],'select') || hasClass(tds[j],'closed')) && (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0) ) {
+                    nbHiddenQuestions = nbHiddenQuestions + 1;
+                }
             }
-            if ((i === (trs.length - 1)) && (nbDataFound > 0)) break;
-            if ((i === (trs.length - 1)) && (nbDataFound === 0)) continue;
+            if ((i === (trs.length - 1)) && ((nbDataFound - nbHiddenQuestions) > 0)) break;
+            if ((i === (trs.length - 1)) && ((nbDataFound - nbHiddenQuestions) === 0)) continue;
             // Check if all questions have answers
-            if (nbDataFound !== (tds.length - 1) && lastDataFound === 0) {
+            if (nbDataFound !== (tds.length - 1) && (lastDataFound  === 0)) {
                 trs[(i + 1)].style.display = 'none';
             } else {
                 if (trs[(i + 1)].style.display === 'none') {
@@ -853,6 +859,32 @@
         this.suffixes = options.suffixes || [];
         this.decimals = options.decimals || [];
         this.useSlider = options.useSlider || 0;
+        this.arrInputCodesHiddenQuestions = []; 
+        
+        addEvent(document, 'askiaShowQuestion', 
+                 (function (passedInElement) {
+            return function (data) {
+                var indexInputCode = passedInElement.arrInputCodesHiddenQuestions.indexOf(data.detail.question.inputCode);
+                if (indexInputCode !== -1) {
+                    passedInElement.arrInputCodesHiddenQuestions.splice(indexInputCode, 1);
+                }
+                if (passedInElement.stepByStep) {
+                    stepByStepRows(passedInElement);
+                }
+            };
+        }(this)));
+        addEvent(document, 'askiaHideQuestion', 
+                 (function (passedInElement) {
+            return function (data) {
+                var indexInputCode = passedInElement.arrInputCodesHiddenQuestions.indexOf(data.detail.question.inputCode);
+                if (indexInputCode === -1) {
+                    passedInElement.arrInputCodesHiddenQuestions.push(data.detail.question.inputCode);
+                }
+                if (passedInElement.stepByStep) {
+                    stepByStepRows(passedInElement);
+                }
+            };
+        }(this)));
 
         var radios = document.querySelectorAll('#adc_' + this.instanceId + ' input[type="radio"]');
         var checkboxes = document.querySelectorAll('#adc_' + this.instanceId + ' input[type="checkbox"]');
