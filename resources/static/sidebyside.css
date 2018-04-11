@@ -56,7 +56,12 @@ body {
     margin: 0;
     background: transparent;
     padding: 5px;
-    height: 34px;
+    height: 2em;
+    background-image: linear-gradient(45deg, transparent 50%, rgba(221, 221, 221, 1) 50%), linear-gradient(135deg, rgba(221, 221, 221, 1) 50%, transparent 50%);
+    background-position: calc(100% - 13px) calc(0.8em), calc(100% - 6px) calc(0.8em);
+    background-size: 8px 8px, 8px 8px;
+    background-repeat: no-repeat;
+    padding-right: 1.5em;
     cursor: pointer;
 }
 .sidebyside select option:first-child {
