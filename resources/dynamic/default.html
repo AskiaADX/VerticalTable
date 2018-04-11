@@ -45,7 +45,7 @@ For i3 = 1 To 5
     If ((columnQuestion.Id = DK) and (i3 = 1)) Then
     	columnQuestion = CurrentQuestion
     EndIf
-    If (((columnQuestion.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + i3) = "0")) Or (columnQuestion.Type = "multiple")) Then
+    If (((columnQuestion.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + i3) <> "1") and (CurrentADC.PropValue("colAsComboBox" + i3) <> "2")) Or (columnQuestion.Type = "multiple")) Then
         hasClosedQuestion = 1
         Break
     EndIf
@@ -62,7 +62,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
             If ((column.Id = DK) and (i2 = 1)) Then
                 column = CurrentQuestion
             EndIf
-    %}<th {%:= On(((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + i2) = "0")) Or (column.Type = "multiple"),"", rowspan) %}>{%:= column.LongCaption %}</th>{%Next i2 %}
+    %}<th {%:= On(((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + i2) <> "1") and (CurrentADC.PropValue("colAsComboBox" + i2) <> "2")) Or (column.Type = "multiple"),"", rowspan) %}>{%:= column.LongCaption %}</th>{%Next i2 %}
         </tr>
         {% If ((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQuestion = 1)) Then %}
         <tr>
@@ -71,7 +71,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
             If ((column.Id = DK) and (i4 = 1)) Then
                 column = CurrentQuestion
             EndIf
-    If (((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + i4) = "0")) Or (column.Type = "multiple")) Then
+    If (((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + i4) <> "1") and (CurrentADC.PropValue("colAsComboBox" + i4) <> "2")) Or (column.Type = "multiple")) Then
     	  %}
           <th>
             <div class="header-responses-container">
@@ -212,7 +212,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
             </div>
           </td>
             {% EndIf
-			If ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + j2) = "0")) Then %}
+			If ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + j2) <> "1") and (CurrentADC.PropValue("colAsComboBox" + j2) <> "2")) Then %}
           <td class="closed" data-class="inputcode_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
             <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
               <div class="question-label">{%:= column.LongCaption %}</div>
@@ -237,16 +237,17 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
             </div>
           </td>
             {% EndIf
-			If ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + j2) = "1" or CurrentADC.PropValue("colAsComboBox" + j2) = "2")) Then %}
+			If ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + j2) = "1" or CurrentADC.PropValue("colAsComboBox" + j2) = "2")) Then 
+				attrSelected = On(column.Iteration(loopQuestion.Answers[j1].Index).HasDK or column.Iteration(loopQuestion.Answers[j1].Index).HasNA, " selected=\"selected\"", "") %}
           <td class="select" data-class="inputcode_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
             <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
               <div class="question-label">{%:= column.LongCaption %}</div>
               <div class="responses-container">
                   <select id="askia-input-select{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" data-class="shortcut_{%= j2 %}" class="select_{%= CurrentADC.InstanceId %}_{%= j2 %}" name="{%:= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}">
-                      <option value="0">{%:= CurrentADC.PropValue("firstOptionCombo" + j2) %}</option>
+                      <option value="0" disabled="disabled"{%:= attrSelected %}>{%:= CurrentADC.PropValue("firstOptionCombo" + j2) %}</option>
                       {% For j5=1 to column.AvailableResponses.Count
-    					attrSelected = On(column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j5].IsSelected, "selected=\"selected\"", "") %}
-                      <option {%:= attrSelected %} value="{%:= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j5].InputValue() %}">{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j5].Caption %}</option>
+    					attrSelected = On(column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j5].IsSelected, " selected=\"selected\"", "") %}
+                      <option{%:= attrSelected %} value="{%:= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j5].InputValue() %}">{%= column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j5].Caption %}</option>
                       {% Next j5 %}
                   </select>
               </div>

@@ -8,6 +8,10 @@ body {
 *:focus {
   outline: none;
 }
+* {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
 .sidebyside {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -55,8 +59,11 @@ body {
     height: 34px;
     cursor: pointer;
 }
+.sidebyside select option:first-child {
+	display: none;   
+}
 
-.RLTimePicker select::-ms-expand {
+.sidebyside select::-ms-expand {
     display: none;
 }
 
@@ -447,11 +454,12 @@ body {
   appearance: none;
   cursor: pointer;
 }
-
-.sidebyside .RLTimePicker select option {
+.sidebyside select option {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  text-align: center;
   cursor: pointer;
+}
+.sidebyside .RLTimePicker select option {
+  text-align: center;
 }
 
 .sidebyside .RLTimePicker select:focus {

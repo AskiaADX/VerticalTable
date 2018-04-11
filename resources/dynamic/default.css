@@ -211,6 +211,11 @@ EndIf %}
     color: rgba({%= Theme.BlackColor %}) !important;
     background-color: rgba({%= Theme.WhiteColor %}) !important;
 }
+#adc_{%= CurrentADC.InstanceId %} .RLTimePicker option:disabled,
+#adc_{%= CurrentADC.InstanceId %} .select option:disabled {
+    color: rgba({%= Theme.BlackColor.ToRGB() %},.5) !important;
+    background-color: rgba({%= Theme.WhiteColor %}) !important;
+}
 #picker1 .is-today .pika-button {
   color: rgba({%= Theme.SecondaryColor %}) !important;
 }

@@ -299,7 +299,7 @@
             } else {
                 if (trs[(i + 1)].style.display === 'none') {
                     trs[(i + 1)].style.display = '';
-                    scrollIt(trs[(i + 1)], 200, 'easeOutQuad');   
+                    scrollIt(trs[(i + 1)], 300, 'easeOutQuad');   
                 }
                 break;
             }
@@ -714,7 +714,7 @@
     function resetComboBox(inputSelects) {
         for(var i = 0; i < inputSelects.length; i++) {
             var optList = inputSelects[i].getElementsByTagName("option");
-            for( var j = 0; j < optList.length; j++) {
+            for( var j = 1; j < optList.length; j++) {
                 optList[j].disabled = false;
             }
         }
