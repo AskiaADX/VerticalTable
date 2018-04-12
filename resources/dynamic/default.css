@@ -213,6 +213,7 @@ EndIf %}
 {% EndIf %}
 
 #adc_{%= CurrentADC.InstanceId %} .select select,
+#adc_{%= CurrentADC.InstanceId %} select:focus::-ms-value,
 #adc_{%= CurrentADC.InstanceId %} .RLTimePicker select:not([disabled=disabled]) {
     color: rgba({%= Theme.BlackColor %}) !important;
     background-color: rgba({%= Theme.WhiteColor %}) !important;
@@ -224,7 +225,7 @@ EndIf %}
     background-color: rgba({%= Theme.WhiteColor %}) !important;
 }
 #adc_{%= CurrentADC.InstanceId %} .RLTimePicker option:disabled,
-#adc_{%= CurrentADC.InstanceId %} .select option:disabled {
+#adc_{%= CurrentADC.InstanceId %} select option:disabled {
     color: rgba({%= Theme.BlackColor.ToRGB() %},.5) !important;
     background-color: rgba({%= Theme.WhiteColor %}) !important;
 }
