@@ -346,7 +346,7 @@
              if (el.className !== 'dkbutton') {
                 var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
              	triggerRouting(shortcut);   
-                if (that.stepByStep) setTimeout(stepByStepRows, 200, that);
+                if (that.stepByStep) setTimeout(stepByStepRows, 300, that);
              }
         }
     }
@@ -548,7 +548,7 @@
             }
         }
         triggerRouting(shortcut);
-        if (that.stepByStep) setTimeout(stepByStepRows, 200, that);
+        if (that.stepByStep) setTimeout(stepByStepRows, 300, that);
     }
     
     /**
@@ -562,7 +562,7 @@
         var split = el.className.split('_')
         var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
         triggerRouting(shortcut);
-        if (that.stepByStep) setTimeout(stepByStepRows, 200, that);
+        if (that.stepByStep) setTimeout(stepByStepRows, 300, that);
     }
     
     /**
@@ -576,7 +576,7 @@
         var split = el.className.split('_')
         var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
         triggerRouting(shortcut);
-        if (that.stepByStep) setTimeout(stepByStepRows, 200, that);
+        if (that.stepByStep) setTimeout(stepByStepRows, 300, that);
     }
 
     /**
@@ -743,7 +743,7 @@
             }
         }
         triggerRouting(shortcut);
-        if (that.stepByStep) setTimeout(stepByStepRows, 200, that);
+        if (that.stepByStep) setTimeout(stepByStepRows, 300, that);
     }
 
     /**
