@@ -169,13 +169,13 @@ EndIf %}
 }
 {% EndIf %}
 /* If responses on headers and show header */
-{% If (CurrentADC.PropValue("respOnHeader") = "1" and CurrentADC.PropValue("showTitle") = "1") Then %}
+{% If (CurrentADC.PropValue("respOnHeader") = "1" and CurrentADC.PropValue("showTitle") = "1" and  CurrentADC.PropValue("responsesDirection") = "0") Then %}
 #adc_{%= CurrentADC.InstanceId %} .response-container .content {
   display: none;
 }
 {% EndIf %}
 /* If responses not on headers or not show header */
-{% If (CurrentADC.PropValue("respOnHeader") = "0" or CurrentADC.PropValue("showTitle") = "0") Then %}
+{% If (CurrentADC.PropValue("respOnHeader") = "0" or CurrentADC.PropValue("showTitle") = "0" or CurrentADC.PropValue("responsesDirection") = "1") Then %}
 #adc_{%= CurrentADC.InstanceId %} .response-container .askia-checkbox,
 #adc_{%= CurrentADC.InstanceId %} .response-container .askia-radio {
   display: none;
