@@ -295,12 +295,12 @@
             if ((i === (trs.length - 1)) && ((nbDataFound - nbHiddenQuestions) === 0)) continue;
             // Check if all questions have answers
             if (nbDataFound !== (tds.length - 1) && (lastDataFound  === 0)) {
-                trs[(i + 1)].style.display = 'none';
+                if (that.stepByStep) trs[(i + 1)].style.display = 'none';
             } else {
                 if (trs[(i + 1)].style.display === 'none') {
-                    trs[(i + 1)].style.display = '';
-                    scrollIt(trs[(i + 1)], 300, 'easeOutQuad');   
+                    if (that.stepByStep) trs[(i + 1)].style.display = '';
                 }
+                scrollIt(trs[(i + 1)], 300, 'easeOutQuad');   
                 break;
             }
         }   
@@ -346,7 +346,7 @@
              if (el.className !== 'dkbutton') {
                 var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
              	triggerRouting(shortcut);   
-                if (that.stepByStep) setTimeout(stepByStepRows, 300, that);
+                setTimeout(stepByStepRows, 300, that);
              }
         }
     }
@@ -548,7 +548,7 @@
             }
         }
         triggerRouting(shortcut);
-        if (that.stepByStep) setTimeout(stepByStepRows, 300, that);
+        setTimeout(stepByStepRows, 300, that);
     }
     
     /**
@@ -562,7 +562,7 @@
         var split = el.className.split('_')
         var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
         triggerRouting(shortcut);
-        if (that.stepByStep) setTimeout(stepByStepRows, 300, that);
+        setTimeout(stepByStepRows, 300, that);
     }
     
     /**
@@ -576,7 +576,7 @@
         var split = el.className.split('_')
         var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
         triggerRouting(shortcut);
-        if (that.stepByStep) setTimeout(stepByStepRows, 300, that);
+        setTimeout(stepByStepRows, 300, that);
     }
 
     /**
@@ -743,7 +743,7 @@
             }
         }
         triggerRouting(shortcut);
-        if (that.stepByStep) setTimeout(stepByStepRows, 300, that);
+        setTimeout(stepByStepRows, 300, that);
     }
 
     /**
@@ -868,9 +868,7 @@
                 if (indexInputCode !== -1) {
                     passedInElement.arrInputCodesHiddenQuestions.splice(indexInputCode, 1);
                 }
-                if (passedInElement.stepByStep) {
-                    stepByStepRows(passedInElement);
-                }
+                stepByStepRows(passedInElement);
             };
         }(this)));
         addEvent(document, 'askiaHideQuestion', 
@@ -880,9 +878,7 @@
                 if (indexInputCode === -1) {
                     passedInElement.arrInputCodesHiddenQuestions.push(data.detail.question.inputCode);
                 }
-                if (passedInElement.stepByStep) {
-                    stepByStepRows(passedInElement);
-                }
+                stepByStepRows(passedInElement);
             };
         }(this)));
 
@@ -1077,8 +1073,7 @@
             simplboxConstructorCall(zooms[l1].getAttribute('data-id'));
         }
         
-        // If step by step
-        if (this.stepByStep) stepByStepRows(this);
+        stepByStepRows(this);
 
     }
 
