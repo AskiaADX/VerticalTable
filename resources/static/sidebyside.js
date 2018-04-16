@@ -267,8 +267,10 @@
 
         while (el) {
             // for all other non-BODY elements
-            xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
-            yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+            // xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+            // yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+            xPos += (el.offsetLeft + el.clientLeft);
+            yPos += (el.offsetTop + el.clientTop);
             el = el.offsetParent;
         }
         return {
