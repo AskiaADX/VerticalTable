@@ -3,6 +3,89 @@
     if (msEdgeMatch) document.documentMode = parseInt(msEdgeMatch[1]);
 })();
 (function () {
+    
+    // Create a safe reference to the Underscore object for use below.
+    var _ = function(obj) {
+        if (obj instanceof _) return obj;
+        if (!(this instanceof _)) return new _(obj);
+        this._wrapped = obj;
+    };
+    
+    // Similar to ES6's rest param (http://ariya.ofilabs.com/2013/03/es6-and-rest-parameter.html)
+    // This accumulates the arguments passed into an array, after a given index.
+    var restArgs = function(func, startIndex) {
+        startIndex = startIndex == null ? func.length - 1 : +startIndex;
+        return function() {
+            var length = Math.max(arguments.length - startIndex, 0),
+                rest = Array(length),
+                index = 0;
+            for (; index < length; index++) {
+                rest[index] = arguments[index + startIndex];
+            }
+            switch (startIndex) {
+                case 0: return func.call(this, rest);
+                case 1: return func.call(this, arguments[0], rest);
+                case 2: return func.call(this, arguments[0], arguments[1], rest);
+                              }
+            var args = Array(startIndex + 1);
+            for (index = 0; index < startIndex; index++) {
+                args[index] = arguments[index];
+            }
+            args[startIndex] = rest;
+            return func.apply(this, args);
+        };
+    };
+    
+    // Delays a function for the given number of milliseconds, and then calls
+    // it with the arguments supplied.
+    _.delay = restArgs(function(func, wait, args) {
+        return setTimeout(function() {
+            return func.apply(null, args);
+        }, wait);
+    });
+    
+    /**
+ * Return a function which, until she continue to be invoked,
+ * will not be executed. The function will be executed only when
+ * the function will stop to be called for more than N milliseconds.
+ * If the parameter `immediate` equal true, then the function 
+ * will be executed to the first call instaed of the last.
+ * Parameters :
+ *  - func : the function to `debounce`
+ *  - wait : the number of milliseconds (N) to wait before 
+ *           call the function func()
+ *  - args : the arguments to pass to func()
+ *                          
+ */
+    function debounce(func, wait, immediate) {
+        var timeout, result;
+
+        var later = function(context, args) {
+            timeout = null;
+            if (args) result = func.apply(context, args);
+        };
+
+        var debounced = restArgs(function(args) {
+            if (timeout) clearTimeout(timeout);
+            if (immediate) {
+                var callNow = !timeout;
+                timeout = setTimeout(later, wait);
+                if (callNow) result = func.apply(this, args);
+            } else {
+                timeout = _.delay(later, wait, this, args);
+            }
+
+            return result;
+        });
+
+        debounced.cancel = function() {
+            clearTimeout(timeout);
+            timeout = null;
+        };
+
+        return debounced;
+
+    }
 
     /**
    * Add event listener in DOMElement
@@ -177,6 +260,23 @@
         return result;
     }
     
+    // Helper function to get an element's exact position
+    function getPosition(el) {
+        var xPos = 0;
+        var yPos = 0;
+
+        while (el) {
+            // for all other non-BODY elements
+            xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+            yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+            el = el.offsetParent;
+        }
+        return {
+            x: xPos,
+            y: yPos
+        };
+    }
+    
     function scrollIt(destination, duration, easing, callback) {
 
         var easings = {
@@ -226,7 +326,7 @@
 
         var documentHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
         var windowHeight = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
-        var destinationOffset = typeof destination === 'number' ? destination : destination.offsetTop + 100;
+        var destinationOffset = typeof destination === 'number' ? destination : getPosition(destination).y - 20;
         var destinationOffsetToScroll = Math.round(documentHeight - destinationOffset < windowHeight ? documentHeight - windowHeight : destinationOffset);
 
         if ('requestAnimationFrame' in window === false) {
@@ -294,13 +394,17 @@
             if ((i === (trs.length - 1)) && ((nbDataFound - nbHiddenQuestions) > 0)) break;
             if ((i === (trs.length - 1)) && ((nbDataFound - nbHiddenQuestions) === 0)) continue;
             // Check if all questions have answers
-            if (nbDataFound !== (tds.length - 1) && (lastDataFound  === 0)) {
+            if ((nbDataFound !== (tds.length - 1)) && (lastDataFound  === 0)) {
                 if (that.stepByStep) trs[(i + 1)].style.display = 'none';
+                addClass(trs[(i + 1)],'display');
             } else {
                 if (trs[(i + 1)].style.display === 'none') {
                     if (that.stepByStep) trs[(i + 1)].style.display = '';
                 }
-                scrollIt(trs[(i + 1)], 300, 'easeOutQuad');   
+                if (hasClass(trs[(i + 1)],'display')) {
+                	if (window.innerWidth <= that.responsiveWidth) scrollIt(trs[(i + 1)], 300, 'easeOutQuad');
+                    removeClass(trs[(i + 1)],'display');
+                }
                 break;
             }
         }   
@@ -346,7 +450,8 @@
              if (el.className !== 'dkbutton') {
                 var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
              	triggerRouting(shortcut);   
-                setTimeout(stepByStepRows, 300, that);
+                var debounceStepByStep = debounce(stepByStepRows, 300);
+                debounceStepByStep(that);
              }
         }
     }
@@ -548,7 +653,8 @@
             }
         }
         triggerRouting(shortcut);
-        setTimeout(stepByStepRows, 300, that);
+        var debounceStepByStep = debounce(stepByStepRows, 300);
+        debounceStepByStep(that);
     }
     
     /**
@@ -562,7 +668,8 @@
         var split = el.className.split('_')
         var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
         triggerRouting(shortcut);
-        setTimeout(stepByStepRows, 300, that);
+        var debounceStepByStep = debounce(stepByStepRows, 300);
+        debounceStepByStep(that);
     }
     
     /**
@@ -576,7 +683,8 @@
         var split = el.className.split('_')
         var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
         triggerRouting(shortcut);
-        setTimeout(stepByStepRows, 300, that);
+        var debounceStepByStep = debounce(stepByStepRows, 300);
+        debounceStepByStep(that);
     }
 
     /**
@@ -743,7 +851,8 @@
             }
         }
         triggerRouting(shortcut);
-        setTimeout(stepByStepRows, 300, that);
+        var debounceStepByStep = debounce(stepByStepRows, 300);
+        debounceStepByStep(that);
     }
 
     /**
@@ -850,6 +959,7 @@
     function SideBySide (options) {
         this.options = options;
         this.instanceId = options.instanceId || 1;
+        this.responsiveWidth = options.responsiveWidth || 600;
         this.showTotal = options.showTotal || 0;
         this.questions = options.questions || [];
         this.maxLimit = options.maxLimit || [];
@@ -868,7 +978,8 @@
                 if (indexInputCode !== -1) {
                     passedInElement.arrInputCodesHiddenQuestions.splice(indexInputCode, 1);
                 }
-                stepByStepRows(passedInElement);
+                var debounceStepByStep = debounce(stepByStepRows, 300);
+                debounceStepByStep(passedInElement);
             };
         }(this)));
         addEvent(document, 'askiaHideQuestion', 
@@ -878,7 +989,8 @@
                 if (indexInputCode === -1) {
                     passedInElement.arrInputCodesHiddenQuestions.push(data.detail.question.inputCode);
                 }
-                stepByStepRows(passedInElement);
+                var debounceStepByStep = debounce(stepByStepRows, 300);
+                debounceStepByStep(passedInElement);
             };
         }(this)));
 
@@ -1073,7 +1185,8 @@
             simplboxConstructorCall(zooms[l1].getAttribute('data-id'));
         }
         
-        stepByStepRows(this);
+        var debounceStepByStep = debounce(stepByStepRows, 300);
+        debounceStepByStep(this);
 
     }
 

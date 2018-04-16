@@ -26,6 +26,7 @@ Next i1
 (function () {
   var sidebyside = new SideBySide({
     instanceId: {%= CurrentADC.InstanceId %},
+    responsiveWidth:  parseInt('{%= CurrentADC.PropValue("responsiveWidth") %}',10),
     showTotal: {%= CurrentADC.PropValue("showTotal") %},
     useSlider: {%= CurrentADC.PropValue("useSlider") %},
     headerFixed: {%= On(CurrentADC.PropValue("headerFixed") = "1", true, false)%},
