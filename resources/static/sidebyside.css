@@ -264,6 +264,18 @@ body {
   text-align: -webkit-center;
 }
 
+.sidebyside .header-response-container {
+    align-self: stretch;
+}
+.sidebyside .header-response-container .caption {
+    word-break: break-all;
+}
+.sidebyside .header-response-container img {
+    margin: 0 auto;
+}
+.sidebyside .header-response-container .caption {
+    word-break: break-word;
+}
 .sidebyside .response-container label {
   box-sizing: border-box;
   cursor: pointer;
@@ -275,6 +287,17 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.sidebyside .header-response-container label {
+    align-self: stretch;
+    word-wrap: break-word;
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+     /* IE10 IE11 CSS styles go here */
+    .sidebyside .header-response-container label {
+  		display: inline-block;
+	}
 }
 
 .sidebyside .closed .response-container .content {
