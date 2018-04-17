@@ -138,6 +138,18 @@
           <option value="2" text="Image and text" />
         </options>
       </property>
+      <property xsi:type="standardProperty" id="maxImagesWidth" name="Responses image max-width" type="string" mode="dynamic" require="true" visible="false">
+        <description><![CDATA[Responses image max-width]]></description>
+        <value><![CDATA[40px]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="forceImagesWidth" name="Force Responses image width" type="string" mode="dynamic" require="true" visible="false">
+        <description><![CDATA[Force Responses image width]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
+      </property>
       <property xsi:type="standardProperty" id="iterationColumn" name="Iteration display" type="string" require="true" visible="false">
         <description><![CDATA[]]></description>
         <value><![CDATA[2]]></value>
@@ -149,6 +161,18 @@
       </property>
       <property xsi:type="standardProperty" id="imgZoomRow" name="Iteration image zoom" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[Iteration Image Zoom]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="maxLoopImagesWidth" name="Iteration image max-width" type="string" mode="dynamic" require="true" visible="false">
+        <description><![CDATA[Iteration image max-width]]></description>
+        <value><![CDATA[70px]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="forceLoopImagesWidth" name="Force Iteration image width" type="string" mode="dynamic" require="true" visible="false">
+        <description><![CDATA[Force Iteration image width]]></description>
         <value><![CDATA[0]]></value>
         <options>
           <option value="1" text="Yes" />
@@ -192,6 +216,14 @@
           <option value="left" text="Left" />
           <option value="center" text="Center" />
           <option value="right" text="Right" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="scrollNextIteration" name="Scroll to the next available iteration" type="string" mode="dynamic" require="true" visible="false">
+        <description><![CDATA[Scroll to the next available iteration]]></description>
+        <value><![CDATA[1]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
         </options>
       </property>
     </category>

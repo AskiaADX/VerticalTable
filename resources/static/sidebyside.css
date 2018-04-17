@@ -187,9 +187,7 @@ body {
 }
 
 .sidebyside tbody td:first-child img {
-  width: 100%;
   min-width: 40px;
-  max-width: 200px;
 }
 
 .sidebyside .question-container {
@@ -493,6 +491,10 @@ body {
 .sidebyside .RLTimePicker .secsContainer {
   display: inherit;
   height: 34px;
+}
+
+.sidebyside .header-closed {
+    padding: 0 !important;
 }
 
 

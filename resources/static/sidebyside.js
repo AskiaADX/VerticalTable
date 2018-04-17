@@ -404,7 +404,7 @@
                     if (that.stepByStep) trs[(i + 1)].style.display = '';
                 }
                 if (hasClass(trs[(i + 1)],'display')) {
-                	if (window.innerWidth <= that.responsiveWidth) scrollIt(trs[(i + 1)], 300, 'easeOutQuad');
+                	if ((window.innerWidth <= that.responsiveWidth) && that.scrollNextIteration) scrollIt(trs[(i + 1)], 300, 'easeOutQuad');
                     removeClass(trs[(i + 1)],'display');
                 }
                 break;
@@ -963,6 +963,7 @@
         this.instanceId = options.instanceId || 1;
         this.responsiveWidth = options.responsiveWidth || 600;
         this.showTotal = options.showTotal || 0;
+        this.scrollNextIteration = options.scrollNextIteration;
         this.questions = options.questions || [];
         this.maxLimit = options.maxLimit || [];
         this.headerFixed = options.headerFixed;

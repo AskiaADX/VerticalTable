@@ -28,6 +28,7 @@ Next i1
     instanceId: {%= CurrentADC.InstanceId %},
     responsiveWidth:  parseInt('{%= CurrentADC.PropValue("responsiveWidth") %}',10),
     showTotal: {%= CurrentADC.PropValue("showTotal") %},
+    scrollNextIteration: {%= On(CurrentADC.PropValue("scrollNextIteration") = "1", true, false)%},
     useSlider: {%= CurrentADC.PropValue("useSlider") %},
     headerFixed: {%= On(CurrentADC.PropValue("headerFixed") = "1", true, false)%},
     stepByStep: {%= On(CurrentADC.PropValue("stepByStep") = "yes", true, false)%},

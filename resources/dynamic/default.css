@@ -26,6 +26,15 @@ Dim othersColumnWidth = ((100 - firstColumnWidth.ToNumber() ) / columnNumber).Fl
     display: none;
 }
 {% EndIf %}
+{% If (columnNumber = 1) Then %}
+#adc_{%= CurrentADC.InstanceId %} .question-label,
+#adc_{%= CurrentADC.InstanceId %} .header-question-label {
+    display: none !important;
+}
+#adc_{%= CurrentADC.InstanceId %} .header-response-container:not(:last-child) {
+    border-right: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
+}
+{% EndIf %}
 {% If (CurrentADC.PropValue("useSlider") = "2") Then %}
 #adc_{%= CurrentADC.InstanceId %} input[type=number] {
     display: none;
@@ -416,7 +425,19 @@ EndIf %}
 #adc_{%= CurrentADC.InstanceId %} input[readonly=readonly] + .imperial {
     background-color: rgba({%= Theme.BlackColor.ToRGB() %},0.05);
 }
-
+{% If (CurrentADC.PropValue("forceImagesWidth") = "1") Then %}
+#adc_{%= CurrentADC.InstanceId %} .header-response-container img,
+#adc_{%= CurrentADC.InstanceId %} .closed .response-container img {
+  width: 100%;
+  max-width: {%= CurrentADC.PropValue("maxImagesWidth") %};
+}
+{% EndIf %}
+{% If (CurrentADC.PropValue("forceLoopImagesWidth") = "1") Then %}
+#adc_{%= CurrentADC.InstanceId %} tbody td:first-child img {
+  width: 100%;
+  max-width: {%= CurrentADC.PropValue("maxLoopImagesWidth") %};
+}
+{% EndIf %}
 @media screen and (max-width: {%= CurrentADC.PropValue("responsiveWidth") %}) {
   #adc_{%= CurrentADC.InstanceId %} thead,
   #adc_{%= CurrentADC.InstanceId %} tfoot {
@@ -437,10 +458,17 @@ EndIf %}
   }
   #adc_{%= CurrentADC.InstanceId %} tbody > tr > td:first-child,
   #adc_{%= CurrentADC.InstanceId %} tfoot > tr > th:first-child {
-    border-bottom: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
     border-top: 0px solid transparent;
     text-align: center;
   }
+  #adc_{%= CurrentADC.InstanceId %} tfoot > tr > th:first-child {
+    border-bottom: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
+  }
+  {% If (columnNumber > 1) Then %}
+  #adc_{%= CurrentADC.InstanceId %} tbody > tr > td:first-child {
+    border-bottom: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
+  }
+  {% EndIf %}
   #adc_{%= CurrentADC.InstanceId %} .closed .responses-container {
       {% If ( CurrentADC.PropValue("responsiveResponsesDirection") = "1" ) Then %}
   	display: inline-block;
