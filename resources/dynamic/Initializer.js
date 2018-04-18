@@ -29,6 +29,7 @@ Next i1
     responsiveWidth:  parseInt('{%= CurrentADC.PropValue("responsiveWidth") %}',10),
     showTotal: {%= CurrentADC.PropValue("showTotal") %},
     scrollNextIteration: {%= On(CurrentADC.PropValue("scrollNextIteration") = "1", true, false)%},
+    autoSubmit: {%= On(CurrentADC.PropValue("autoSubmit") = "yes", true, false)%},
     useSlider: {%= CurrentADC.PropValue("useSlider") %},
     headerFixed: {%= On(CurrentADC.PropValue("headerFixed") = "1", true, false)%},
     stepByStep: {%= On(CurrentADC.PropValue("stepByStep") = "yes", true, false)%},

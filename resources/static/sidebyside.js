@@ -54,7 +54,7 @@
  *  - func : the function to `debounce`
  *  - wait : the number of milliseconds (N) to wait before 
  *           call the function func()
- *  - args : the arguments to pass to func()
+ *  - immediate : execute immediately func() (by default false)
  *                          
  */
     function debounce(func, wait, immediate) {
@@ -411,6 +411,47 @@
             }
         }   
     }
+    
+    function autoSubmitForm (that) {
+        var trs = document.querySelectorAll('#adc_' + that.instanceId + ' tbody > tr');
+        var tds;
+        var result = true;
+        var nbDataFound = 0;
+        var nbHiddenQuestions = 0;
+        var nextBtn = document.getElementsByName('Next')[0];
+        
+        // Iterate tr backwards
+    	for (var i = (trs.length); i-- > 0; ) {
+            tds = trs[i].querySelectorAll('td');
+            nbDataFound = 0;
+            nbHiddenQuestions = 0;
+            // Iterate td backwards
+    		for (var j = tds.length; j-- > 1; ) {
+                if (hasClass(tds[j],'date') && (checkAnswersDate(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+					nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'open') && (checkAnswersOpen(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'numeric') && (checkAnswersNumeric(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'select') && (checkAnswersSelect(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'closed') && (checkAnswersClosed(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                }
+                if ((hasClass(tds[j],'date') || hasClass(tds[j],'open') || hasClass(tds[j],'numeric') || hasClass(tds[j],'select') || hasClass(tds[j],'closed')) && (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0) ) {
+                    nbHiddenQuestions = nbHiddenQuestions + 1;
+                }
+            }
+            // Check if all questions doesn't have answers
+            if (nbDataFound !== (tds.length - 1)) {
+  				result = false;
+                break;
+            }
+        }
+        if (result && that.autoSubmit) {
+            nextBtn.click();
+        }
+    }
 
     /**
    * Manage the exclusive responses or single question
@@ -454,6 +495,8 @@
              	triggerRouting(shortcut);   
                 var debounceStepByStep = debounce(stepByStepRows, 300);
                 debounceStepByStep(that);
+                var debounceAutoSubmitForm = debounce(autoSubmitForm, 300);
+                if (that.autoSubmit) debounceAutoSubmitForm(that);
              }
         }
     }
@@ -657,6 +700,9 @@
         triggerRouting(shortcut);
         var debounceStepByStep = debounce(stepByStepRows, 300);
         debounceStepByStep(that);
+        var debounceAutoSubmitForm = debounce(autoSubmitForm, 300);
+        if (that.autoSubmit) debounceAutoSubmitForm(that);
+        
     }
     
     /**
@@ -672,6 +718,8 @@
         triggerRouting(shortcut);
         var debounceStepByStep = debounce(stepByStepRows, 300);
         debounceStepByStep(that);
+        var debounceAutoSubmitForm = debounce(autoSubmitForm, 300);
+        if (that.autoSubmit) debounceAutoSubmitForm(that);
     }
     
     /**
@@ -687,6 +735,8 @@
         triggerRouting(shortcut);
         var debounceStepByStep = debounce(stepByStepRows, 300);
         debounceStepByStep(that);
+		var debounceAutoSubmitForm = debounce(autoSubmitForm, 300);
+        if (that.autoSubmit) debounceAutoSubmitForm(that);
     }
 
     /**
@@ -855,6 +905,8 @@
         triggerRouting(shortcut);
         var debounceStepByStep = debounce(stepByStepRows, 300);
         debounceStepByStep(that);
+        var debounceAutoSubmitForm = debounce(autoSubmitForm, 300);
+        if (that.autoSubmit) debounceAutoSubmitForm(that);
     }
 
     /**
@@ -964,6 +1016,7 @@
         this.responsiveWidth = options.responsiveWidth || 600;
         this.showTotal = options.showTotal || 0;
         this.scrollNextIteration = options.scrollNextIteration;
+        this.autoSubmit = options.autoSubmit;
         this.questions = options.questions || [];
         this.maxLimit = options.maxLimit || [];
         this.headerFixed = options.headerFixed;
@@ -1065,13 +1118,6 @@
                     onInputNumbers(e, passedInElement); 
                 };
             }(this)));
-            if ('createEvent' in document) {
-                var evt = document.createEvent('HTMLEvents');
-                evt.initEvent('input', false, true);
-                inputNumbers[k].dispatchEvent(evt);
-            } else {
-                inputNumbers[k].fireEvent('oninput');
-            }
         }
 
         // Change event (live sum) on input range
@@ -1110,13 +1156,6 @@
                     onInputOpens(e, passedInElement); 
                 };
             }(this)));
-            if ('createEvent' in document) {
-                var evt = document.createEvent('HTMLEvents');
-                evt.initEvent('input', false, true);
-                inputOpens[k1].dispatchEvent(evt);
-            } else {
-                inputOpens[k1].fireEvent('oninput');
-            }
         }
         
         // Input event on date time
@@ -1127,13 +1166,6 @@
                     onInputDates(e, passedInElement); 
                 };
             }(this)));
-            if ('createEvent' in document) {
-                var evt = document.createEvent('HTMLEvents');
-                evt.initEvent('input', false, true);
-                inputDates[k2].dispatchEvent(evt);
-            } else {
-                inputDates[k2].fireEvent('oninput');
-            }
         }
 
         // Manage ranking combo box
@@ -1147,13 +1179,6 @@
                             updateComboBox(e, passedInElement); 
                         };
                     }(this)));
-                    if ('createEvent' in document) {
-                        var evt = document.createEvent('HTMLEvents');
-                        evt.initEvent('change', false, true);
-                        inputElt[j1].dispatchEvent(evt);
-                    } else {
-                        inputElt[j1].fireEvent('onchange');
-                    }
                 }
             }   
         }

@@ -71,7 +71,7 @@
           <option value="right" text="Right" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="firstColumnWidth" name="First column width" type="string" mode="dynamic" require="true" visible="false">
+      <property xsi:type="standardProperty" id="firstColumnWidth" name="First column width" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[The size in percentage of the first column of the table]]></description>
         <value><![CDATA[20]]></value>
         <options>
@@ -105,7 +105,7 @@
           <option value="right" text="Right" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="showTitle" name="Show title" type="string" require="true" visible="false">
+      <property xsi:type="standardProperty" id="showTitle" name="Show title" type="string" require="true" visible="true">
         <description><![CDATA[Sets if the caption of the question is written in the header of the table or not]]></description>
         <value><![CDATA[1]]></value>
         <options>
@@ -195,9 +195,17 @@
           <option value="no" text="No" />
         </options>
       </property>
+      <property xsi:type="standardProperty" id="autoSubmit" name="Auto submit" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Auto submit]]></description>
+        <value><![CDATA[no]]></value>
+        <options>
+          <option value="yes" text="Yes" />
+          <option value="no" text="No" />
+        </options>
+      </property>
     </category>
     <category id="Responsive" name="Responsive">
-      <property xsi:type="standardProperty" id="responsiveWidth" name="Responsive width" type="string" mode="dynamic" require="true" visible="false">
+      <property xsi:type="standardProperty" id="responsiveWidth" name="Responsive width" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[The width value for the table to be splitted (media queries)]]></description>
         <value><![CDATA[600px]]></value>
       </property>
@@ -218,9 +226,9 @@
           <option value="right" text="Right" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="scrollNextIteration" name="Scroll to the next available iteration" type="string" mode="dynamic" require="true" visible="false">
+      <property xsi:type="standardProperty" id="scrollNextIteration" name="Scroll to the next available iteration" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Scroll to the next available iteration]]></description>
-        <value><![CDATA[1]]></value>
+        <value><![CDATA[0]]></value>
         <options>
           <option value="1" text="Yes" />
           <option value="0" text="No" />
