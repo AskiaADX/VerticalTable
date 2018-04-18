@@ -111,7 +111,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
            EndIf
     	   If (column.Type = "multiple") Then
     	  %}
-          <td class="closed" data-class="inputcode_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
+          <td class="closed multiple" data-class="inputcode_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
               <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
                   <div class="question-label">{%:= column.LongCaption %}</div>
               	  <div class="responses-container">
@@ -213,7 +213,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
           </td>
             {% EndIf
 			If ((column.Type = "single") and (CurrentADC.PropValue("colAsComboBox" + j2) <> "1") and (CurrentADC.PropValue("colAsComboBox" + j2) <> "2")) Then %}
-          <td class="closed" data-class="inputcode_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
+          <td class="closed single" data-class="inputcode_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
             <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
               <div class="question-label">{%:= column.LongCaption %}</div>
               <div class="responses-container">

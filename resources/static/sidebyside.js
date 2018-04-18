@@ -427,6 +427,10 @@
             nbHiddenQuestions = 0;
             // Iterate td backwards
     		for (var j = tds.length; j-- > 1; ) {
+                if (hasClass(tds[j],'open') || hasClass(tds[j],'numeric') || hasClass(tds[j],'multiple')) {
+                    result = false;
+                	break;
+                }
                 if (hasClass(tds[j],'date') && (checkAnswersDate(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
 					nbDataFound = nbDataFound + 1;
                 } else if (hasClass(tds[j],'open') && (checkAnswersOpen(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
@@ -443,7 +447,7 @@
                 }
             }
             // Check if all questions doesn't have answers
-            if (nbDataFound !== (tds.length - 1)) {
+            if ((nbDataFound !== (tds.length - 1)) || (result === false)) {
   				result = false;
                 break;
             }
