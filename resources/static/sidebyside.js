@@ -727,6 +727,19 @@
     }
     
     /**
+   * Manage the change event on select
+   *
+   * @param {Object} event Change event of the select
+   * @param {Object} that SideBySide object, same as options
+   */
+    function onSelects (event, that) {
+        var debounceStepByStep = debounce(stepByStepRows, 300);
+        debounceStepByStep(that);
+        var debounceAutoSubmitForm = debounce(autoSubmitForm, 300);
+        if (that.autoSubmit) debounceAutoSubmitForm(that);
+    }
+    
+    /**
    * Manage the input event on date time
    *
    * @param {Object} event Input event of the date time
@@ -1030,6 +1043,7 @@
         this.decimals = options.decimals || [];
         this.useSlider = options.useSlider || 0;
         this.arrInputCodesHiddenQuestions = []; 
+        this.selectBox = options.selectBox || [];
         
         addEvent(document, 'askiaShowQuestion', 
                  (function (passedInElement) {
@@ -1181,6 +1195,21 @@
                              (function (passedInElement) {
                         return function (e) {
                             updateComboBox(e, passedInElement); 
+                        };
+                    }(this)));
+                }
+            }   
+        }
+        
+        // Manage select combo box
+        for(var i2 = 0; i2 < this.selectBox.length ; i2++){
+            if (this.selectBox[i2]) {
+                var selectElt = document.querySelectorAll(".select_"+ this.instanceId + "_" + (i2+1));
+                for(var j2 = 0; j2 < selectElt.length; j2++) {
+                    addEvent(selectElt[j2], 'change', 
+                             (function (passedInElement) {
+                        return function (e) {
+                            onSelects(e, passedInElement); 
                         };
                     }(this)));
                 }

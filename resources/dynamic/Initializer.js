@@ -8,10 +8,12 @@ Dim i6
 Dim i7
 Dim i8
 Dim i9
+Dim i10
 Dim varLim
 Dim column
 Dim columnQuestion
 Dim ranking
+Dim selectbox
 Dim columnNumber = 1
 For i1 = 2 To 5
     columnQuestion = CurrentADC.PropQuestion("questionCol" + i1)
@@ -65,7 +67,13 @@ Next i1
                 column = CurrentQuestion
             EndIf
     %}{%:= On((column.Type = "numeric"), column.Decimals + "", "")%}{%= On(i9 <> columnNumber, ",", "") 
-		%}{%Next i9 %}]
+		%}{%Next i9 %}],
+    selectBox: [{% For i10 = 1 To columnNumber
+    	column = CurrentADC.PropQuestion("questionCol" + i10)
+            If ((column.Id = DK) and (i10 = 1)) Then
+                column = CurrentQuestion
+            Endif
+    selectbox = CurrentADC.PropValue("colAsComboBox" + i10) %}{%= On((selectbox = "1") and (column.Type = "single"), true, false)%}{%= On(i10 <> columnNumber, ",", "") %}{% Next i10 %}]
   });
   {% 
 	For i2 = 1 to columnNumber 
