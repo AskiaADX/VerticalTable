@@ -5,11 +5,11 @@
           version="2.1.0"
           askiaCompat="5.4.2">
   <info>
-    <name>SideBySide</name>
+    <name>VerticalTable</name>
     <guid>c4acbd4e-3246-457c-9f9a-3a2dc9871dcc</guid>
     <version>2.0.3</version>
     <date>2017-05-26</date>
-    <description><![CDATA[Side by side vertical table]]></description>
+    <description><![CDATA[Vertical table]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>, Clément Salomon <clement@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -26,7 +26,7 @@
   <outputs defaultOutput="default">
     <output id="default">
       <description><![CDATA[Default output]]></description>
-      <content fileName="sidebyside.css" type="css" mode="static" position="head" />
+      <content fileName="verticaltable.css" type="css" mode="static" position="head" />
       <content fileName="default.css" type="css" mode="dynamic" position="head" />
       <content fileName="moment.min.js" type="javascript" mode="static" position="head" />
       <content fileName="pikaday.js" type="javascript" mode="static" position="head" />
@@ -35,7 +35,7 @@
       <content fileName="simplbox.js" type="javascript" mode="static" position="foot" />
       <content fileName="time_picker.js" type="javascript" mode="static" position="foot" />
       <content fileName="date_picker.js" type="javascript" mode="static" position="foot" />
-      <content fileName="sidebyside.js" type="javascript" mode="static" position="foot" />
+      <content fileName="verticaltable.js" type="javascript" mode="static" position="foot" />
       <content fileName="Initializer.js" type="javascript" mode="dynamic" position="foot" />
     </output>
   </outputs>

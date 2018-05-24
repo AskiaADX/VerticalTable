@@ -361,7 +361,7 @@
     /**
    * Step by step functionnality (Show or hide next row)
    *
-   * @param {Object} that SideBySide object, same as options
+   * @param {Object} that VerticalTable object, same as options
    */
     function stepByStepRows (that) {
         var trs = document.querySelectorAll('#adc_' + that.instanceId + ' tbody > tr');
@@ -483,7 +483,7 @@
    * Manage the change event on input radio and checkbox
    *
    * @param {Object} event Change event of the input radio and checkbox
-   * @param {Object} that SideBySide object, same as options
+   * @param {Object} that VerticalTable object, same as options
    */
     function onChange (event, that) {
         var el = event.target || event.srcElement;
@@ -509,7 +509,7 @@
    * Manage the change event on input DK for numeric
    *
    * @param {Object} event Change event of the input DK for numeric
-   * @param {Object} that SideBySide object, same as options
+   * @param {Object} that VerticalTable object, same as options
    */
     function onNumericInputDK (event, that) {
         var el = event.target || event.srcElement;
@@ -559,7 +559,7 @@
    * Manage the change event on input DK for open
    *
    * @param {Object} event Change event of the input DK for open
-   * @param {Object} that SideBySide object, same as options
+   * @param {Object} that VerticalTable object, same as options
    */
     function onOpenInputDK (event, that) {
         var el = event.target || event.srcElement;
@@ -586,7 +586,7 @@
    * Manage the change event on input DK for date
    *
    * @param {Object} event Change event of the input DK for date
-   * @param {Object} that SideBySide object, same as options
+   * @param {Object} that VerticalTable object, same as options
    */
     function onDateInputDK (event, that) {
         var el = event.target || event.srcElement;
@@ -661,7 +661,7 @@
    * Manage the input event on input numbers - live sum
    *
    * @param {Object} event Input event of the input numbers
-   * @param {Object} that SideBySide object, same as options
+   * @param {Object} that VerticalTable object, same as options
    */
     function onInputNumbers (event, that) {
         var el = event.target || event.srcElement;
@@ -713,7 +713,7 @@
    * Manage the input event on open ended (input text, email, url and textarea)
    *
    * @param {Object} event Input event of the open ended
-   * @param {Object} that SideBySide object, same as options
+   * @param {Object} that VerticalTable object, same as options
    */
     function onInputOpens (event, that) {
         var el = event.target || event.srcElement;
@@ -730,7 +730,7 @@
    * Manage the change event on select
    *
    * @param {Object} event Change event of the select
-   * @param {Object} that SideBySide object, same as options
+   * @param {Object} that VerticalTable object, same as options
    */
     function onSelects (event, that) {
         var debounceStepByStep = debounce(stepByStepRows, 300);
@@ -743,7 +743,7 @@
    * Manage the input event on date time
    *
    * @param {Object} event Input event of the date time
-   * @param {Object} that SideBySide object, same as options
+   * @param {Object} that VerticalTable object, same as options
    */
     function onInputDates (event, that) {
         var el = event.target || event.srcElement;
@@ -760,7 +760,7 @@
    * Manage the input event on input ranges - live sum
    *
    * @param {Object} event Input event of the input ranges
-   * @param {Object} that SideBySide object, same as options
+   * @param {Object} that VerticalTable object, same as options
    */
     function onInputRanges (event, that) {
         var el = event.target || event.srcElement;
@@ -901,7 +901,7 @@
    * Update the combo box when using ranking
    *
    * @param {Object} event Change event of the select
-   * @param {Object} that SideBySide object, same as options
+   * @param {Object} that VerticalTable object, same as options
    */
     function updateComboBox(event, that) {
         var el = event.target || event.srcElement;
@@ -1022,12 +1022,12 @@
     }
 
     /**
-   * Creates a new instance of the SideBySide
+   * Creates a new instance of the VerticalTable
    *
-   * @param {Object} options Options of the SideBySide
+   * @param {Object} options Options of the VerticalTable
    * @param {String} options.instanceId=1 Id of the ADC instance
    */
-    function SideBySide (options) {
+    function VerticalTable (options) {
         this.options = options;
         this.instanceId = options.instanceId || 1;
         this.responsiveWidth = options.responsiveWidth || 600;
@@ -1252,8 +1252,8 @@
     }
 
     /**
-   * Attach the SideBySide to the window object
+   * Attach the VerticalTable to the window object
    */
-    window.SideBySide = SideBySide;
+    window.VerticalTable = VerticalTable;
 
 }());

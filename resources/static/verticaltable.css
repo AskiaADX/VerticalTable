@@ -12,41 +12,41 @@ body {
     -webkit-appearance: none;
     -moz-appearance: none;
 }
-.sidebyside {
+.verticaltable {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
 
-.sidebyside input {
+.verticaltable input {
   margin: 0;
 }
 
-.sidebyside input[type="radio"],
-.sidebyside input[type="checkbox"],
-.sidebyside .DK,
-.sidebyside .askia-response-label {
+.verticaltable input[type="radio"],
+.verticaltable input[type="checkbox"],
+.verticaltable .DK,
+.verticaltable .askia-response-label {
   cursor: pointer;
 }
 
-.sidebyside input[type=number],
-.sidebyside .thousand {
+.verticaltable input[type=number],
+.verticaltable .thousand {
     text-align: right;
 }
-.sidebyside textarea {
+.verticaltable textarea {
 	resize: vertical;   
 }
 
-.sidebyside .DK {
+.verticaltable .DK {
     padding: 5px 5px 5px 5px;
 }
 
-.sidebyside .date .DK {
+.verticaltable .date .DK {
     padding: 5px 0 0px 0;
 }
 
-.sidebyside select {
+.verticaltable select {
   	width: 100%;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -64,27 +64,27 @@ body {
     padding-right: 1.5em;
     cursor: pointer;
 }
-.sidebyside select option:first-child {
+.verticaltable select option:first-child {
 	display: none;   
 }
 
-.sidebyside select::-ms-expand {
+.verticaltable select::-ms-expand {
     display: none;
 }
 
-.sidebyside label img{
+.verticaltable label img{
     pointer-events: none;
     display: block;
 }
 
-.sidebyside .sum-container {
+.verticaltable .sum-container {
   display: none;
   text-align: center;
 }
-.sidebyside input[type=range]::-moz-focus-outer {
+.verticaltable input[type=range]::-moz-focus-outer {
     border: 0;
 }
-.sidebyside input[type=range] {
+.verticaltable input[type=range] {
   -webkit-appearance: none;
   width: 99%;
   min-width: 200px;
@@ -94,57 +94,57 @@ body {
   background: transparent;
   border: 0px solid white;
 }
-.sidebyside input[type=range][disabled=disabled]::-webkit-slider-thumb {
+.verticaltable input[type=range][disabled=disabled]::-webkit-slider-thumb {
     display: none;
 }
-.sidebyside input[type=range][disabled=disabled]::-ms-thumb {
+.verticaltable input[type=range][disabled=disabled]::-ms-thumb {
     display: none;
 }
-.sidebyside input[type=range][disabled=disabled]::-moz-range-thumb {
+.verticaltable input[type=range][disabled=disabled]::-moz-range-thumb {
     display: none;
     opacity: 0;
 }
-.sidebyside input[type=range]:not([disabled=disabled])::-webkit-slider-thumb {
+.verticaltable input[type=range]:not([disabled=disabled])::-webkit-slider-thumb {
     display: block;
 }
-.sidebyside input[type=range]:not([disabled=disabled])::-ms-thumb {
+.verticaltable input[type=range]:not([disabled=disabled])::-ms-thumb {
     display: block;
 }
-.sidebyside input[type=range]:not([disabled=disabled])::-moz-range-thumb {
+.verticaltable input[type=range]:not([disabled=disabled])::-moz-range-thumb {
     display: block;
     opacity: 1;
 }
 
-.sidebyside input[type=range]:focus {
+.verticaltable input[type=range]:focus {
   outline: none;
 }
 
-.sidebyside .range {
+.verticaltable .range {
     position: relative;
     margin-left: 1em;
     width: 100%;
 }
 @media screen and (min-width:0\0) {
   /* IE9 and IE10 rule sets go here */
-  .sidebyside .range {
+  .verticaltable .range {
     width: 200px;
   }
 }
 
-.sidebyside .range:after,
-.sidebyside .range:before {
+.verticaltable .range:after,
+.verticaltable .range:before {
     position: absolute;
     top: 2.0em;
 }
-.sidebyside .range:before {
+.verticaltable .range:before {
     left: 0em;
     content: attr(min);
 }
-.sidebyside .range:after {
+.verticaltable .range:after {
     right: 0em;
     content: attr(max);
 }
-.sidebyside .preBar {
+.verticaltable .preBar {
     position: absolute;
     z-index: 1;
     padding: 0px;
@@ -153,70 +153,70 @@ body {
     top: 12px;
 }
 
-.sidebyside span[class^="timeSeparator_"] {
+.verticaltable span[class^="timeSeparator_"] {
   line-height: 2;
 }
 
-.sidebyside tr {
+.verticaltable tr {
   height: 1px;
 }
 
 @-moz-document url-prefix() {
   /* Firefox rule sets go here */
-  .sidebyside tr {
+  .verticaltable tr {
     height: 100%;
   }
 }
 
 @media screen and (min-width:0\0) {
   /* IE9 and IE10 rule sets go here */
-  .sidebyside tr {
+  .verticaltable tr {
     height: 100%;
   }
 }
 
 @media all and (-ms-high-contrast:none) {
   /* IE11 rule sets go here */
-  *::-ms-backdrop, .sidebyside tr {
+  *::-ms-backdrop, .verticaltable tr {
     height: 1px;
   } /* IE11 */
 }
 
-.sidebyside td {
+.verticaltable td {
   height: inherit;
 }
 
-.sidebyside tbody td:first-child img {
+.verticaltable tbody td:first-child img {
   min-width: 40px;
 }
 
-.sidebyside .question-container {
+.verticaltable .question-container {
   display: flex;
   align-items: stretch;
   flex-direction: column;
 }
 
-.sidebyside .closed .question-container {
+.verticaltable .closed .question-container {
   height: 100%;
 }
 
-.sidebyside .RLTimePicker.question-container {
+.verticaltable .RLTimePicker.question-container {
   display: inline-flex;
 }
 
-.sidebyside .RLDatePicker.question-container {
+.verticaltable .RLDatePicker.question-container {
   display: block;
 }
 
-.sidebyside .question-label {
+.verticaltable .question-label {
   display: none;
   box-sizing: border-box;
   width: 100%;
   padding: .3em;
 }
 
-.sidebyside .responses-container,
-.sidebyside .header-responses-container {
+.verticaltable .responses-container,
+.verticaltable .header-responses-container {
   padding: 0;
   margin: 0;
   height: 100%;
@@ -228,34 +228,34 @@ body {
 }
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
      /* IE10 IE11 CSS styles go here */
-    .sidebyside .date .responses-container {
+    .verticaltable .date .responses-container {
   		flex-direction: column;
 	}
 }
 
-.sidebyside .closed .responses-container,
-.sidebyside .header-responses-container {
+.verticaltable .closed .responses-container,
+.verticaltable .header-responses-container {
   align-items: stretch;
 }
 
-.sidebyside .date .responses-container {
+.verticaltable .date .responses-container {
   flex-wrap: wrap;
 }
 
-.sidebyside .response-container,
-.sidebyside .header-response-container {
+.verticaltable .response-container,
+.verticaltable .header-response-container {
   display: flex;
   flex: 1;
   padding: .3em;
   box-sizing: border-box;
   cursor: pointer;
 }
-.sidebyside .header-response-container {
+.verticaltable .header-response-container {
   cursor: auto;
 }
 
-.sidebyside .response-container,
-.sidebyside .header-response-container {
+.verticaltable .response-container,
+.verticaltable .header-response-container {
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -264,119 +264,119 @@ body {
   text-align: -webkit-center;
 }
 
-.sidebyside .header-response-container {
+.verticaltable .header-response-container {
     align-self: stretch;
 }
-.sidebyside .header-response-container .caption {
+.verticaltable .header-response-container .caption {
     word-break: break-all;
 }
-.sidebyside .header-response-container img {
+.verticaltable .header-response-container img {
     margin: 0 auto;
 }
-.sidebyside .header-response-container .caption {
+.verticaltable .header-response-container .caption {
     word-break: break-word;
 }
-.sidebyside .response-container label {
+.verticaltable .response-container label {
   box-sizing: border-box;
   cursor: pointer;
 }
 
-.sidebyside .closed .response-container .content,
-.sidebyside .header-response-container label {
+.verticaltable .closed .response-container .content,
+.verticaltable .header-response-container label {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.sidebyside .header-response-container label {
+.verticaltable .header-response-container label {
     align-self: stretch;
     word-wrap: break-word;
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
      /* IE10 IE11 CSS styles go here */
-    .sidebyside .header-response-container label {
+    .verticaltable .header-response-container label {
   		display: inline-block;
 	}
 }
 
-.sidebyside .closed .response-container .content {
+.verticaltable .closed .response-container .content {
   padding: .3em;
 }
 
-.sidebyside .response-container .caption {
+.verticaltable .response-container .caption {
   /* word-break: break-all; */
 }
 
-.sidebyside .sum-container {
+.verticaltable .sum-container {
   padding: .3em;
 }
 
-.sidebyside .resultSum {
+.verticaltable .resultSum {
   display: inline-block;
 }
 
-.sidebyside .RLDatePicker input,
-.sidebyside .RLTimePicker select,
-.sidebyside .RLTimePicker option {
+.verticaltable .RLDatePicker input,
+.verticaltable .RLTimePicker select,
+.verticaltable .RLTimePicker option {
   cursor: pointer;
 }
 
-.sidebyside .RLTimePicker [class^="timeSeparator"] {
+.verticaltable .RLTimePicker [class^="timeSeparator"] {
   line-height: 2;
 }
 
-.sidebyside th {
+.verticaltable th {
   text-align: center;
   font-weight: normal;
 }
 
-.sidebyside td {
+.verticaltable td {
   position: relative;
 }
 
-.sidebyside .RLDatePicker tbody td,
-.sidebyside .RLDatePicker thead th {
+.verticaltable .RLDatePicker tbody td,
+.verticaltable .RLDatePicker thead th {
   border-top: 0px solid transparent !important;
 }
 
-.sidebyside tbody tr:hover .RLDatePicker td.is-empty {
+.verticaltable tbody tr:hover .RLDatePicker td.is-empty {
   background-color: transparent !important;
 }
 
-.sidebyside th,
-.sidebyside td {
+.verticaltable th,
+.verticaltable td {
   padding: .3em;
   text-align: center;
 }
 
-.sidebyside tbody tr > td {
+.verticaltable tbody tr > td {
   padding: 0;
 }
 
-.sidebyside tbody tr > td:not(.closed) .responses-container {
+.verticaltable tbody tr > td:not(.closed) .responses-container {
   padding: .3em;
 }
 
-.sidebyside th:first-child,
-.sidebyside td:first-child {
+.verticaltable th:first-child,
+.verticaltable td:first-child {
   padding: .3em;
 }
 
-.sidebyside input[type=text],
-.sidebyside input[type=email],
-.sidebyside input[type=url] {
+.verticaltable input[type=text],
+.verticaltable input[type=email],
+.verticaltable input[type=url] {
   width: 100%;
   min-width: auto;
   max-width: 85%;
   -webkit-appearance: none;
 }
 
-.sidebyside .RLDatePicker input[type=text] {
+.verticaltable .RLDatePicker input[type=text] {
   min-width: 105px;
 }
 
-.sidebyside input[type=number] {
+.verticaltable input[type=number] {
   width: 100%;
   min-width: 10%;
   max-width: 8em;
@@ -384,15 +384,15 @@ body {
 }
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
      /* IE10+ CSS styles go here */
-    .sidebyside input[type=number] {
+    .verticaltable input[type=number] {
   		max-width: 5em;
 	}
-    .sidebyside input[type=text] {
+    .verticaltable input[type=text] {
         max-width: 8em;
     }
 }
 
-.sidebyside .imgZoom {
+.verticaltable .imgZoom {
   position: absolute;
   background: url(magnifyingGlass.png) center center no-repeat;
   bottom: 7px;
@@ -402,11 +402,11 @@ body {
   right: 5px;
 }
 
-.sidebyside .imgZoom:hover {
+.verticaltable .imgZoom:hover {
   border: 1px solid transparent;
 }
 
-.sidebyside .paddingZoom {
+.verticaltable .paddingZoom {
   padding-right: 25px !important;
 }
 
@@ -449,7 +449,7 @@ body {
 
 /* TIME PICKER */
 
-.sidebyside .RLTimePicker {
+.verticaltable .RLTimePicker {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -459,11 +459,11 @@ body {
   margin-bottom: .3em;
 }
 
-.sidebyside .RLTimePicker .show {
+.verticaltable .RLTimePicker .show {
   display: block;
 }
 
-.sidebyside .RLTimePicker select {
+.verticaltable .RLTimePicker select {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -480,20 +480,20 @@ body {
   appearance: none;
   cursor: pointer;
 }
-.sidebyside select option {
+.verticaltable select option {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   cursor: pointer;
 }
-.sidebyside .RLTimePicker select option {
+.verticaltable .RLTimePicker select option {
   text-align: center;
 }
 
-.sidebyside .RLTimePicker select:focus {
+.verticaltable .RLTimePicker select:focus {
   border-bottom-color: #ace;
   outline: none;
 }
 
-.sidebyside .RLTimePicker .imperial {
+.verticaltable .RLTimePicker .imperial {
   width: 45px;
   padding: 5px;
   line-height: 1.5;
@@ -503,7 +503,7 @@ body {
   -ms-user-select: none;
 }
 
-.sidebyside .RLTimePicker .timeSeparator {
+.verticaltable .RLTimePicker .timeSeparator {
   width: 5px;
   height: 34px;
   padding: 1px;
@@ -511,12 +511,12 @@ body {
   font-weight: bolder;
 }
 
-.sidebyside .RLTimePicker .secsContainer {
+.verticaltable .RLTimePicker .secsContainer {
   display: inherit;
   height: 34px;
 }
 
-.sidebyside .header-closed {
+.verticaltable .header-closed {
     padding: 0 !important;
 }
 
@@ -751,7 +751,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   cursor: help;
 }
 
-.sidebyside .RLDatePicker {
+.verticaltable .RLDatePicker {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -764,7 +764,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
 /* line 29, ../sass/timePicker.scss */
 
-.sidebyside .RLDatePicker input {
+.verticaltable .RLDatePicker input {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -788,13 +788,13 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
 /* line 41, ../sass/timePicker.scss */
 
-.sidebyside .RLDatePicker input:focus {
+.verticaltable .RLDatePicker input:focus {
   /* border: 1px solid #dddddd;
   border-bottom-color: #ace; */
   outline: none;
 }
 
-.sidebyside .RLDatePicker input[type=text] {
+.verticaltable .RLDatePicker input[type=text] {
   max-width: 90%;
 }
 

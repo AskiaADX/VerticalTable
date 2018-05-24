@@ -26,7 +26,7 @@ Next i1
 %}
 
 (function () {
-  var sidebyside = new SideBySide({
+  var verticaltable = new VerticalTable({
     instanceId: {%= CurrentADC.InstanceId %},
     responsiveWidth:  parseInt('{%= CurrentADC.PropValue("responsiveWidth") %}',10),
     showTotal: {%= CurrentADC.PropValue("showTotal") %},
