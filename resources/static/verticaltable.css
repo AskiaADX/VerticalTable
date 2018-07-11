@@ -64,6 +64,10 @@ body {
     padding-right: 1.5em;
     cursor: pointer;
 }
+.verticaltable select[disabled="disabled"],
+.verticaltable [readonly="readonly"] {
+    font-style: italic;
+}
 .verticaltable select option:first-child {
 	display: none;   
 }

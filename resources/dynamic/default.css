@@ -130,7 +130,7 @@ Dim othersColumnWidth = ((100 - firstColumnWidth.ToNumber() ) / columnNumber).Fl
       align-items: center;
       {% EndIf %}
   }
-    {% If (CurrentADC.PropValue("responsesDirection") <> "1") Then %}
+{% If (CurrentADC.PropValue("responsesDirection") <> "1" and CurrentADC.PropValue("showBorderColumn") = "yes") Then %}
     #adc_{%= CurrentADC.InstanceId %} .closed .response-container {
         border-right: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
     }
@@ -138,7 +138,7 @@ Dim othersColumnWidth = ((100 - firstColumnWidth.ToNumber() ) / columnNumber).Fl
         border-right: 0px solid transparent;
     }
     {% EndIf %}
-    {% If (CurrentADC.PropValue("responsesDirection") = "1") Then %}
+    {% If (CurrentADC.PropValue("responsesDirection") = "1" and CurrentADC.PropValue("showBorderColumn") = "yes") Then %}
     #adc_{%= CurrentADC.InstanceId %} .closed .response-container:not(:first-child) {
         border-top: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
     }
