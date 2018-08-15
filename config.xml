@@ -12,7 +12,7 @@
     <description><![CDATA[Vertical table
 		v2.0.4 - Added alt attribute to img
 			   - Added span to labels and table headers
-			   - Added labels to inputs]]></description>
+			   - Added aria-labels to inputs]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>, Clément Salomon <clement@askia.com>]]></author>
     <site>http://www.askia.com</site>

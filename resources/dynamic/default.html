@@ -148,17 +148,14 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
             <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
               <div class="question-label">{%:= column.LongCaption %}</div>
               <div class="responses-container">
-                <span class="prefix">{%= CurrentADC.PropValue("numBoxPrefix" + j2) %}</span>
-                  <label for="askia-input-number{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" hidden>Number</label>
-                  <input type="number" id="askia-input-number{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" data-class="shortcut_{%= j2 %}" class="input_{%= CurrentADC.InstanceId %}_{%= j2 %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}{%:= attrReadOnly %}>
-                  {% If (CurrentADC.PropValue("useSlider") = "2") Then %}
-                  <label for="askia-input-currency{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" hidden>Currency</label>
-				  <input type="text" id="askia-input-currency{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="currency_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}" {%:= attrReadOnly %} class="thousand" />
+                <span class="prefix">{%= CurrentADC.PropValue("numBoxPrefix" + j2) %}</span>                  
+                  <input type="number" id="askia-input-number{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Number" data-class="shortcut_{%= j2 %}" class="input_{%= CurrentADC.InstanceId %}_{%= j2 %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}{%:= attrReadOnly %}>
+                  {% If (CurrentADC.PropValue("useSlider") = "2") Then %}                  
+				  <input type="text" id="askia-input-currency{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Currency" name="currency_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}" {%:= attrReadOnly %} class="thousand" />
 				  {% EndIf %}
                   {% If (CurrentADC.PropValue("useSlider") = "1") Then %}
-                  <div class="range"{%:= minVal %}{%:= maxVal %}> 
-                  <label for="askia-input-range_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" hidden>Range</label>
-                  <input type="range" id="askia-input-range_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" class="inputRange_{%= CurrentADC.InstanceId %}_{%= j2 %}{%:= clsSelected %}" name="range{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}{%:= attrDisabled %}>
+                  <div class="range"{%:= minVal %}{%:= maxVal %}>                   
+                  <input type="range" id="askia-input-range_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Range" class="inputRange_{%= CurrentADC.InstanceId %}_{%= j2 %}{%:= clsSelected %}" name="range{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}{%:= attrDisabled %}>
                    <p class="preBar"></p>
                   </div>
                   {% EndIf %}
@@ -196,11 +193,10 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
             <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
               <div class="question-label">{%:= column.LongCaption %}</div>
               <div class="responses-container">
-                  <label for="askia-input-open{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" hidden>Open</label>
                 {% If (CurrentADC.PropValue("openUse") = "1") Then %}
-                <textarea id="askia-input-open{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" data-class="shortcut_{%= j2 %}" class="inputopen" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}"{%:= attrReadOnly %}{%:= attrMaxOpen %}{%:= attrPlaceholder %}>{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}</textarea>
+                <textarea id="askia-input-open{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Text area" data-class="shortcut_{%= j2 %}" class="inputopen" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}"{%:= attrReadOnly %}{%:= attrMaxOpen %}{%:= attrPlaceholder %}>{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}</textarea>
                 {% Else %}
-                <input type="{%= On(CurrentADC.PropValue("openUse") = "2","email",On(CurrentADC.PropValue("openUse") = "3","url","text")) %}" data-class="shortcut_{%= j2 %}" class="inputopen" id="askia-input-open{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= attrReadOnly %}{%:= attrMaxOpen %}{%:= attrPlaceholder %}>
+                <input type="{%= On(CurrentADC.PropValue("openUse") = "2","email",On(CurrentADC.PropValue("openUse") = "3","url","text")) %}" aria-label="Open" data-class="shortcut_{%= j2 %}" class="inputopen" id="askia-input-open{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= attrReadOnly %}{%:= attrMaxOpen %}{%:= attrPlaceholder %}>
                 {% EndIf %}
               </div>
                 {% If (CurrentADC.PropValue("openDkButton") = "1" and column.IsAllowDK) Then %}
@@ -246,9 +242,8 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
           <td class="select" data-class="inputcode_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
             <div class="question-container askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">
               <div class="question-label">{%:= column.LongCaption %}</div>
-              <div class="responses-container">
-                  <label for="askia-input-select{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" hidden>Select</label>
-                  <select id="askia-input-select{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" data-class="shortcut_{%= j2 %}" class="select_{%= CurrentADC.InstanceId %}_{%= j2 %}" name="{%:= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}">
+              <div class="responses-container">                  
+                  <select id="askia-input-select{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Select" data-class="shortcut_{%= j2 %}" class="select_{%= CurrentADC.InstanceId %}_{%= j2 %}" name="{%:= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}">
                       <option value="0" disabled="disabled"{%:= attrSelected %}>{%:= CurrentADC.PropValue("firstOptionCombo" + j2) %}</option>
                       {% For j5=1 to column.AvailableResponses.Count
     					attrSelected = On(column.Iteration(loopQuestion.Answers[j1].Index).AvailableResponses[j5].IsSelected, " selected=\"selected\"", "") %}
@@ -267,24 +262,20 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
               <div class="question-label">{%:= column.LongCaption %}</div>
               <div class="responses-container">
                   {% If (Not(column.IsTimeOnly)) Then %}
-                <div class="RLDatePicker">
-                  <label for="askia-input-date{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" hidden>Date</label>
-                  <input type="text" id="askia-input-date{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" data-class="shortcut_{%= j2 %}" class="askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName("date") %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue("date") %}"{%:= attrReadOnly %}{%:= attrDisabled %}>
+                <div class="RLDatePicker">                  
+                  <input type="text" id="askia-input-date{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Date" data-class="shortcut_{%= j2 %}" class="askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName("date") %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue("date") %}"{%:= attrReadOnly %}{%:= attrDisabled %}>
                 </div>
                   {% EndIf %}
                   {% If (Not(column.IsDateOnly)) Then  %}
-                <div class="RLTimePicker">
-                  <label for="hour_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" hidden>Hour</label>
-                  <select id="hour_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="hour"{%:= attrDisabled %}>
+                <div class="RLTimePicker">                  
+                  <select id="hour_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Hour" name="hour"{%:= attrDisabled %}>
                   </select>
-                  <span class="timeSeparator_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">:</span>
-                  <label for="minutes_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" hidden>Minutes</label>                    
-                  <select id="minutes_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="minutes"{%:= attrDisabled %}>
+                  <span class="timeSeparator_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">:</span>                  
+                  <select id="minutes_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Minutes" name="minutes"{%:= attrDisabled %}>
                   </select>
                   <span id="secsContainer_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" class="secsContainer">
-                    <span class="timeSeparator_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">:</span>
-                    <label for="seconds_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" hidden>seconds</label>
-                    <select id="seconds_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="seconds"{%:= attrDisabled %}></select>
+                    <span class="timeSeparator_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}">:</span>                    
+                    <select id="seconds_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Seconds" name="seconds"{%:= attrDisabled %}></select>
                   </span>
                   <input id="askia-input-time{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" data-class="shortcut_{%= j2 %}" class="askia-question-{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %} time_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" hidden="" type="text" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName("time") %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue("time") %}"{%:= attrReadOnly %}>
                   <span class="imperial" {%If CurrentADC.PropValue("imperial") = "false" Then %} hidden {% EndIf %} id="ampm_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}"></span>
