@@ -149,13 +149,13 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
               <div class="question-label">{%:= column.LongCaption %}</div>
               <div class="responses-container">
                 <span class="prefix">{%= CurrentADC.PropValue("numBoxPrefix" + j2) %}</span>                  
-                  <input type="number" id="askia-input-number{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Number" data-class="shortcut_{%= j2 %}" class="input_{%= CurrentADC.InstanceId %}_{%= j2 %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}{%:= attrReadOnly %}>
+                  <input type="number" id="askia-input-number{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Number" autocomplete="off" data-class="shortcut_{%= j2 %}" class="input_{%= CurrentADC.InstanceId %}_{%= j2 %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}{%:= attrReadOnly %}>
                   {% If (CurrentADC.PropValue("useSlider") = "2") Then %}                  
-				  <input type="text" id="askia-input-currency{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Currency" name="currency_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}" {%:= attrReadOnly %} class="thousand" />
+				  <input type="text" id="askia-input-currency{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Currency" autocomplete="off" name="currency_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}" {%:= attrReadOnly %} class="thousand" />
 				  {% EndIf %}
                   {% If (CurrentADC.PropValue("useSlider") = "1") Then %}
                   <div class="range"{%:= minVal %}{%:= maxVal %}>                   
-                  <input type="range" id="askia-input-range_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Range" class="inputRange_{%= CurrentADC.InstanceId %}_{%= j2 %}{%:= clsSelected %}" name="range{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}{%:= attrDisabled %}>
+                  <input type="range" id="askia-input-range_{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Range" autocomplete="off" class="inputRange_{%= CurrentADC.InstanceId %}_{%= j2 %}{%:= clsSelected %}" name="range{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}{%:= attrDisabled %}>
                    <p class="preBar"></p>
                   </div>
                   {% EndIf %}
@@ -196,7 +196,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
                 {% If (CurrentADC.PropValue("openUse") = "1") Then %}
                 <textarea id="askia-input-open{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" aria-label="Text area" data-class="shortcut_{%= j2 %}" class="inputopen" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}"{%:= attrReadOnly %}{%:= attrMaxOpen %}{%:= attrPlaceholder %}>{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}</textarea>
                 {% Else %}
-                <input type="{%= On(CurrentADC.PropValue("openUse") = "2","email",On(CurrentADC.PropValue("openUse") = "3","url","text")) %}" aria-label="Open" data-class="shortcut_{%= j2 %}" class="inputopen" id="askia-input-open{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= attrReadOnly %}{%:= attrMaxOpen %}{%:= attrPlaceholder %}>
+                <input type="{%= On(CurrentADC.PropValue("openUse") = "2","email",On(CurrentADC.PropValue("openUse") = "3","url","text")) %}" aria-label="Open" autocomplete="off" data-class="shortcut_{%= j2 %}" class="inputopen" id="askia-input-open{%= column.Iteration(loopQuestion.Answers[j1].Index).InputCode %}" name="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.Answers[j1].Index).InputValue() %}"{%:= attrReadOnly %}{%:= attrMaxOpen %}{%:= attrPlaceholder %}>
                 {% EndIf %}
               </div>
                 {% If (CurrentADC.PropValue("openDkButton") = "1" and column.IsAllowDK) Then %}
