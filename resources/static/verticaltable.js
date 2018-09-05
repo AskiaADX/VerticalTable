@@ -1136,6 +1136,11 @@
                     onInputNumbers(e, passedInElement); 
                 };
             }(this)));
+            if (k === (inputNumbers.length - 1)) {
+                var event = document.createEvent('HTMLEvents');
+                event.initEvent('input', true, false);
+                inputNumbers[k].dispatchEvent(event);
+        	}
         }
 
         // Change event (live sum) on input range

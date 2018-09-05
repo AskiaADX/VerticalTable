@@ -69,7 +69,7 @@ body {
     font-style: italic;
 }
 .verticaltable select option:first-child {
-	display: none;   
+	/*display: none;*/
 }
 
 .verticaltable select::-ms-expand {
