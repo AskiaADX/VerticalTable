@@ -172,7 +172,7 @@ Dim othersColumnWidth = ((100 - firstColumnWidth.ToNumber() ) / columnNumber).Fl
 EndIf %}
 /* If browser support touch false and javascript true */
 {% If ((Browser.Support("touch") = False) and (Browser.Support("javascript"))) Then %}
-#adc_{%= CurrentADC.InstanceId %} .response-container:hover {
+#adc_{%= CurrentADC.InstanceId %} .response-container:not(.emptyCell):hover {
   background-color: rgba({%= CurrentADC.PropValue("hoverBgPrimaryColor").ToRGB() %},.1);
   color: rgb({%= CurrentADC.PropValue("hoverFontColor").ToRGB() %});
 }
@@ -202,7 +202,7 @@ EndIf %}
 #adc_{%= CurrentADC.InstanceId %} select {
     font-size: {%= Theme.NormalFS %};
 }
-#adc_{%= CurrentADC.InstanceId %} .response-container.selected {
+#adc_{%= CurrentADC.InstanceId %} .response-container.selected:not(.emptyCell) {
     background-color: rgba({%= CurrentADC.PropValue("selectedBgPrimaryColor").ToRGBA() %});
     color: rgb({%= CurrentADC.PropValue("selectedFontColor").ToRGB() %});
 }
@@ -438,9 +438,13 @@ EndIf %}
   max-width: {%= CurrentADC.PropValue("maxLoopImagesWidth") %};
 }
 {% EndIf %}
+#adc_{%= CurrentADC.InstanceId %} .response-container.emptyCell {
+    cursor: auto;
+}
 @media screen and (max-width: {%= CurrentADC.PropValue("responsiveWidth") %}) {
   #adc_{%= CurrentADC.InstanceId %} thead,
-  #adc_{%= CurrentADC.InstanceId %} tfoot {
+  #adc_{%= CurrentADC.InstanceId %} tfoot,
+  #adc_{%= CurrentADC.InstanceId %} .response-container.emptyCell {
     display: none;
   }
   #adc_{%= CurrentADC.InstanceId %} table {
@@ -488,7 +492,7 @@ EndIf %}
       {% Else %}
       align-items: center;
       {% EndIf %}
-      border-bottom: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
+      border-top: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
   }
   {% If (CurrentADC.PropValue("responsiveResponsesDirection") <> "1") Then %}
   #adc_{%= CurrentADC.InstanceId %} .closed .response-container {
@@ -504,7 +508,10 @@ EndIf %}
       border-top: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
   }
   #adc_{%= CurrentADC.InstanceId %} .closed .response-container:not(:first-child) {
-      border-top: 0px {%= CurrentADC.PropValue("borderStyle") %} transparent;
+      border-bottom: 0px {%= CurrentADC.PropValue("borderStyle") %} transparent;
+  }
+  #adc_{%= CurrentADC.InstanceId %} .closed .response-container {
+      border-right: 0px {%= CurrentADC.PropValue("borderStyle") %} transparent;
   }
   {% EndIf %}
   #adc_{%= CurrentADC.InstanceId %} tbody > tr > td {
