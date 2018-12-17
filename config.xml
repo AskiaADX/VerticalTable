@@ -7,14 +7,15 @@
   <info>
     <name>VerticalTable</name>
     <guid>c4acbd4e-3246-457c-9f9a-3a2dc9871dcc</guid>
-    <version>2.0.6</version>
+    <version>3.0.0</version>
     <date>2017-05-26</date>
     <description><![CDATA[Vertical table
 		v2.0.4 - Added alt attribute to img
 			   - Added span to labels and table headers
 			   - Added aria-labels to inputs
 		v2.0.5 - Fixed live sum on load
-		v2.0.6 - Adc compatible with Ignore responses]]></description>
+		v2.0.6 - Adc compatible with Ignore responses
+		v3.0.0 - AvailableAnswers]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>, Clément Salomon <clement@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -23,7 +24,7 @@
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" chapter="false" single="true" multiple="true" numeric="true" date="true" open="true" requireParentLoop="true" />
+      <constraint on="questions" chapter="false" single="true" multiple="true" numeric="true" date="true" open="true" requireParentLoop="true" RequireLoopDepth="true" />
       <constraint on="controls" responseblock="true" label="false" textbox="false" checkbox="false" listbox="false" radiobutton="false" />
       <constraint on="responses" max="*" min="*" />
     </constraints>

@@ -80,7 +80,7 @@ Next i1
     	column = CurrentADC.PropQuestion("questionCol"+i2)
     	If column.Type = "datetime" Then 
         	If(Not(column.IsDateOnly)) Then
-                For i3 = 1 to CurrentQuestion.ParentLoop.Answers.Count
+            	For i3 = 1 to CurrentQuestion.ParentLoop.AvailableAnswers.Count
     				column = CurrentADC.PropQuestion("questionCol"+i2)
 					column = column.AllIterations[i3] %}
   var timePicker{%= column.InputCode %} = new TimePicker({
@@ -91,9 +91,9 @@ Next i1
     hideInput: true,
     minHour: {%= Hour(column.MinDate) %},
     maxHour: {%= Hour(column.MaxDate) %},
-    selectedHour: '{%= Hour(column.Iteration(column.ParentLoop.Answers[i3].Index).Value.ToDate()) %}',
-    selectedMin: '{%= Minute(column.Iteration(column.ParentLoop.Answers[i3].Index).Value.ToDate()) %}',
-    selectedSec: '{%= Second(column.Iteration(column.ParentLoop.Answers[i3].Index).Value.ToDate()) %}',
+    selectedHour: '{%= Hour(column.Iteration(column.ParentLoop.AvailableAnswers[i3].Index).Value.ToDate()) %}',
+    selectedMin: '{%= Minute(column.Iteration(column.ParentLoop.AvailableAnswers[i3].Index).Value.ToDate()) %}',
+    selectedSec: '{%= Second(column.Iteration(column.ParentLoop.AvailableAnswers[i3].Index).Value.ToDate()) %}',
     question: '{%= column.Shortcut %}',
     adcId: {%= CurrentADC.InstanceId %},
     inputCode: {%= column.InputCode %}
@@ -102,7 +102,7 @@ Next i1
         	EndIf
 			column = CurrentADC.PropQuestion("questionCol"+i2)
 			If (Not(column.IsTimeOnly)) Then 
-				For i4 = 1 to CurrentQuestion.ParentLoop.Answers.Count
+				For i4 = 1 to CurrentQuestion.ParentLoop.AvailableAnswers.Count
     				column = CurrentADC.PropQuestion("questionCol"+i2)
 					column = column.AllIterations[i4] %}
   var datePicker{%= column.InputCode %} = new DatePicker({
