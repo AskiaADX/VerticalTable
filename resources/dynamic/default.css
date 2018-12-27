@@ -497,6 +497,7 @@ EndIf %}
   {% If (CurrentADC.PropValue("responsiveResponsesDirection") <> "1") Then %}
   #adc_{%= CurrentADC.InstanceId %} .closed .response-container {
       border-top: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
+      border-bottom: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
       border-right: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
   }
   #adc_{%= CurrentADC.InstanceId %} .responses-container .response-container:last-child {
@@ -504,10 +505,10 @@ EndIf %}
   }
   {% EndIf %}
   {% If (CurrentADC.PropValue("responsiveResponsesDirection") = "1") Then %}
-  #adc_{%= CurrentADC.InstanceId %} .closed .response-container:first-child {
-      border-top: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
+  #adc_{%= CurrentADC.InstanceId %} .closed .response-container:last-child {
+      border-bottom: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
   }
-  #adc_{%= CurrentADC.InstanceId %} .closed .response-container:not(:first-child) {
+  #adc_{%= CurrentADC.InstanceId %} .closed .response-container:not(:last-child) {
       border-bottom: 0px {%= CurrentADC.PropValue("borderStyle") %} transparent;
   }
   #adc_{%= CurrentADC.InstanceId %} .closed .response-container {
