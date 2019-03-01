@@ -580,6 +580,7 @@ EndIf %}
     width: 95%;
   }
   #adc_{%= CurrentADC.InstanceId %} input[type="radio"],
+  #adc_{%= CurrentADC.InstanceId %} .response-container input[type="checkbox"],
   #adc_{%= CurrentADC.InstanceId %} .askia-radio,
   #adc_{%= CurrentADC.InstanceId %} .askia-checkbox {
     display: none;
