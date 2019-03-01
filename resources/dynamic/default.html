@@ -35,7 +35,7 @@ Dim totalCaption = CurrentADC.PropValue("totalCaption")
 Dim counterHeader = 1
 Dim countResponsesOnIteration = 1
 Dim arrResponsesOnIteration = {}
-For i1 = 2 To 5
+For i1 = 2 To 6
     columnQuestion = CurrentADC.PropQuestion("questionCol" + i1)
     If columnQuestion.Id <> DK Then
         columnNumber = i1
@@ -43,7 +43,7 @@ For i1 = 2 To 5
         Break
     EndIf
 Next i1
-For i3 = 1 To 5
+For i3 = 1 To 6
     columnQuestion = CurrentADC.PropQuestion("questionCol" + i3)
     If ((columnQuestion.Id = DK) and (i3 = 1)) Then
     	columnQuestion = CurrentQuestion
