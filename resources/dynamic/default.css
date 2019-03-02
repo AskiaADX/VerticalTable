@@ -46,6 +46,22 @@ Dim othersColumnWidth = ((100 - firstColumnWidth.ToNumber() ) / columnNumber).Fl
     display: none;
 }
 {% EndIf %}
+{% If (CurrentADC.PropValue("hideFirstColumn") = "1") Then %}
+#adc_{%= CurrentADC.InstanceId %} tr > th:not(.header-closed):first-child,
+#adc_{%= CurrentADC.InstanceId %} tr > td:first-child {
+    display: none;
+}
+{% EndIf %}
+@media screen and (max-width: {%= CurrentADC.PropValue("responsiveWidth") %}) {
+    #adc_{%= CurrentADC.InstanceId %} tr > th:not(.header-closed):first-child,
+    #adc_{%= CurrentADC.InstanceId %} tr > td:first-child {
+        {% If (CurrentADC.PropValue("hideFirstColumnResponsive") = "1") Then %}
+        display: none;
+        {% Else %}
+        display: block;
+        {% EndIf %}
+    }
+}
 #adc_{%= CurrentADC.InstanceId %} table {
   width: 100%;
   max-width: {%= CurrentADC.PropValue("controlWidth") %};
