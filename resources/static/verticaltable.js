@@ -733,6 +733,9 @@
    * @param {Object} that VerticalTable object, same as options
    */
     function onSelects (event, that) {
+        var el = event.target || event.srcElement;
+        var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
+        triggerRouting(shortcut);
         var debounceStepByStep = debounce(stepByStepRows, 300);
         debounceStepByStep(that);
         var debounceAutoSubmitForm = debounce(autoSubmitForm, 300);
