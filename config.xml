@@ -7,7 +7,7 @@
   <info>
     <name>VerticalTable</name>
     <guid>c4acbd4e-3246-457c-9f9a-3a2dc9871dcc</guid>
-    <version>3.0.3</version>
+    <version>3.0.4</version>
     <date>2017-05-26</date>
     <description><![CDATA[Vertical table
 		v2.0.4 - Added alt attribute to img
@@ -27,13 +27,13 @@
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" chapter="false" single="true" multiple="true" numeric="true" date="true" open="true" requireParentLoop="true" requireLoopDepth="1" />
-      <constraint on="controls" responseblock="true" label="false" textbox="false" checkbox="false" listbox="false" radiobutton="false" />
+      <constraint on="questions" chapter="false" single="true" multiple="true" numeric="true" date="true" open="true" requireParentLoop="true" requireLoopDepth="true" />
+      <constraint on="controls" responseblock="true" label="false" textbox="true" checkbox="true" listbox="true" radiobutton="true" />
       <constraint on="responses" max="*" min="*" />
     </constraints>
   </info>
   <outputs defaultOutput="default">
-    <output id="default" manageLoopDepth="1">
+    <output id="default">
       <description><![CDATA[Default output]]></description>
       <content fileName="verticaltable.css" type="css" mode="static" position="head" />
       <content fileName="default.css" type="css" mode="dynamic" position="head" />
@@ -118,8 +118,8 @@
         <description><![CDATA[Sets if the first column is hidden or not]]></description>
         <value><![CDATA[0]]></value>
         <options>
-            <option value="1" text="Yes" />
-            <option value="0" text="No" />
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
         </options>
       </property>
       <property xsi:type="standardProperty" id="showTitle" name="Show title" type="string" require="true" visible="true">
@@ -255,8 +255,8 @@
         <description><![CDATA[Sets if the first column is hidden or not on responsive mode]]></description>
         <value><![CDATA[0]]></value>
         <options>
-            <option value="1" text="Yes" />
-            <option value="0" text="No" />
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
         </options>
       </property>
     </category>
