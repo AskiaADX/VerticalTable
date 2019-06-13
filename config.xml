@@ -7,7 +7,7 @@
   <info>
     <name>VerticalTable</name>
     <guid>c4acbd4e-3246-457c-9f9a-3a2dc9871dcc</guid>
-    <version>3.0.4</version>
+    <version>3.0.5</version>
     <date>2017-05-26</date>
     <description><![CDATA[Vertical table
 		v2.0.4 - Added alt attribute to img
@@ -18,7 +18,8 @@
 		v3.0.0 - AvailableAnswers
         v3.0.1 - Added column 6
         v3.0.2 - Added hide first column
-        v3.0.3 - Fixed live routing on selects]]></description>
+        v3.0.3 - Fixed live routing on selects
+		v3.0.5 - Fixed manageLoopDepth and requireLoopDepth]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>, Clément Salomon <clement@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -27,13 +28,13 @@
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" chapter="false" single="true" multiple="true" numeric="true" date="true" open="true" requireParentLoop="true" requireLoopDepth="true" />
+      <constraint on="questions" chapter="false" single="true" multiple="true" numeric="true" date="true" open="true" requireParentLoop="true" requireLoopDepth="1" />
       <constraint on="controls" responseblock="true" label="false" textbox="true" checkbox="true" listbox="true" radiobutton="true" />
       <constraint on="responses" max="*" min="*" />
     </constraints>
   </info>
   <outputs defaultOutput="default">
-    <output id="default">
+    <output id="default" manageLoopDepth="1">
       <description><![CDATA[Default output]]></description>
       <content fileName="verticaltable.css" type="css" mode="static" position="head" />
       <content fileName="default.css" type="css" mode="dynamic" position="head" />
