@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<control  xmlns="http://www.askia.com/2.1.0/ADCSchema"
+<control  xmlns="http://www.askia.com/2.2.0/ADCSchema"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://www.askia.com/2.1.0/ADCSchema https://raw.githubusercontent.com/AskiaADX/ADXSchema/2.1.0/ADCSchema.xsd"
-          version="2.1.0"
-          askiaCompat="5.4.2">
+          xsi:schemaLocation="http://www.askia.com/2.2.0/ADCSchema https://raw.githubusercontent.com/AskiaADX/ADXSchema/2.2.0/ADCSchema.xsd"
+          version="2.2.0"
+          askiaCompat="5.5.2">
   <info>
     <name>VerticalTable</name>
     <guid>c4acbd4e-3246-457c-9f9a-3a2dc9871dcc</guid>
@@ -406,10 +406,10 @@ For instance 1 or 0.1 or 5 etc.]]></description>
       </property>
       <property xsi:type="standardProperty" id="placeholder" name="Placeholder" type="string" mode="dynamic" require="false" visible="true">
         <description><![CDATA[
-          
+
           Using HTML 5, in modern browser.
           Helper text shows in the input when it's empty.
-        
+
         ]]></description>
         <value></value>
       </property>
