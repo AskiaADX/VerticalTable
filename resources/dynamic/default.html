@@ -31,7 +31,12 @@ Dim maxVal
 Dim useSlider
 Dim step
 Dim clsSelected
+Dim firstBodyRow = ""
 Dim totalCaption = CurrentADC.PropValue("totalCaption")
+Dim stepByStep = CurrentADC.PropValue("stepByStep")
+Dim useStepByStep= CurrentADC.PropValue("useStepByStep")
+Dim addButton = CurrentADC.PropValue("addButton")
+Dim removeButton = CurrentADC.PropValue("removeButton")
 Dim counterHeader = 1
 Dim countResponsesOnIteration = 1
 Dim arrResponsesOnIteration = {}
@@ -107,9 +112,13 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
       <tbody>
           {% For j1 = 1 To loopQuestion.AvailableAnswers.Count
           imgZoom = On((loopQuestion.AvailableAnswers[j1].ResourceURL <> "") and (CurrentADC.PropValue("imgZoomRow") = "1"),"data-id=\"imgZoom_" + CurrentADC.InstanceId + "_" + j1 + "\"","")
-    	  paddingZoom = On((loopQuestion.AvailableAnswers[j1].ResourceURL <> "") and (CurrentADC.PropValue("imgZoomRow") = "1"),"class=\"paddingZoom\"","") %}
-        <tr {%:= imgZoom %}>
+    	  paddingZoom = On((loopQuestion.AvailableAnswers[j1].ResourceURL <> "") and (CurrentADC.PropValue("imgZoomRow") = "1"),"class=\"paddingZoom\"","") 
+    	  firstBodyRow = On((j1 = 1),"class=\"firstbodyrow\"","") %}
+        <tr {%:= firstBodyRow %} {%:= imgZoom %}>
             <td {%:= paddingZoom %}>
+            {%  If ((stepByStep = "yes") and (useStepByStep = "buttons")) Then %}
+                <div class="minusbutton" style="display: none;"><input type="button" value="{%= removeButton %}"></div>
+            {% EndIf %}
             {% If ((loopQuestion.AvailableAnswers[j1].ResourceURL <> "") and (CurrentADC.PropValue("iterationColumn") <> "0")) Then %}
             <img src="{%= loopQuestion.AvailableAnswers[j1].ResourceURL %}" class="image" alt="{%:= loopQuestion.AvailableAnswers[j1].Caption %}">
             {% If (CurrentADC.PropValue("imgZoomRow") = "1") Then %}<a href="{%= loopQuestion.AvailableAnswers[j1].ResourceURL %}" target="_blank" data-simplbox="imgZoom_{%= CurrentADC.InstanceId %}_{%= j1 %}"><div class="imgZoom"></div></a>{% EndIf %}
@@ -364,4 +373,10 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
         </tr>
       </tfoot>
     </table>
+    {%  If ((stepByStep = "yes") and (useStepByStep = "buttons")) Then %}
+    <br />
+    <div class="plusbutton">
+        <input type="button" value="{%= addButton %}" />
+    </div>
+    {% EndIf %}
   </div>
