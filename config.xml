@@ -7,7 +7,7 @@
   <info>
     <name>VerticalTable</name>
     <guid>c4acbd4e-3246-457c-9f9a-3a2dc9871dcc</guid>
-    <version>3.0.6</version>
+    <version>3.0.7</version>
     <date>2017-05-26</date>
     <description><![CDATA[Vertical table
 		v2.0.4 - Added alt attribute to img
@@ -20,7 +20,8 @@
         v3.0.2 - Added hide first column
         v3.0.3 - Fixed live routing on selects
 		v3.0.5 - Fixed manageLoopDepth and requireLoopDepth
-		v3.0.6 - Added Use step by step parameter]]></description>
+		v3.0.6 - Added Use step by step parameter
+		v3.0.7 - Added parameter for the color of the buttons]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>, Clément Salomon <clement@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -351,6 +352,14 @@
       <property xsi:type="standardProperty" id="selectedBgPrimaryColor" name="Selected background color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[Selected Background Color]]></description>
         <value><![CDATA[{%= Theme.SecondaryColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="buttonsBgColor" name="Buttons background color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
+        <description><![CDATA[Buttons Background Color]]></description>
+        <value><![CDATA[{%= Theme.PrimaryLightColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="buttonsHoverBgColor" name="Buttons hover background color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
+        <description><![CDATA[Buttons Hover Background Color]]></description>
+        <value><![CDATA[{%= Theme.PrimaryColor %}]]></value>
       </property>
       <property xsi:type="standardProperty" id="useHeaderStyleFirstColumn" name="Use header style first column" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[Use the header style for the first column]]></description>

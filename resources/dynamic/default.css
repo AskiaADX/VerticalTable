@@ -31,16 +31,16 @@ Dim othersColumnWidth = ((100 - firstColumnWidth.ToNumber() ) / columnNumber).Fl
     border-radius: {%= CurrentADC.PropValue("borderRadius") %};
     font-size: {%= Theme.NormalFS %};
     color: rgba({%= Theme.WhiteColor %});
-    background-color: rgba({%= Theme.PrimaryLightColor %});
+    background-color: rgba({%= CurrentADC.PropValue("buttonsBgColor").ToRGBA() %});
     box-shadow: 0 2px rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
 }
 #adc_{%= CurrentADC.InstanceId %} .plusbutton input[type="button"]:hover:not(:disabled),
 #adc_{%= CurrentADC.InstanceId %} .minusbutton input[type="button"]:hover:not(:disabled) {
-    background-color: rgba({%= Theme.PrimaryColor %});
+    background-color: rgba({%= CurrentADC.PropValue("buttonsHoverBgColor").ToRGBA() %});
 }
 #adc_{%= CurrentADC.InstanceId %} .plusbutton input[type="button"]:active,
 #adc_{%= CurrentADC.InstanceId %} .minusbutton input[type="button"]:active {
-    background-color: rgba({%= Theme.PrimaryColor %});
+    background-color: rgba({%= CurrentADC.PropValue("buttonsHoverBgColor").ToRGBA() %});
     box-shadow: 0 1px rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
     transform: translateY(1px);
 }
