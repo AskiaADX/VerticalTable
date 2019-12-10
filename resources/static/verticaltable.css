@@ -8,15 +8,42 @@ body {
 *:focus {
   outline: none;
 }
-* {
+.verticaltable *:not(input[type="radio"]):not(input[type="checkbox"]) {
     -webkit-appearance: none;
     -moz-appearance: none;
+    appearance: none;
 }
 .verticaltable {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.verticaltable .plusbutton input[type="button"],
+.verticaltable .minusbutton input[type="button"] {
+    min-width: 30px;
+    min-height: 30px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    transition: background-color .3s;
+    padding: 5px;
+}
+
+.verticaltable .plusbutton input[type="button"]:disabled,
+.verticaltable .minusbutton input[type="button"]:disabled {
+    opacity: .5;
+    cursor: not-allowed;
 }
 
 .verticaltable input {
@@ -46,6 +73,16 @@ body {
     padding: 5px 0 0px 0;
 }
 
+.verticaltable .plusbutton {
+    width: 100%;
+    text-align: center;
+}
+.verticaltable .minusbutton {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
 .verticaltable select {
   	width: 100%;
     -webkit-box-sizing: border-box;
@@ -62,6 +99,9 @@ body {
     background-size: 8px 8px, 8px 8px;
     background-repeat: no-repeat;
     padding-right: 1.5em;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     cursor: pointer;
 }
 .verticaltable select[disabled="disabled"],

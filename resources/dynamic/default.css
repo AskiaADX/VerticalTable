@@ -2,7 +2,7 @@
 Dim i1
 Dim columnQuestion
 Dim columnNumber = 1
-For i1 = 2 To 5
+For i1 = 2 To 6
     columnQuestion = CurrentADC.PropQuestion("questionCol" + i1)
     If columnQuestion.Id <> DK Then
         columnNumber = i1
@@ -26,6 +26,24 @@ Dim othersColumnWidth = ((100 - firstColumnWidth.ToNumber() ) / columnNumber).Fl
     display: none;
 }
 {% EndIf %}
+#adc_{%= CurrentADC.InstanceId %} .plusbutton input[type="button"],
+#adc_{%= CurrentADC.InstanceId %} .minusbutton input[type="button"] {
+    border-radius: {%= CurrentADC.PropValue("borderRadius") %};
+    font-size: {%= Theme.NormalFS %};
+    color: rgba({%= Theme.WhiteColor %});
+    background-color: rgba({%= CurrentADC.PropValue("buttonsBgColor").ToRGBA() %});
+    box-shadow: 0 2px rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
+}
+#adc_{%= CurrentADC.InstanceId %} .plusbutton input[type="button"]:hover:not(:disabled),
+#adc_{%= CurrentADC.InstanceId %} .minusbutton input[type="button"]:hover:not(:disabled) {
+    background-color: rgba({%= CurrentADC.PropValue("buttonsHoverBgColor").ToRGBA() %});
+}
+#adc_{%= CurrentADC.InstanceId %} .plusbutton input[type="button"]:active,
+#adc_{%= CurrentADC.InstanceId %} .minusbutton input[type="button"]:active {
+    background-color: rgba({%= CurrentADC.PropValue("buttonsHoverBgColor").ToRGBA() %});
+    box-shadow: 0 1px rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
+    transform: translateY(1px);
+}
 {% If (columnNumber = 1) Then %}
 #adc_{%= CurrentADC.InstanceId %} .question-label,
 #adc_{%= CurrentADC.InstanceId %} .header-question-label {
@@ -46,6 +64,22 @@ Dim othersColumnWidth = ((100 - firstColumnWidth.ToNumber() ) / columnNumber).Fl
     display: none;
 }
 {% EndIf %}
+{% If (CurrentADC.PropValue("hideFirstColumn") = "1") Then %}
+#adc_{%= CurrentADC.InstanceId %} tr > th:not(.header-closed):first-child,
+#adc_{%= CurrentADC.InstanceId %} tr > td:first-child {
+    display: none;
+}
+{% EndIf %}
+@media screen and (max-width: {%= CurrentADC.PropValue("responsiveWidth") %}) {
+    #adc_{%= CurrentADC.InstanceId %} tr > th:not(.header-closed):first-child,
+    #adc_{%= CurrentADC.InstanceId %} tr > td:first-child {
+        {% If (CurrentADC.PropValue("hideFirstColumnResponsive") = "1") Then %}
+        display: none;
+        {% Else %}
+        display: block;
+        {% EndIf %}
+    }
+}
 #adc_{%= CurrentADC.InstanceId %} table {
   width: 100%;
   max-width: {%= CurrentADC.PropValue("controlWidth") %};
@@ -497,6 +531,7 @@ EndIf %}
   {% If (CurrentADC.PropValue("responsiveResponsesDirection") <> "1") Then %}
   #adc_{%= CurrentADC.InstanceId %} .closed .response-container {
       border-top: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
+      border-bottom: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
       border-right: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
   }
   #adc_{%= CurrentADC.InstanceId %} .responses-container .response-container:last-child {
@@ -504,10 +539,10 @@ EndIf %}
   }
   {% EndIf %}
   {% If (CurrentADC.PropValue("responsiveResponsesDirection") = "1") Then %}
-  #adc_{%= CurrentADC.InstanceId %} .closed .response-container:first-child {
-      border-top: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
+  #adc_{%= CurrentADC.InstanceId %} .closed .response-container:last-child {
+      border-bottom: {%= CurrentADC.PropValue("borderThickness") %} {%= CurrentADC.PropValue("borderStyle") %} rgba({%= CurrentADC.PropValue("borderColour").ToRGBA() %});
   }
-  #adc_{%= CurrentADC.InstanceId %} .closed .response-container:not(:first-child) {
+  #adc_{%= CurrentADC.InstanceId %} .closed .response-container:not(:last-child) {
       border-bottom: 0px {%= CurrentADC.PropValue("borderStyle") %} transparent;
   }
   #adc_{%= CurrentADC.InstanceId %} .closed .response-container {
@@ -579,6 +614,7 @@ EndIf %}
     width: 95%;
   }
   #adc_{%= CurrentADC.InstanceId %} input[type="radio"],
+  #adc_{%= CurrentADC.InstanceId %} .response-container input[type="checkbox"],
   #adc_{%= CurrentADC.InstanceId %} .askia-radio,
   #adc_{%= CurrentADC.InstanceId %} .askia-checkbox {
     display: none;

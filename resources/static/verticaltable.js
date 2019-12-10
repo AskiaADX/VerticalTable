@@ -397,19 +397,372 @@
             if ((i === (trs.length - 1)) && ((nbDataFound - nbHiddenQuestions) === 0)) continue;
             // Check if all questions have answers
             if ((nbDataFound !== (tds.length - 1)) && (lastDataFound  === 0)) {
-                if (that.stepByStep) trs[(i + 1)].style.display = 'none';
+                if (that.stepByStep && that.useStepByStep === 'auto') trs[(i + 1)].style.display = 'none';
+                if (that.stepByStep && that.useStepByStep === 'buttons') document.querySelector("#adc_" + that.instanceId + " .plusbutton input[type=button]").setAttribute('disabled', 'disabled');
                 addClass(trs[(i + 1)],'display');
             } else {
                 if (trs[(i + 1)].style.display === 'none') {
-                    if (that.stepByStep) trs[(i + 1)].style.display = '';
+                    if (that.stepByStep && that.useStepByStep === 'auto') trs[(i + 1)].style.display = '';
                 }
+                if (that.stepByStep && that.useStepByStep === 'buttons' && (lastDataFound  === 0)) document.querySelector("#adc_" + that.instanceId + " .plusbutton input[type=button]").removeAttribute('disabled');
                 if (hasClass(trs[(i + 1)],'display')) {
-                	if ((window.innerWidth <= that.responsiveWidth) && that.scrollNextIteration) scrollIt(trs[(i + 1)], 300, 'easeOutQuad');
+                	if ((window.innerWidth <= that.responsiveWidth) && that.scrollNextIteration && !(that.stepByStep && that.useStepByStep === 'buttons')) scrollIt(trs[(i + 1)], 300, 'easeOutQuad');
                     removeClass(trs[(i + 1)],'display');
                 }
                 break;
             }
         }   
+    }
+    
+    /**
+   * Step by step buttons functionnality (Show or hide next row)
+   *
+   * @param {Object} that VerticalTable object, same as options
+   */
+    function stepByStepButtons (that) {
+        var trs = document.querySelectorAll('#adc_' + that.instanceId + ' tbody > tr');
+        var tds;
+        var lastDataFound = 0;
+        var nbDataFound = 0;
+        var nbHiddenQuestions = 0;
+        
+        // Iterate tr backwards
+    	for (var i = (trs.length); i-- > 0; ) {
+            tds = trs[i].querySelectorAll('td');
+            lastDataFound = nbDataFound - nbHiddenQuestions;
+            nbDataFound = 0;
+            nbHiddenQuestions = 0;
+            // Iterate td backwards
+    		for (var j = tds.length; j-- > 1; ) {
+                if (hasClass(tds[j],'date') && (checkAnswersDate(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+					nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'open') && (checkAnswersOpen(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'numeric') && (checkAnswersNumeric(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'select') && (checkAnswersSelect(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'closed') && (checkAnswersClosed(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                }
+                if ((hasClass(tds[j],'date') || hasClass(tds[j],'open') || hasClass(tds[j],'numeric') || hasClass(tds[j],'select') || hasClass(tds[j],'closed')) && (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0) ) {
+                    nbHiddenQuestions = nbHiddenQuestions + 1;
+                }
+            }
+            if ((i === (trs.length - 1)) && ((nbDataFound - nbHiddenQuestions) > 0)) break;
+            if (that.stepByStep && that.useStepByStep === 'buttons') {
+                if (i === 0) trs[(i)].querySelector('.minusbutton').style.display = 'none';
+                if ((nbDataFound !== (tds.length - 1)) && (nbDataFound - nbHiddenQuestions  === 0) && (i > 0)) {
+                    trs[(i)].style.display = 'none';
+                    if (i > 0) trs[(i)].querySelector('.minusbutton').style.display = 'none';
+                } else {
+                    if (trs[(i)].style.display === 'none') {
+                        trs[(i)].style.display = '';
+                    }
+                    if (i > 0) trs[(i)].querySelector('.minusbutton').style.display = '';
+                    break;
+                }
+            }
+        }   
+    }
+    
+    /**
+   * Add button functionnality (Show next row)
+   *
+   * @param {Object} that VerticalTable object, same as options
+   */
+    function addButton (that) {
+        var trs = document.querySelectorAll('#adc_' + that.instanceId + ' tbody > tr');
+        var tds;
+        var lastDataFound = 0;
+        var nbDataFound = 0;
+        var nbHiddenQuestions = 0;
+        
+        // Iterate tr backwards
+    	for (var i = (trs.length); i-- > 0; ) {
+            tds = trs[i].querySelectorAll('td');
+            lastDataFound = nbDataFound - nbHiddenQuestions;
+            nbDataFound = 0;
+            nbHiddenQuestions = 0;
+            // Iterate td backwards
+    		for (var j = tds.length; j-- > 1; ) {
+                if (hasClass(tds[j],'date') && (checkAnswersDate(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+					nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'open') && (checkAnswersOpen(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'numeric') && (checkAnswersNumeric(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'select') && (checkAnswersSelect(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                } else if (hasClass(tds[j],'closed') && (checkAnswersClosed(tds[j]) || (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0)) ) {
+                    nbDataFound = nbDataFound + 1;
+                }
+                if ((hasClass(tds[j],'date') || hasClass(tds[j],'open') || hasClass(tds[j],'numeric') || hasClass(tds[j],'select') || hasClass(tds[j],'closed')) && (that.arrInputCodesHiddenQuestions.indexOf(parseInt(tds[j].getAttribute('data-class').split('_')[1], 10)) >= 0) ) {
+                    nbHiddenQuestions = nbHiddenQuestions + 1;
+                }
+            }
+            if ((i === (trs.length - 1)) && ((nbDataFound - nbHiddenQuestions) > 0)) break;
+            if ((i === (trs.length - 1)) && ((nbDataFound - nbHiddenQuestions) === 0)) continue;
+            // Check if all questions have answers
+            if ((nbDataFound !== (tds.length - 1)) && (lastDataFound  === 0)) {
+  				// In case it's needed at one time
+            } else {
+                if (trs[(i + 1)].style.display === 'none') {
+                    if (that.stepByStep && that.useStepByStep === 'buttons') {
+                        trs[(i)].querySelector('.minusbutton').style.display = 'none';
+                        trs[(i + 1)].querySelector('.minusbutton').style.display = '';
+                        removeClass(trs[(i + 1)], 'display');
+                        trs[(i + 1)].style.display = '';
+                        document.querySelector("#adc_" + that.instanceId + " .plusbutton input[type=button]").setAttribute('disabled', 'disabled');
+                    }
+                }
+                if ((window.innerWidth <= that.responsiveWidth) && that.scrollNextIteration && (that.stepByStep && that.useStepByStep === 'buttons')) scrollIt(trs[(i + 1)], 300, 'easeOutQuad');
+                break;
+            }
+        }
+    }
+    
+    /**
+   * Remove button functionnality (Hide current row)
+   *
+   * @param {Object} event Click event of the input minus button
+   * @param {Object} that VerticalTable object, same as options
+   */
+    function removeButton (event, that) {
+        var el = event.target || event.srcElement;
+        if (el.nodeName === 'INPUT' && (el.type === 'button')) {
+            // Hide the minus button
+            el.parentElement.style.display = 'none';
+            // Hide the current tr
+            var currentTr = el.parentElement.parentElement.parentElement;
+            currentTr.style.display = 'none';
+            addClass(currentTr, 'display');
+            clearDataTr(currentTr);
+            showPreviousMinusButton(currentTr);
+            document.querySelector("#adc_" + that.instanceId + " .plusbutton input[type=button]").removeAttribute('disabled');
+        }
+    }
+    
+    /**
+   * Remove the data on the tr
+   *
+   * @param {Object} tr VerticalTable current tr
+   */
+    function clearDataTr (tr) {
+        var tds = tr.querySelectorAll('td:not(:first-child)');
+        
+        for (var i = 0, j = tds.length; i < j; i++) {
+			if (hasClass(tds[i],'single')) {
+                clearSingle(tds[i]);
+            } else if (hasClass(tds[i],'select')) {
+                clearSelect(tds[i]);
+            } else if (hasClass(tds[i],'multiple')) {
+                clearMultiple(tds[i]);
+            } else if (hasClass(tds[i],'numeric')) {
+                clearNumeric(tds[i]);
+            } else if (hasClass(tds[i],'open')) {
+                clearOpen(tds[i]);
+            } else if (hasClass(tds[i],'date')) {
+                clearDate(tds[i]);
+            }
+        }
+        
+    }
+    
+    /**
+   * Remove the data on single
+   *
+   * @param {Object} td VerticalTable current td
+   */
+    function clearSingle (td) {
+        var labelSelected = td.querySelector('.response-container.selected');
+        if (labelSelected) {
+            var radio = labelSelected.querySelector('input[type="radio"]');
+            radio.checked = false;
+            radio.removeAttribute('checked');
+            removeClass(labelSelected,'selected');
+            var event = document.createEvent('HTMLEvents');
+            event.initEvent('change', true, false);
+            radio.dispatchEvent(event);
+        }
+    }
+    
+    /**
+   * Remove the data on select
+   *
+   * @param {Object} td VerticalTable current td
+   */
+    function clearSelect (td) {
+        var select = td.querySelector('select');
+        if (select) {
+            select.selectedIndex = 0;
+            var event = document.createEvent('HTMLEvents');
+            event.initEvent('change', true, false);
+            select.dispatchEvent(event);
+        }
+    }
+    
+    /**
+   * Remove the data on multiple
+   *
+   * @param {Object} td VerticalTable current td
+   */
+    function clearMultiple (td) {
+        var labelsSelected = td.querySelectorAll('.response-container.selected');
+        if (labelsSelected.length >0) {
+            for (var i = 0, j = labelsSelected.length; i < j; i++) {
+                var checkbox = labelsSelected[i].querySelector('input[type="checkbox"]');
+                checkbox.checked = false;
+                checkbox.removeAttribute('checked');
+                removeClass(labelsSelected[i],'selected');
+                var event = document.createEvent('HTMLEvents');
+                event.initEvent('change', true, false);
+                checkbox.dispatchEvent(event);
+            }
+        }
+    }
+    
+    /**
+   * Remove the data on numeric
+   *
+   * @param {Object} td VerticalTable current td
+   */
+    function clearNumeric (td) {
+        var numeric = td.querySelector('input[type="number"]');
+        var currency = td.querySelector('input[type="text"]');
+        var range = td.querySelector('input[type="range"]');
+        var suffix = td.querySelector('.suffix');
+        var dk = td.querySelector('.DK');
+        var inputDk = td.querySelector('.DK input[type="checkbox"]');
+        if (currency) {
+            currency.value = '';
+            currency.defaultValue = '';
+            currency.removeAttribute('readonly');
+        }
+        if (range) {
+            range.value = '';
+            range.defaultValue = '';
+            range.removeAttribute('disabled');
+            removeClass(range,'selected');
+            suffix.innerHTML = '';
+        }
+        if (numeric) {
+            numeric.value = '';
+            numeric.defaultValue = '';
+            numeric.removeAttribute('readonly');
+            var event = document.createEvent('HTMLEvents');
+            event.initEvent('input', true, false);
+            numeric.dispatchEvent(event);
+        }
+        if (dk) {
+            if (inputDk) inputDk.checked = false;
+            removeClass(dk,'selected');
+        }
+    }
+    
+    /**
+   * Remove the data on open
+   *
+   * @param {Object} td VerticalTable current td
+   */
+    function clearOpen (td) {
+        var inputText = td.querySelector('input[type="text"]');
+        var inputUrl = td.querySelector('input[type="url"]');
+        var inputEMail = td.querySelector('input[type="email"]');
+        var textarea = td.querySelector('textarea');
+        var dk = td.querySelector('.DK');
+        var inputDk = td.querySelector('.DK input[type="checkbox"]');
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent('input', true, false);
+        if (inputText) {
+            inputText.value = '';
+            inputText.defaultValue = '';
+            inputText.removeAttribute('readonly');
+            inputText.dispatchEvent(event);
+        }
+        if (inputUrl) {
+            inputUrl.value = '';
+            inputUrl.defaultValue = '';
+            inputUrl.removeAttribute('readonly');
+            inputUrl.dispatchEvent(event);
+        }
+        if (inputEMail) {
+            inputEMail.value = '';
+            inputEMail.defaultValue = '';
+            inputEMail.removeAttribute('readonly');
+            inputEMail.dispatchEvent(event);
+        }
+        if (textarea) {
+            textarea.value = '';
+            textarea.defaultValue = '';
+            textarea.removeAttribute('readonly');
+            textarea.dispatchEvent(event);
+        }
+        if (dk) {
+            if (inputDk) inputDk.checked = false;
+            removeClass(dk,'selected');
+        }
+    }
+    
+    /**
+   * Remove the data on date
+   *
+   * @param {Object} td VerticalTable current td
+   */
+    function clearDate (td) {
+        var inputDateText = td.querySelector('.RLDatePicker input[type="text"]');
+        var selectHour = td.querySelector('.RLTimePicker select[name="hour"]');
+        var selectMinute = td.querySelector('.RLTimePicker select[name="minutes"]');
+        var selectSecond = td.querySelector('.RLTimePicker select[name="seconds"]');
+        var inputTimeText = td.querySelector('.RLTimePicker input[type="text"]');
+        var dk = td.querySelector('.DK');
+        var inputDk = td.querySelector('.DK input[type="checkbox"]');
+        if (inputDateText) {
+            inputDateText.value = '';
+            inputDateText.defaultValue = '';
+            inputDateText.removeAttribute('readonly');
+            var event1 = document.createEvent('HTMLEvents');
+            event1.initEvent('input', true, false);
+            inputDateText.dispatchEvent(event1);
+        }
+        if (selectHour) {
+            selectHour.selectedIndex = 0;
+            selectHour.removeAttribute('disabled');
+        }
+        if (selectMinute) {
+            selectMinute.selectedIndex = 0;
+            selectMinute.removeAttribute('disabled');
+        }
+        if (selectSecond) {
+            selectSecond.selectedIndex = 0;
+            selectSecond.removeAttribute('disabled');
+        }
+        if (inputTimeText) {
+            inputTimeText.value = '';
+            inputTimeText.defaultValue = '';
+            inputTimeText.removeAttribute('readonly');
+            var event2 = document.createEvent('HTMLEvents');
+            event2.initEvent('input', true, false);
+            inputDateText.dispatchEvent(event2);
+        }
+        if (dk) {
+            if (inputDk) inputDk.checked = false;
+            removeClass(dk,'selected');
+        }
+    }
+    
+    /**
+   * Show the previous minus button
+   *
+   * @param {Object} tr VerticalTable current tr
+   */
+    function showPreviousMinusButton (tr) {
+        var previousTr = tr.previousElementSibling;
+        // Show the minus button on the previous Tr if it's not the first row
+        if (!previousTr) return; 
+        if (!hasClass(previousTr,'firstbodyrow')) {
+           previousTr.querySelector('.minusbutton').style.display = '';
+        }
     }
     
     function autoSubmitForm (that) {
@@ -476,7 +829,6 @@
                 }
             }
         }
-
     }
 
     /**
@@ -733,6 +1085,9 @@
    * @param {Object} that VerticalTable object, same as options
    */
     function onSelects (event, that) {
+        var el = event.target || event.srcElement;
+        var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
+        triggerRouting(shortcut);
         var debounceStepByStep = debounce(stepByStepRows, 300);
         debounceStepByStep(that);
         var debounceAutoSubmitForm = debounce(autoSubmitForm, 300);
@@ -795,7 +1150,6 @@
 
         return (((t / w) * 100) < 16 && ((t / w) * 100) > 0) ? t + 4 : t;
     }
-
 
     /**
   * Calculate the offsetTop
@@ -1038,6 +1392,7 @@
         this.maxLimit = options.maxLimit || [];
         this.headerFixed = options.headerFixed;
         this.stepByStep = options.stepByStep;
+        this.useStepByStep = options.useStepByStep;
         this.rankingBox = options.rankingBox || [];
         this.suffixes = options.suffixes || [];
         this.decimals = options.decimals || [];
@@ -1244,6 +1599,26 @@
         window.addEventListener('scroll', function () {
             headerFix(ths, options);
         });
+        
+        // Manage add button
+        var buttonAdd = document.querySelector('#adc_' + options.instanceId + ' .plusbutton input[type="button"]');
+        var buttonsRemove = document.querySelectorAll('#adc_' + options.instanceId + ' .minusbutton input[type="button"]');
+		if (this.stepByStep && this.useStepByStep === 'buttons') {
+            addEvent(buttonAdd, 'click', 
+                     (function (passedInElement) {
+                return function (e) {
+                    addButton(passedInElement);
+                };
+            }(this)));
+            for (var b1 = 0; b1 < buttonsRemove.length; b1++) {
+                addEvent(buttonsRemove[b1], 'click', 
+                         (function (passedInElement) {
+                    return function (e) {
+                        removeButton(e, passedInElement); 
+                    };
+                }(this)));
+            }
+        }
 
         // Manage zoom
         var zooms = document.getElementById('adc_' + this.instanceId).querySelectorAll('tbody tr');
@@ -1253,6 +1628,9 @@
         
         var debounceStepByStep = debounce(stepByStepRows, 300);
         debounceStepByStep(this);
+        
+        var debounceStepByStepButtons = debounce(stepByStepButtons, 300);
+        debounceStepByStepButtons(this);
 
     }
 
