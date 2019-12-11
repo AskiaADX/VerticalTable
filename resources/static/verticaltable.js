@@ -403,8 +403,8 @@
             } else {
                 if (trs[(i + 1)].style.display === 'none') {
                     if (that.stepByStep && that.useStepByStep === 'auto') trs[(i + 1)].style.display = '';
+                    if (that.stepByStep && that.useStepByStep === 'buttons' && (lastDataFound  === 0)) document.querySelector("#adc_" + that.instanceId + " .plusbutton input[type=button]").removeAttribute('disabled');
                 }
-                if (that.stepByStep && that.useStepByStep === 'buttons' && (lastDataFound  === 0)) document.querySelector("#adc_" + that.instanceId + " .plusbutton input[type=button]").removeAttribute('disabled');
                 if (hasClass(trs[(i + 1)],'display')) {
                 	if ((window.innerWidth <= that.responsiveWidth) && that.scrollNextIteration && !(that.stepByStep && that.useStepByStep === 'buttons')) scrollIt(trs[(i + 1)], 300, 'easeOutQuad');
                     removeClass(trs[(i + 1)],'display');
@@ -673,7 +673,7 @@
         var dk = td.querySelector('.DK');
         var inputDk = td.querySelector('.DK input[type="checkbox"]');
         var event = document.createEvent('HTMLEvents');
-        event.initEvent('input', true, false);
+        event.initEvent('inputMinusButton', true, false);
         if (inputText) {
             inputText.value = '';
             inputText.defaultValue = '';
@@ -1529,6 +1529,16 @@
         // Input event on open ended
         for (var k1 = 0; k1 < inputOpens.length; k1++) {
             addEvent(inputOpens[k1], 'input', 
+                     (function (passedInElement) {
+                return function (e) {
+                    onInputOpens(e, passedInElement); 
+                };
+            }(this)));
+        }
+        
+        // Input event on open ended
+        for (var k3 = 0; k3 < inputOpens.length; k3++) {
+            addEvent(inputOpens[k3], 'inputMinusButton', 
                      (function (passedInElement) {
                 return function (e) {
                     onInputOpens(e, passedInElement); 
