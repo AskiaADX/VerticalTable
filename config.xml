@@ -7,7 +7,7 @@
   <info>
     <name>VerticalTable</name>
     <guid>c4acbd4e-3246-457c-9f9a-3a2dc9871dcc</guid>
-    <version>3.0.8</version>
+    <version>3.0.9</version>
     <date>2017-05-26</date>
     <description><![CDATA[Vertical table
 		v2.0.4 - Added alt attribute to img
@@ -22,7 +22,8 @@
 		v3.0.5 - Fixed manageLoopDepth and requireLoopDepth
 		v3.0.6 - Added Use step by step parameter
 		v3.0.7 - Added parameter for the color of the buttons
-		v3.0.8 - Some bug fixed]]></description>
+        v3.0.8 - Some bug fixed
+        v3.0.9 - Fixed default value Use combo box parameter]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>, Clément Salomon <clement@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -589,7 +590,7 @@ Format: MM/DD/YYYY]]></description>
       </property>
       <property xsi:type="standardProperty" id="colAsComboBox1" name="Use combo box" type="string" require="false" visible="true">
         <description><![CDATA[If the question in this column is a single closed question sets if it's a combo box or a radio button]]></description>
-        <value></value>
+        <value><![CDATA[0]]></value>
         <options>
           <option value="0" text="Radio Button" />
           <option value="1" text="ComboBox" />
@@ -620,7 +621,7 @@ Format: MM/DD/YYYY]]></description>
       </property>
       <property xsi:type="standardProperty" id="colAsComboBox2" name="Use combo box" type="string" require="false" visible="true">
         <description><![CDATA[If the question in this column is a single closed question sets if it's a combo box or a radio button]]></description>
-        <value></value>
+        <value><![CDATA[0]]></value>
         <options>
           <option value="0" text="Radio Button" />
           <option value="1" text="ComboBox" />
@@ -651,7 +652,7 @@ Format: MM/DD/YYYY]]></description>
       </property>
       <property xsi:type="standardProperty" id="colAsComboBox3" name="Use combo box" type="string" require="false" visible="true">
         <description><![CDATA[If the question in this column is a single closed question sets if it's a combo box or a radio button]]></description>
-        <value></value>
+        <value><![CDATA[0]]></value>
         <options>
           <option value="0" text="Radio Button" />
           <option value="1" text="ComboBox" />
@@ -682,7 +683,7 @@ Format: MM/DD/YYYY]]></description>
       </property>
       <property xsi:type="standardProperty" id="colAsComboBox4" name="Use combo box" type="string" require="false" visible="true">
         <description><![CDATA[If the question in this column is a single closed question sets if it's a combo box or a radio button]]></description>
-        <value></value>
+        <value><![CDATA[0]]></value>
         <options>
           <option value="0" text="Radio Button" />
           <option value="1" text="ComboBox" />
@@ -713,7 +714,7 @@ Format: MM/DD/YYYY]]></description>
       </property>
       <property xsi:type="standardProperty" id="colAsComboBox5" name="Use combo box" type="string" require="false" visible="true">
         <description><![CDATA[If the question in this column is a single closed question sets if it's a combo box or a radio button]]></description>
-        <value></value>
+        <value><![CDATA[0]]></value>
         <options>
           <option value="0" text="Radio Button" />
           <option value="1" text="ComboBox" />
@@ -744,7 +745,7 @@ Format: MM/DD/YYYY]]></description>
       </property>
       <property xsi:type="standardProperty" id="colAsComboBox6" name="Use combo box" type="string" require="false" visible="true">
         <description><![CDATA[If the question in this column is a single closed question sets if it's a combo box or a radio button]]></description>
-        <value></value>
+        <value><![CDATA[0]]></value>
         <options>
           <option value="0" text="Radio Button" />
           <option value="1" text="ComboBox" />
