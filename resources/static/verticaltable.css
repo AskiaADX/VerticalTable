@@ -5,6 +5,11 @@ html {
 body {
   -webkit-tap-highlight-color: transparent;
 }
+
+.askiaquestions {
+    width: calc(100% - 15vw) !important;
+}
+
 *:focus {
   outline: none;
 }
@@ -62,7 +67,7 @@ body {
     text-align: right;
 }
 .verticaltable textarea {
-	resize: vertical;   
+	resize: vertical;
 }
 
 .verticaltable .DK {
@@ -131,7 +136,7 @@ body {
 .verticaltable input[type=range] {
   -webkit-appearance: none;
   width: 99%;
-  min-width: 200px;
+  min-width: 60px;
   height: 32px;
   margin: 0;
   padding: 0;
