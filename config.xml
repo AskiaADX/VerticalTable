@@ -7,7 +7,7 @@
   <info>
     <name>VerticalTable</name>
     <guid>c4acbd4e-3246-457c-9f9a-3a2dc9871dcc</guid>
-    <version>3.0.9</version>
+    <version>3.0.10</version>
     <date>2017-05-26</date>
     <description><![CDATA[Vertical table
 		v2.0.4 - Added alt attribute to img
@@ -23,7 +23,8 @@
 		v3.0.6 - Added Use step by step parameter
 		v3.0.7 - Added parameter for the color of the buttons
         v3.0.8 - Some bug fixed
-        v3.0.9 - Fixed default value Use combo box parameter]]></description>
+        v3.0.9 - Fixed default value Use combo box parameter
+        v3.0.10 - Increased the columns count]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>, Clément Salomon <clement@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -765,6 +766,68 @@ Format: MM/DD/YYYY]]></description>
         <value></value>
       </property>
       <property xsi:type="standardProperty" id="maxNumLimit6" name="Maximal numeric limit" type="number" require="false" visible="true" decimal="0">
+        <description><![CDATA[]]></description>
+        <value></value>
+      </property>
+    </category>
+    <category id="column7" name="Column 7">
+      <property xsi:type="standardProperty" id="questionCol7" name="Question" type="question" require="false" visible="true">
+        <description><![CDATA[Set the question for column 7]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="colAsComboBox7" name="Use combo box" type="string" require="false" visible="true">
+        <description><![CDATA[If the question in this column is a single closed question sets if it's a combo box or a radio button]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="0" text="Radio Button" />
+          <option value="1" text="ComboBox" />
+          <option value="2" text="ComboBox as ranking" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="firstOptionCombo7" name="Text of the first option" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[The text of the first option in the combo box]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="numBoxPrefix7" name="Numerical box prefix" type="string" require="false" visible="true">
+        <description><![CDATA[Prefix for numerical box in this column only]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="numBoxSuffix7" name="Numerical box suffix" type="string" require="false" visible="true">
+        <description><![CDATA[]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="maxNumLimit7" name="Maximal numeric limit" type="number" require="false" visible="true" decimal="0">
+        <description><![CDATA[]]></description>
+        <value></value>
+      </property>
+    </category>
+    <category id="column8" name="Column 8">
+      <property xsi:type="standardProperty" id="questionCol8" name="Question" type="question" require="false" visible="true">
+        <description><![CDATA[Set the question for column 8]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="colAsComboBox8" name="Use combo box" type="string" require="false" visible="true">
+        <description><![CDATA[If the question in this column is a single closed question sets if it's a combo box or a radio button]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="0" text="Radio Button" />
+          <option value="1" text="ComboBox" />
+          <option value="2" text="ComboBox as ranking" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="firstOptionCombo8" name="Text of the first option" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[The text of the first option in the combo box]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="numBoxPrefix8" name="Numerical box prefix" type="string" require="false" visible="true">
+        <description><![CDATA[Prefix for numerical box in this column only]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="numBoxSuffix8" name="Numerical box suffix" type="string" require="false" visible="true">
+        <description><![CDATA[]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="maxNumLimit8" name="Maximal numeric limit" type="number" require="false" visible="true" decimal="0">
         <description><![CDATA[]]></description>
         <value></value>
       </property>

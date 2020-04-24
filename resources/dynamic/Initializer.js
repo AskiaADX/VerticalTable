@@ -15,7 +15,7 @@ Dim columnQuestion
 Dim ranking
 Dim selectbox
 Dim columnNumber = 1
-For i1 = 2 To 6
+For i1 = 2 To 8
     columnQuestion = CurrentADC.PropQuestion("questionCol" + i1)
     If columnQuestion.Id <> DK Then
         columnNumber = i1
@@ -41,7 +41,7 @@ Next i1
             If ((column.Id = DK) and (i5 = 1)) Then
                 column = CurrentQuestion
             EndIf
-    %}{%:= On((column.Id <> DK), "'" + column.Shortcut + "'", "null")%}{%= On(i5 <> columnNumber, ",", "") 
+    %}{%:= On((column.Id <> DK), "'" + column.Shortcut + "'", "null")%}{%= On(i5 <> columnNumber, ",", "")
 		%}{%Next i5 %}],
     maxLimit: [{% For i6 = 1 To columnNumber
     	column = CurrentADC.PropQuestion("questionCol" + i6)
@@ -60,14 +60,14 @@ Next i1
             If ((column.Id = DK) and (i8 = 1)) Then
                 column = CurrentQuestion
             EndIf
-    %}{%:= On((column.Type = "numeric"), "'" + CurrentADC.PropValue("numBoxSuffix" + i8) + "'", "''")%}{%= On(i8 <> columnNumber, ",", "") 
+    %}{%:= On((column.Type = "numeric"), "'" + CurrentADC.PropValue("numBoxSuffix" + i8) + "'", "''")%}{%= On(i8 <> columnNumber, ",", "")
 		%}{%Next i8 %}],
     decimals: [{% For i9 = 1 To columnNumber
     	column = CurrentADC.PropQuestion("questionCol" + i9)
             If ((column.Id = DK) and (i9 = 1)) Then
                 column = CurrentQuestion
             EndIf
-    %}{%:= On((column.Type = "numeric"), column.Decimals + "", "")%}{%= On(i9 <> columnNumber, ",", "") 
+    %}{%:= On((column.Type = "numeric"), column.Decimals + "", "")%}{%= On(i9 <> columnNumber, ",", "")
 		%}{%Next i9 %}],
     selectBox: [{% For i10 = 1 To columnNumber
     	column = CurrentADC.PropQuestion("questionCol" + i10)
@@ -76,10 +76,10 @@ Next i1
             Endif
     selectbox = CurrentADC.PropValue("colAsComboBox" + i10) %}{%= On((selectbox = "1") and (column.Type = "single"), true, false)%}{%= On(i10 <> columnNumber, ",", "") %}{% Next i10 %}]
   });
-  {% 
-	For i2 = 1 to columnNumber 
+  {%
+	For i2 = 1 to columnNumber
     	column = CurrentADC.PropQuestion("questionCol"+i2)
-    	If column.Type = "datetime" Then 
+    	If column.Type = "datetime" Then
         	If(Not(column.IsDateOnly)) Then
             	For i3 = 1 to CurrentQuestion.ParentLoop.AvailableAnswers.Count
     				column = CurrentADC.PropQuestion("questionCol"+i2)
@@ -102,7 +102,7 @@ Next i1
 {%            Next i3
         	EndIf
 			column = CurrentADC.PropQuestion("questionCol"+i2)
-			If (Not(column.IsTimeOnly)) Then 
+			If (Not(column.IsTimeOnly)) Then
 				For i4 = 1 to CurrentQuestion.ParentLoop.AvailableAnswers.Count
     				column = CurrentADC.PropQuestion("questionCol"+i2)
 					column = column.AllIterations[i4] %}
