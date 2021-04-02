@@ -295,6 +295,11 @@ EndIf %}
 #adc_{%= CurrentADC.InstanceId %} input[type=range] {
   border-radius: {%= Theme.BorderRadius %};
 }
+
+#adc_{%= CurrentADC.InstanceId %} input[type=range]::-ms-tooltip {
+    display: none;
+}
+
 #adc_{%= CurrentADC.InstanceId %} .range:after,
 #adc_{%= CurrentADC.InstanceId %} .range:before {
     font-size: {%= Theme.SmallFS %};
