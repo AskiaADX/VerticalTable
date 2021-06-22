@@ -7,8 +7,8 @@
   <info>
     <name>VerticalTable</name>
     <guid>c4acbd4e-3246-457c-9f9a-3a2dc9871dcc</guid>
-    <version>3.0.11</version>
-    <date>2020-07-27</date>
+    <version>3.0.12</version>
+    <date>2021-06-22</date>
     <description><![CDATA[Vertical table
 		v2.0.4 - Added alt attribute to img
 			   - Added span to labels and table headers
@@ -25,7 +25,8 @@
         v3.0.8 - Some bug fixed
         v3.0.9 - Fixed default value Use combo box parameter
         v3.0.10 - Increased the columns count
-		v3.0.11 - Remove ms-tooltip on slider]]></description>
+		v3.0.11 - Remove ms-tooltip on slider
+    v3.0.12 - Fixed numerical sum]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>, Clément Salomon <clement@askia.com>]]></author>
     <site>http://www.askia.com</site>

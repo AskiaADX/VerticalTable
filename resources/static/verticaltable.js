@@ -3,14 +3,14 @@
     if (msEdgeMatch) document.documentMode = parseInt(msEdgeMatch[1]);
 })();
 (function () {
-    
+
     // Create a safe reference to the Underscore object for use below.
     var _ = function(obj) {
         if (obj instanceof _) return obj;
         if (!(this instanceof _)) return new _(obj);
         this._wrapped = obj;
     };
-    
+
     // Similar to ES6's rest param (http://ariya.ofilabs.com/2013/03/es6-and-rest-parameter.html)
     // This accumulates the arguments passed into an array, after a given index.
     var restArgs = function(func, startIndex) {
@@ -35,7 +35,7 @@
             return func.apply(this, args);
         };
     };
-    
+
     // Delays a function for the given number of milliseconds, and then calls
     // it with the arguments supplied.
     _.delay = restArgs(function(func, wait, args) {
@@ -43,19 +43,19 @@
             return func.apply(null, args);
         }, wait);
     });
-    
+
     /**
  * Return a function which, until she continue to be invoked,
  * will not be executed. The function will be executed only when
  * the function will stop to be called for more than N milliseconds.
- * If the parameter `immediate` equal true, then the function 
+ * If the parameter `immediate` equal true, then the function
  * will be executed to the first call instaed of the last.
  * Parameters :
  *  - func : the function to `debounce`
- *  - wait : the number of milliseconds (N) to wait before 
+ *  - wait : the number of milliseconds (N) to wait before
  *           call the function func()
  *  - immediate : execute immediately func() (by default false)
- *                          
+ *
  */
     function debounce(func, wait, immediate) {
         var timeout, result;
@@ -114,9 +114,9 @@
    */
     function addClass (obj, clsName) {
         if (obj.classList)      {
-            obj.classList.add(clsName); 
+            obj.classList.add(clsName);
         }    else            {
-            obj.className += ' ' + clsName; 
+            obj.className += ' ' + clsName;
         }
     }
 
@@ -133,7 +133,7 @@
             obj.className = obj.className.replace(new RegExp('(^|\\b)' + clsName.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
         }
     }
-    
+
      /**
    * Verify the element has a class in DOMElement
    *
@@ -153,14 +153,14 @@
    * @param {String} shortcut Shortcut of the question
    */
     function triggerRouting(shortcut) {
-        if (window.askia 
-            && window.arrLiveRoutingShortcut 
+        if (window.askia
+            && window.arrLiveRoutingShortcut
             && window.arrLiveRoutingShortcut.length > 0
             && window.arrLiveRoutingShortcut.indexOf(shortcut) >= 0) {
             askia.triggerAnswer();
         }
     }
-    
+
     /**
    * Check if the date question has an answer
    *
@@ -196,7 +196,7 @@
         }
         return result;
     }
-    
+
     /**
    * Check if the open question has an answer
    *
@@ -213,7 +213,7 @@
         }
         return result;
     }
-    
+
     /**
    * Check if the numerical question has an answer
    *
@@ -230,7 +230,7 @@
         }
         return result;
     }
-    
+
     /**
    * Check if the select question has an answer
    *
@@ -242,7 +242,7 @@
       	if (inputSelect.value === '0') result = false;
         return result;
     }
-    
+
     /**
    * Check if the closed question has an answer
    *
@@ -259,7 +259,7 @@
         }
         return result;
     }
-    
+
     // Helper function to get an element's exact position
     function getPosition(el) {
         var xPos = 0;
@@ -278,7 +278,7 @@
             y: yPos
         };
     }
-    
+
     function scrollIt(destination, duration, easing, callback) {
 
         var easings = {
@@ -357,7 +357,7 @@
 
         scroll();
     }
-    
+
     /**
    * Step by step functionnality (Show or hide next row)
    *
@@ -369,7 +369,7 @@
         var lastDataFound = 0;
         var nbDataFound = 0;
         var nbHiddenQuestions = 0;
-        
+
         // Iterate tr backwards
     	for (var i = (trs.length); i-- > 0; ) {
             tds = trs[i].querySelectorAll('td');
@@ -411,9 +411,9 @@
                 }
                 break;
             }
-        }   
+        }
     }
-    
+
     /**
    * Step by step buttons functionnality (Show or hide next row)
    *
@@ -425,7 +425,7 @@
         var lastDataFound = 0;
         var nbDataFound = 0;
         var nbHiddenQuestions = 0;
-        
+
         // Iterate tr backwards
     	for (var i = (trs.length); i-- > 0; ) {
             tds = trs[i].querySelectorAll('td');
@@ -463,9 +463,9 @@
                     break;
                 }
             }
-        }   
+        }
     }
-    
+
     /**
    * Add button functionnality (Show next row)
    *
@@ -477,7 +477,7 @@
         var lastDataFound = 0;
         var nbDataFound = 0;
         var nbHiddenQuestions = 0;
-        
+
         // Iterate tr backwards
     	for (var i = (trs.length); i-- > 0; ) {
             tds = trs[i].querySelectorAll('td');
@@ -521,7 +521,7 @@
             }
         }
     }
-    
+
     /**
    * Remove button functionnality (Hide current row)
    *
@@ -542,7 +542,7 @@
             document.querySelector("#adc_" + that.instanceId + " .plusbutton input[type=button]").removeAttribute('disabled');
         }
     }
-    
+
     /**
    * Remove the data on the tr
    *
@@ -550,7 +550,7 @@
    */
     function clearDataTr (tr) {
         var tds = tr.querySelectorAll('td:not(:first-child)');
-        
+
         for (var i = 0, j = tds.length; i < j; i++) {
 			if (hasClass(tds[i],'single')) {
                 clearSingle(tds[i]);
@@ -566,9 +566,9 @@
                 clearDate(tds[i]);
             }
         }
-        
+
     }
-    
+
     /**
    * Remove the data on single
    *
@@ -586,7 +586,7 @@
             radio.dispatchEvent(event);
         }
     }
-    
+
     /**
    * Remove the data on select
    *
@@ -601,7 +601,7 @@
             select.dispatchEvent(event);
         }
     }
-    
+
     /**
    * Remove the data on multiple
    *
@@ -621,7 +621,7 @@
             }
         }
     }
-    
+
     /**
    * Remove the data on numeric
    *
@@ -659,7 +659,7 @@
             removeClass(dk,'selected');
         }
     }
-    
+
     /**
    * Remove the data on open
    *
@@ -703,7 +703,7 @@
             removeClass(dk,'selected');
         }
     }
-    
+
     /**
    * Remove the data on date
    *
@@ -750,7 +750,7 @@
             removeClass(dk,'selected');
         }
     }
-    
+
     /**
    * Show the previous minus button
    *
@@ -759,12 +759,12 @@
     function showPreviousMinusButton (tr) {
         var previousTr = tr.previousElementSibling;
         // Show the minus button on the previous Tr if it's not the first row
-        if (!previousTr) return; 
+        if (!previousTr) return;
         if (!hasClass(previousTr,'firstbodyrow')) {
            previousTr.querySelector('.minusbutton').style.display = '';
         }
     }
-    
+
     function autoSubmitForm (that) {
         var trs = document.querySelectorAll('#adc_' + that.instanceId + ' tbody > tr');
         var tds;
@@ -772,7 +772,7 @@
         var nbDataFound = 0;
         var nbHiddenQuestions = 0;
         var nextBtn = document.getElementsByName('Next')[0];
-        
+
         // Iterate tr backwards
     	for (var i = (trs.length); i-- > 0; ) {
             tds = trs[i].querySelectorAll('td');
@@ -848,7 +848,7 @@
             manageExclusive(el);
              if (el.className !== 'dkbutton') {
                 var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
-             	triggerRouting(shortcut);   
+             	triggerRouting(shortcut);
                 var debounceStepByStep = debounce(stepByStepRows, 300);
                 debounceStepByStep(that);
                 var debounceAutoSubmitForm = debounce(autoSubmitForm, 300);
@@ -933,7 +933,7 @@
             }
         }
     }
-    
+
     /**
    * Manage the change event on input DK for date
    *
@@ -952,20 +952,20 @@
             if (el.checked) {
                 if (inputDate) {
                 	inputDate.value = '';
-                	inputDate.setAttribute('readonly', 'readonly');   
-                    inputDate.setAttribute('disabled', 'disabled');   
+                	inputDate.setAttribute('readonly', 'readonly');
+                    inputDate.setAttribute('disabled', 'disabled');
                 }
                 if (selectHour) {
                     selectHour.selectedIndex =0;
-                	selectHour.setAttribute('disabled', 'disabled');   
+                	selectHour.setAttribute('disabled', 'disabled');
                 }
                 if (selectMinutes) {
                     selectMinutes.selectedIndex =0;
-                	selectMinutes.setAttribute('disabled', 'disabled');   
+                	selectMinutes.setAttribute('disabled', 'disabled');
                 }
                 if (selectSeconds) {
                     selectSeconds.selectedIndex =0;
-                	selectSeconds.setAttribute('disabled', 'disabled');   
+                	selectSeconds.setAttribute('disabled', 'disabled');
                 }
                 if (inputTime) {
                 	inputTime.value = '';
@@ -1017,7 +1017,7 @@
    */
     function onInputNumbers (event, that) {
         var el = event.target || event.srcElement;
-        var split = el.className.split('_')
+        var split = el.className.split('_');
         var maxLimit = that.maxLimit[parseInt(split[2], 10) - 1];
         var decimals = that.decimals[parseInt(split[2], 10) - 1] || 0;
         var shortcut = that.questions[parseInt(el.getAttribute('data-class').split('_')[1], 10) - 1] || '';
@@ -1034,7 +1034,7 @@
                 results[j].innerHTML = sum.toLocaleString(undefined, {minimumFractionDigits: decimals,maximumFractionDigits: decimals});
             } else if (that.showTotal === 2) {
                 if (isNaN(maxLimit) === false) {
-                    results[j].innerHTML = (maxLimit  - sum).toLocaleString(undefined, {minimumFractionDigits: decimals,maximumFractionDigits: decimals});  
+                    results[j].innerHTML = (maxLimit  - sum).toLocaleString(undefined, {minimumFractionDigits: decimals,maximumFractionDigits: decimals});
                 } else {
                     results[j].innerHTML = (sum).toLocaleString(undefined, {minimumFractionDigits: decimals,maximumFractionDigits: decimals});
                 }
@@ -1058,9 +1058,9 @@
         debounceStepByStep(that);
         var debounceAutoSubmitForm = debounce(autoSubmitForm, 300);
         if (that.autoSubmit) debounceAutoSubmitForm(that);
-        
+
     }
-    
+
     /**
    * Manage the input event on open ended (input text, email, url and textarea)
    *
@@ -1077,7 +1077,7 @@
         var debounceAutoSubmitForm = debounce(autoSubmitForm, 300);
         if (that.autoSubmit) debounceAutoSubmitForm(that);
     }
-    
+
     /**
    * Manage the change event on select
    *
@@ -1093,7 +1093,7 @@
         var debounceAutoSubmitForm = debounce(autoSubmitForm, 300);
         if (that.autoSubmit) debounceAutoSubmitForm(that);
     }
-    
+
     /**
    * Manage the input event on date time
    *
@@ -1397,10 +1397,11 @@
         this.suffixes = options.suffixes || [];
         this.decimals = options.decimals || [];
         this.useSlider = options.useSlider || 0;
-        this.arrInputCodesHiddenQuestions = []; 
+        this.arrInputCodesHiddenQuestions = [];
         this.selectBox = options.selectBox || [];
-        
-        addEvent(document, 'askiaShowQuestion', 
+        this.numericQuestionCount = options.numericQuestionCount || 1;
+
+        addEvent(document, 'askiaShowQuestion',
                  (function (passedInElement) {
             return function (data) {
                 var indexInputCode = passedInElement.arrInputCodesHiddenQuestions.indexOf(data.detail.question.inputCode);
@@ -1411,7 +1412,7 @@
                 debounceStepByStep(passedInElement);
             };
         }(this)));
-        addEvent(document, 'askiaHideQuestion', 
+        addEvent(document, 'askiaHideQuestion',
                  (function (passedInElement) {
             return function (data) {
                 var indexInputCode = passedInElement.arrInputCodesHiddenQuestions.indexOf(data.detail.question.inputCode);
@@ -1435,63 +1436,64 @@
 
         // Change event on input radio
         for (var i = 0; i < radios.length; i++) {
-            addEvent(radios[i], 'change', 
+            addEvent(radios[i], 'change',
                      (function (passedInElement) {
                 return function (e) {
-                    onChange(e, passedInElement); 
+                    onChange(e, passedInElement);
                 };
             }(this)));
         }
 
         // Change event on input checkbox
         for (var j = 0; j < checkboxes.length; j++) {
-            addEvent(checkboxes[j], 'change', 
+            addEvent(checkboxes[j], 'change',
                      (function (passedInElement) {
                 return function (e) {
-                    onChange(e, passedInElement); 
+                    onChange(e, passedInElement);
                 };
             }(this)));
         }
 
         // Change event on input DK checkbox for numerical variable
         for (var j1 = 0; j1 < numInputDK.length; j1++) {
-            addEvent(numInputDK[j1], 'change', 
+            addEvent(numInputDK[j1], 'change',
                      (function (passedInElement) {
                 return function (e) {
-                    onNumericInputDK(e, passedInElement); 
+                    onNumericInputDK(e, passedInElement);
                 };
             }(this)));
         }
 
         // Change event on input DK checkbox for open variable
         for (var j2 = 0; j2 < openInputDK.length; j2++) {
-            addEvent(openInputDK[j2], 'change', 
+            addEvent(openInputDK[j2], 'change',
                      (function (passedInElement) {
                 return function (e) {
-                    onOpenInputDK(e, passedInElement); 
-                };
-            }(this)));
-        }
-        
-        // Change event on input DK checkbox for date variable
-        for (var j3 = 0; j3 < dateInputDK.length; j3++) {
-            addEvent(dateInputDK[j3], 'change', 
-                     (function (passedInElement) {
-                return function (e) {
-                    onDateInputDK(e, passedInElement); 
+                    onOpenInputDK(e, passedInElement);
                 };
             }(this)));
         }
 
-        // Input event (live sum) on input number
-        for (var k = 0; k < inputNumbers.length; k++) {
-            addEvent(inputNumbers[k], 'input', 
+        // Change event on input DK checkbox for date variable
+        for (var j3 = 0; j3 < dateInputDK.length; j3++) {
+            addEvent(dateInputDK[j3], 'change',
                      (function (passedInElement) {
                 return function (e) {
-                    onInputNumbers(e, passedInElement); 
+                    onDateInputDK(e, passedInElement);
                 };
             }(this)));
-            if (k === (inputNumbers.length - 1)) {
+        }
+
+
+        // Input event (live sum) on input number
+        for (var k = 0; k < inputNumbers.length; k++) {
+            addEvent(inputNumbers[k], 'input',
+                     (function (passedInElement) {
+                return function (e) {
+                    onInputNumbers(e, passedInElement);
+                };
+            }(this)));
+            if (k >= (inputNumbers.length - this.numericQuestionCount)) {
                 var event = document.createEvent('HTMLEvents');
                 event.initEvent('input', true, false);
                 inputNumbers[k].dispatchEvent(event);
@@ -1500,10 +1502,10 @@
 
         // Change event (live sum) on input range
         for (var l = 0; l < inputRanges.length; l++) {
-            addEvent(inputRanges[l], 'change', 
+            addEvent(inputRanges[l], 'change',
                      (function (passedInElement) {
                 return function (e) {
-                    onInputRanges(e, passedInElement); 
+                    onInputRanges(e, passedInElement);
                 };
             }(this)));
             document.querySelector('#adc_' + this.instanceId + ' #' + inputRanges[l].id + ' + .preBar').style.width = widthRange(inputRanges[l]) + 'px';
@@ -1511,10 +1513,10 @@
 
         // Input event (live sum) on input range
         for (var l1 = 0; l1 < inputRanges.length; l1++) {
-            addEvent(inputRanges[l1], 'input', 
+            addEvent(inputRanges[l1], 'input',
                      (function (passedInElement) {
                 return function (e) {
-                    onInputRanges(e, passedInElement); 
+                    onInputRanges(e, passedInElement);
                 };
             }(this)));
         }
@@ -1525,33 +1527,33 @@
                 document.querySelector('#adc_' + options.instanceId + ' #' + inputRanges[l2].id + ' + .preBar').style.width = widthRange(inputRanges[l2]) + 'px';
             }
         });
-        
+
         // Input event on open ended
         for (var k1 = 0; k1 < inputOpens.length; k1++) {
-            addEvent(inputOpens[k1], 'input', 
+            addEvent(inputOpens[k1], 'input',
                      (function (passedInElement) {
                 return function (e) {
-                    onInputOpens(e, passedInElement); 
+                    onInputOpens(e, passedInElement);
                 };
             }(this)));
         }
-        
+
         // Input event on open ended
         for (var k3 = 0; k3 < inputOpens.length; k3++) {
-            addEvent(inputOpens[k3], 'inputMinusButton', 
+            addEvent(inputOpens[k3], 'inputMinusButton',
                      (function (passedInElement) {
                 return function (e) {
-                    onInputOpens(e, passedInElement); 
+                    onInputOpens(e, passedInElement);
                 };
             }(this)));
         }
-        
+
         // Input event on date time
         for (var k2 = 0; k2 < inputDates.length; k2++) {
-            addEvent(inputDates[k2], 'input', 
+            addEvent(inputDates[k2], 'input',
                      (function (passedInElement) {
                 return function (e) {
-                    onInputDates(e, passedInElement); 
+                    onInputDates(e, passedInElement);
                 };
             }(this)));
         }
@@ -1561,29 +1563,29 @@
             if (this.rankingBox[i1]) {
                 var inputElt = document.querySelectorAll(".select_"+ this.instanceId + "_" + (i1+1));
                 for(var j1 = 0; j1 < inputElt.length; j1++) {
-                    addEvent(inputElt[j1], 'change', 
+                    addEvent(inputElt[j1], 'change',
                              (function (passedInElement) {
                         return function (e) {
-                            updateComboBox(e, passedInElement); 
+                            updateComboBox(e, passedInElement);
                         };
                     }(this)));
                 }
-            }   
+            }
         }
-        
+
         // Manage select combo box
         for(var i2 = 0; i2 < this.selectBox.length ; i2++){
             if (this.selectBox[i2]) {
                 var selectElt = document.querySelectorAll(".select_"+ this.instanceId + "_" + (i2+1));
                 for(var j2 = 0; j2 < selectElt.length; j2++) {
-                    addEvent(selectElt[j2], 'change', 
+                    addEvent(selectElt[j2], 'change',
                              (function (passedInElement) {
                         return function (e) {
-                            onSelects(e, passedInElement); 
+                            onSelects(e, passedInElement);
                         };
                     }(this)));
                 }
-            }   
+            }
         }
 
         // If currency used for numerical variable
@@ -1609,22 +1611,22 @@
         window.addEventListener('scroll', function () {
             headerFix(ths, options);
         });
-        
+
         // Manage add button
         var buttonAdd = document.querySelector('#adc_' + options.instanceId + ' .plusbutton input[type="button"]');
         var buttonsRemove = document.querySelectorAll('#adc_' + options.instanceId + ' .minusbutton input[type="button"]');
 		if (this.stepByStep && this.useStepByStep === 'buttons') {
-            addEvent(buttonAdd, 'click', 
+            addEvent(buttonAdd, 'click',
                      (function (passedInElement) {
                 return function (e) {
                     addButton(passedInElement);
                 };
             }(this)));
             for (var b1 = 0; b1 < buttonsRemove.length; b1++) {
-                addEvent(buttonsRemove[b1], 'click', 
+                addEvent(buttonsRemove[b1], 'click',
                          (function (passedInElement) {
                     return function (e) {
-                        removeButton(e, passedInElement); 
+                        removeButton(e, passedInElement);
                     };
                 }(this)));
             }
@@ -1634,7 +1636,7 @@
         for (var l1 = 0, k1 = zooms.length; l1 < k1; l1++) {
             simplboxConstructorCall(zooms[l1].getAttribute('data-id'));
         }
-        
+
         var debounceStepByStep = debounce(stepByStepRows, 300);
         debounceStepByStep(this);
         var debounceStepByStepButtons = debounce(stepByStepButtons, 300);

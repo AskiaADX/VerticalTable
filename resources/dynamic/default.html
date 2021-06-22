@@ -216,7 +216,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
                 <span class="caption_{%= CurrentADC.InstanceId %}_{%= j2 %}">{%= totalCaption %}</span>
                 <span class="sum_{%= CurrentADC.InstanceId %}_{%= j2 %} resultSum">
                   <span class="prefix_{%= CurrentADC.InstanceId %}_{%= j2 %}">{%= CurrentADC.PropValue("numBoxPrefix" + j2) %}</span>
-                  <span class="result_{%= CurrentADC.InstanceId %}_{%= j2 %}">0</span>
+                  <span class="result_{%= CurrentADC.InstanceId %}_{%= j2 %}">{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputValue() %}</span>
                   <span class="suffix_{%= CurrentADC.InstanceId %}_{%= j2 %}">{%= CurrentADC.PropValue("numBoxSuffix" + j2) %}</span>
                 </span>
               </div>
