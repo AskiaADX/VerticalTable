@@ -102,7 +102,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
                   <img src="{%= column.Responses[arrResponsesOnIteration[i5]].ResourceURL %}" alt="{%= column.Responses[arrResponsesOnIteration[i5]].Caption %}">
                   {% EndIf %}
                   {% If ((CurrentADC.PropValue("responsesColumn") <> "1") or (column.Responses[arrResponsesOnIteration[i5]].ResourceURL = "")) Then %}
-                  <span class="caption">{%= column.Responses[arrResponsesOnIteration[i5]].Caption %}</span>
+                  <span class="caption">{%:= column.Responses[arrResponsesOnIteration[i5]].Caption %}</span>
                   {% EndIf %}
                 </label>
               </label>{% Next i5 %}
@@ -216,7 +216,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
                 <span class="caption_{%= CurrentADC.InstanceId %}_{%= j2 %}">{%= totalCaption %}</span>
                 <span class="sum_{%= CurrentADC.InstanceId %}_{%= j2 %} resultSum">
                   <span class="prefix_{%= CurrentADC.InstanceId %}_{%= j2 %}">{%= CurrentADC.PropValue("numBoxPrefix" + j2) %}</span>
-                  <span class="result_{%= CurrentADC.InstanceId %}_{%= j2 %}">0</span>
+                  <span class="result_{%= CurrentADC.InstanceId %}_{%= j2 %}">{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputValue() %}</span>
                   <span class="suffix_{%= CurrentADC.InstanceId %}_{%= j2 %}">{%= CurrentADC.PropValue("numBoxSuffix" + j2) %}</span>
                 </span>
               </div>
@@ -302,7 +302,7 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
                       <option value="0" disabled="disabled"{%:= attrSelected %}>{%:= CurrentADC.PropValue("firstOptionCombo" + j2) %}</option>
                       {% For j5=1 to column.AvailableResponses.Count
     					attrSelected = On(column.Iteration(loopQuestion.AvailableAnswers[j1].Index).AvailableResponses[j5].IsSelected, " selected=\"selected\"", "") %}
-                      <option{%:= attrSelected %} value="{%:= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).AvailableResponses[j5].InputValue() %}">{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).AvailableResponses[j5].Caption %}</option>
+                      <option{%:= attrSelected %} value="{%:= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).AvailableResponses[j5].InputValue() %}">{%:= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).AvailableResponses[j5].Caption %}</option>
                       {% Next j5 %}
                   </select>
               </div>

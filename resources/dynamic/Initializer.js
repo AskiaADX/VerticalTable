@@ -14,6 +14,7 @@ Dim column
 Dim columnQuestion
 Dim ranking
 Dim selectbox
+Dim numericCount = 0
 Dim columnNumber = 1
 For i1 = 2 To 8
     columnQuestion = CurrentADC.PropQuestion("questionCol" + i1)
@@ -22,6 +23,11 @@ For i1 = 2 To 8
     Else
         Break
     EndIf
+
+    If columnQuestion.Type = "numeric" Then
+        numericCount = numericCount + 1
+    EndIf
+
 Next i1
 %}
 
@@ -36,6 +42,7 @@ Next i1
     headerFixed: {%= On(CurrentADC.PropValue("headerFixed") = "1", true, false)%},
     stepByStep: {%= On(CurrentADC.PropValue("stepByStep") = "yes", true, false)%},
     useStepByStep: '{%= CurrentADC.PropValue("useStepByStep") %}',
+    numericQuestionCount: {%= numericCount %},
     questions: [{% For i5 = 1 To columnNumber
     	column = CurrentADC.PropQuestion("questionCol" + i5)
             If ((column.Id = DK) and (i5 = 1)) Then
