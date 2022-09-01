@@ -1079,6 +1079,23 @@
     }
 
     /**
+   * Manage the input event on semi-open
+   *
+   * @param {Object} event Input event of the open ended
+   * @param {Object} that VerticalTable object, same as options
+   */
+    function onInputSemiOpens (event, that) {
+        var el = event.target || event.srcElement;
+        var shortcut = el.getAttribute('data-class');
+        console.log(shortcut);
+        triggerRouting(shortcut);
+        var debounceStepByStep = debounce(stepByStepRows, 300);
+        debounceStepByStep(that);
+        var debounceAutoSubmitForm = debounce(autoSubmitForm, 300);
+        if (that.autoSubmit) debounceAutoSubmitForm(that);
+    }
+
+    /**
    * Manage the change event on select
    *
    * @param {Object} event Change event of the select
@@ -1433,7 +1450,9 @@
         var openInputDK = document.querySelectorAll('#adc_' + this.instanceId + ' .open .DK input[type="checkbox"]');
         var inputDates = document.querySelectorAll('#adc_' + this.instanceId + ' .date input[type="text"]');
         var dateInputDK = document.querySelectorAll('#adc_' + this.instanceId + ' .date .DK input[type="checkbox"]');
+        var inputSemiOpens = document.querySelectorAll('#adc_' + this.instanceId + ' .otherText');
 
+        console.log(inputSemiOpens);
         // Change event on input radio
         for (var i = 0; i < radios.length; i++) {
             addEvent(radios[i], 'change',
@@ -1554,6 +1573,16 @@
                      (function (passedInElement) {
                 return function (e) {
                     onInputDates(e, passedInElement);
+                };
+            }(this)));
+        }
+
+        // Input event on semi-opens
+        for (var k4 = 0; k4 < inputSemiOpens.length; k4++) {
+            addEvent(inputSemiOpens[k4], 'input',
+                     (function (passedInElement) {
+                return function (e) {
+                    onInputSemiOpens(e, passedInElement);
                 };
             }(this)));
         }

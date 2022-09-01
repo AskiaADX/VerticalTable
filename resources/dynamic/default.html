@@ -258,20 +258,25 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
             <div class="question-container askia-question-{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputCode %}">
               <div class="question-label">{%:= column.LongCaption %}</div>
               <div class="responses-container">
-                  {%
-					counterHeader = 1
-                    countResponsesOnIteration = column.Iteration(column.ParentLoop.AvailableAnswers[1].Index).AvailableResponses.Count
-                    arrResponsesOnIteration = column.Iteration(column.ParentLoop.AvailableAnswers[1].Index).AvailableResponses.Index
-                    If (column.ParentLoop.AvailableAnswers.Count > 1) Then
-                        For counterHeader = 2 To column.ParentLoop.AvailableAnswers.Count
-                            arrResponsesOnIteration = arrResponsesOnIteration union column.Iteration(column.ParentLoop.AvailableAnswers[counterHeader].Index).AvailableResponses.Index
-                        Next counterHeader
-                    EndIf
-                    arrResponsesOnIteration = OrderOf(column.Shortcut) Intersection arrResponsesOnIteration
-					For j4 = 1 to arrResponsesOnIteration.Count
-    			  attrSelected = On(column.Iteration(loopQuestion.AvailableAnswers[j1].Index).Responses[arrResponsesOnIteration[j4]].IsSelected, "selected", "")
-                  attrChecked = On(column.Iteration(loopQuestion.AvailableAnswers[j1].Index).Responses[arrResponsesOnIteration[j4]].IsSelected, "checked=\"checked\"", "")
-    			If (arrResponsesOnIteration[j4] Has column.Iteration(loopQuestion.AvailableAnswers[j1].Index).AvailableResponses.Index) Then %}
+              {%
+    					counterHeader = 1
+              countResponsesOnIteration = column.Iteration(column.ParentLoop.AvailableAnswers[1].Index).AvailableResponses.Count
+              arrResponsesOnIteration = column.Iteration(column.ParentLoop.AvailableAnswers[1].Index).AvailableResponses.Index
+              If (column.ParentLoop.AvailableAnswers.Count > 1) Then
+                  For counterHeader = 2 To column.ParentLoop.AvailableAnswers.Count
+                      arrResponsesOnIteration = arrResponsesOnIteration union column.Iteration(column.ParentLoop.AvailableAnswers[counterHeader].Index).AvailableResponses.Index
+                  Next counterHeader
+              EndIf
+              arrResponsesOnIteration = OrderOf(column.Shortcut) Intersection arrResponsesOnIteration
+    					For j4 = 1 to arrResponsesOnIteration.Count
+        			  attrSelected = On(column.Iteration(loopQuestion.AvailableAnswers[j1].Index).Responses[arrResponsesOnIteration[j4]].IsSelected, "selected", "")
+                attrChecked = On(column.Iteration(loopQuestion.AvailableAnswers[j1].Index).Responses[arrResponsesOnIteration[j4]].IsSelected, "checked=\"checked\"", "")
+
+                Dim otherResponse  = column.Iteration(loopQuestion.AvailableAnswers[j1].Index).Responses[arrResponsesOnIteration[j4]]
+                Dim hasOpen = otherResponse.IsOpen
+                Dim otherQuestionShortcut = otherResponse.OpenQuestion.Shortcut
+
+    			      If (arrResponsesOnIteration[j4] Has column.Iteration(loopQuestion.AvailableAnswers[j1].Index).AvailableResponses.Index) Then %}
                 <label class="response-container {%:= attrSelected %}">
                   <input type="radio" id="askia-input{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputCode %}_{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).Responses[arrResponsesOnIteration[j4]].InputValue() %}" data-class="shortcut_{%= j2 %}" name="{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).Responses[arrResponsesOnIteration[j4]].InputName() %}" value="{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).Responses[arrResponsesOnIteration[j4]].InputValue() %}" {%:= attrChecked %}>
                   <label for="askia-input{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputCode %}_{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).Responses[arrResponsesOnIteration[j4]].InputValue() %}" class="askia-radio"><span hidden>Radio</span></label>
@@ -284,6 +289,12 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
                       {% EndIf %}
                   </label>
                 </label>
+                  {% IF hasOpen = True Then %}
+                  <div style="overflow:hidden">
+                    <input type="text" aria-label="Other" class="otherText exclusive" data-class="{%= otherQuestionShortcut %}"
+                    id="askia-input{%= otherResponse.OpenQuestion.InputCode %}" name="{%= otherResponse.OpenQuestion.InputName() %}" value="{%= otherResponse.OpenQuestion.InputValue() %}">
+                  </div>
+                  {% EndIf  %}
                 {% Else %}
                 <label class="emptyCell response-container">&nbsp;</label>
                 {% EndIf %}
