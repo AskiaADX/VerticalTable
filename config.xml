@@ -8,7 +8,7 @@
     <name>VerticalTable</name>
     <guid>c4acbd4e-3246-457c-9f9a-3a2dc9871dcc</guid>
     <version>3.1.0</version>
-    <date>2022-09-01</date>
+    <date>2022-09-13</date>
     <description><![CDATA[Vertical table
 		v2.0.4 - Added alt attribute to img
 			   - Added span to labels and table headers
