@@ -60,7 +60,7 @@ For i3 = 1 To 8
 Next i3
 Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQuestion = 1),"rowspan=\"2\"","")
 %}
-<div id="adc_{%= CurrentADC.InstanceId %}" class="verticaltable">
+<div id="adc_{%= CurrentADC.InstanceId %}" class="verticaltable hideatstart">
     <table cellspacing="0">
       <thead>
         <tr>

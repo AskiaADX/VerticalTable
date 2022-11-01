@@ -25,6 +25,9 @@ body {
   user-select: none;
 }
 
+.hideatstart {
+  visibility: hidden;
+}
 .verticaltable .plusbutton input[type="button"],
 .verticaltable .minusbutton input[type="button"] {
     min-width: 30px;

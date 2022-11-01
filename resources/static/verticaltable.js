@@ -412,6 +412,8 @@
                 break;
             }
         }
+
+        document.querySelectorAll('#adc_' + that.instanceId)[0].classList.remove("hideatstart"); // make the table visible
     }
 
     /**
