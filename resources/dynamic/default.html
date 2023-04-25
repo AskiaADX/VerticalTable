@@ -112,8 +112,16 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
           {% EndIf %}
       </thead>
       <tbody>
-          {% For j1 = 1 To loopQuestion.AvailableAnswers.Count
-          imgZoom = On((loopQuestion.AvailableAnswers[j1].ResourceURL <> "") and (CurrentADC.PropValue("imgZoomRow") = "1"),"data-id=\"imgZoom_" + CurrentADC.InstanceId + "_" + j1 + "\"","")
+        {% For j1 = 1 To loopQuestion.AvailableAnswers.Count %}
+
+        {% Dim pa = loopQuestion.AvailableAnswers
+        If pa[j1].isHeader = True Then %}
+
+        <tr class="headerRow"><td colspan="{%:= columnNumber+1 %}">{%:= pa[j1].Caption %}</td></tr>
+
+        {% Else %}
+
+        {% imgZoom = On((loopQuestion.AvailableAnswers[j1].ResourceURL <> "") and (CurrentADC.PropValue("imgZoomRow") = "1"),"data-id=\"imgZoom_" + CurrentADC.InstanceId + "_" + j1 + "\"","")
     	  paddingZoom = On((loopQuestion.AvailableAnswers[j1].ResourceURL <> "") and (CurrentADC.PropValue("imgZoomRow") = "1"),"class=\"paddingZoom\"","")
     	  firstBodyRow = On((j1 = 1),"class=\"firstbodyrow\"","") %}
         <tr {%:= firstBodyRow %} {%:= imgZoom %}>
@@ -127,9 +135,9 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
             <br>
             {% EndIf %}
             {% If ((CurrentADC.PropValue("iterationColumn") <> "1") or (loopQuestion.AvailableAnswers[j1].ResourceURL = "")) Then %}<span class="caption">{%:= loopQuestion.AvailableAnswers[j1].Caption %}</span>{% EndIf %}
-          </td>
+           </td>
            {% For j2 = 1 To columnNumber
-    	   column = CurrentADC.PropQuestion("questionCol" + j2)
+    	        column = CurrentADC.PropQuestion("questionCol" + j2)
            If ((column.Id = DK) and (j2 = 1)) Then
            	column = CurrentQuestion
            EndIf
@@ -189,16 +197,16 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
                 <span class="prefix">{%= CurrentADC.PropValue("numBoxPrefix" + j2) %}</span>
                   <input type="number" id="askia-input-number{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputCode %}" aria-label="Number" autocomplete="off" data-class="shortcut_{%= j2 %}" class="input_{%= CurrentADC.InstanceId %}_{%= j2 %}" name="{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}{%:= attrReadOnly %}>
                   {% If (CurrentADC.PropValue("useSlider") = "2") Then %}
-				  <input type="text" id="askia-input-currency{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputCode %}" aria-label="Currency" autocomplete="off" name="currency_{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputValue() %}" {%:= attrReadOnly %} class="thousand" />
-				  {% EndIf %}
+				              <input type="text" id="askia-input-currency{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputCode %}" aria-label="Currency" autocomplete="off" name="currency_{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputValue() %}" {%:= attrReadOnly %} class="thousand" />
+				          {% EndIf %}
                   {% If (CurrentADC.PropValue("useSlider") = "1") Then %}
                   <div class="range"{%:= minVal %}{%:= maxVal %}>
                   <input type="range" id="askia-input-range_{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputCode %}" aria-label="Range" autocomplete="off" class="inputRange_{%= CurrentADC.InstanceId %}_{%= j2 %}{%:= clsSelected %}" name="range{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputName() %}" value="{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputValue() %}"{%:= minVal %}{%:= maxVal %}{%:= step %}{%:= attrDisabled %}>
                    <p class="preBar"></p>
                   </div>
                   {% EndIf %}
-                <span class="suffix">{% If (CurrentADC.PropValue("useSlider") = "1") Then %}
-                  {%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputValue() %}
+                    <span class="suffix">{% If (CurrentADC.PropValue("useSlider") = "1") Then %}
+                    {%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputValue() %}
                   {% EndIf %}
                   {%= CurrentADC.PropValue("numBoxSuffix" + j2) %}</span>
               </div>
@@ -353,7 +361,8 @@ Dim rowspan = On((CurrentADC.PropValue("respOnHeader") = "1") and (hasClosedQues
             {% EndIf
 			Next j2 %}
         </tr>
-          {% Next j1 %}
+        {% EndIf %}
+        {% Next j1 %}
       </tbody>
       <tfoot>
         <tr>

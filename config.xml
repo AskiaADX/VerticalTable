@@ -7,7 +7,7 @@
   <info>
     <name>VerticalTable</name>
     <guid>c4acbd4e-3246-457c-9f9a-3a2dc9871dcc</guid>
-    <version>3.1.1</version>
+    <version>3.2.0</version>
     <date>2022-11-01</date>
     <description><![CDATA[Vertical table
 		v2.0.4 - Added alt attribute to img
@@ -30,6 +30,7 @@
 		  v3.0.13 - Fixed encryption of header-response caption
     v3.1.0 - moment.min.js update
       v3.1.1 - Fixed a table glitch
+    v3.2.0 - Response Headers
 		]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>, Clément Salomon <clement@askia.com>]]></author>
@@ -428,6 +429,55 @@ For instance 1 or 0.1 or 5 etc.]]></description>
         <value><![CDATA[Don't know]]></value>
       </property>
     </category>
+
+    <category id="headers" name="Headers (non clickable responses)">
+      <property xsi:type="standardProperty" id="showHeaders" name="Show Headers" type="string" require="false" visible="true">
+        <description><![CDATA[]]></description>
+        <value><![CDATA[1]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="expandableHeaders" name="Expandable Headers" type="string" require="false" visible="true">
+        <description><![CDATA[]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="accordionInitialState" name="Accordion Initial State" type="string" require="false" visible="true">
+        <description><![CDATA[]]></description>
+        <value><![CDATA[expanded]]></value>
+        <options>
+          <option value="expanded" text="Expanded" />
+          <option value="collapsed" text="Collapsed" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="headerColourPrimary" name="Header Background Colour" type="color" mode="dynamic" visible="true">
+        <description><![CDATA[Background colour of the header item]]></description>
+        <value><![CDATA[{%= Theme.NeutralColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="headerFontColour" name="Header Font Colour" type="color" mode="dynamic" visible="true">
+        <description><![CDATA[Header colour]]></description>
+        <value><![CDATA[{%= Theme.BlackColor %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="headerTextAlign" name="Header text align" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[position of the header row text]]></description>
+        <value><![CDATA[center]]></value>
+        <options>
+          <option value="center" text="Center" />
+          <option value="right" text="Right" />
+          <option value="left" text="Left" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="headerBorderColour" name="Header Row Border Colour" type="color" mode="dynamic" visible="true">
+        <description><![CDATA[Border colour of the header row]]></description>
+        <value><![CDATA[{%= Theme.NeutralDarkColor %}]]></value>
+      </property>
+    </category>
+    
     <category id="open" name="Open">
       <property xsi:type="standardProperty" id="openUse" name="Use" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Use an input text or textarea or input email or input url]]></description>

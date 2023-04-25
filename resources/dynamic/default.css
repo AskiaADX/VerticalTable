@@ -26,6 +26,23 @@ Dim othersColumnWidth = ((100 - firstColumnWidth.ToNumber() ) / columnNumber).Fl
     display: none;
 }
 {% EndIf %}
+
+/* Headers */
+#adc_{%= CurrentADC.InstanceId %} .headerRow td {
+    padding: 10px 20px 10px 10px;
+    text-align: {%= CurrentADC.PropValue("headerTextAlign") %} !important;
+    border: 1px solid rgb({%= CurrentADC.PropValue("headerBorderColour") %});
+}
+#adc_{%= CurrentADC.InstanceId%} .headerRow
+{
+  background-color: rgb({%= CurrentADC.PropValue("headerColourPrimary") %}) !important;
+  font-weight: bold;
+  color: rgb({%= CurrentADC.PropValue("headerFontColour") %}) !important;
+  z-index: 0;
+  box-sizing: border-box;
+  line-height: 1.02em;
+}
+
 #adc_{%= CurrentADC.InstanceId %} .plusbutton input[type="button"],
 #adc_{%= CurrentADC.InstanceId %} .minusbutton input[type="button"] {
     border-radius: {%= CurrentADC.PropValue("borderRadius") %};
