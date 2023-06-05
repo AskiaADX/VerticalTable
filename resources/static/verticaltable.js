@@ -1,6 +1,18 @@
 (function () {
   var msEdgeMatch = /Edge\/([0-9]+)/i.exec(navigator.userAgent);
   if (msEdgeMatch) document.documentMode = parseInt(msEdgeMatch[1]);
+
+  if (!Element.prototype.closest) {
+    Element.prototype.closest = function (s) {
+      var el = this;
+      if (!document.documentElement.contains(el)) return null;
+      do {
+        if (el.matches(s)) return el;
+        el = el.parentElement || el.parentNode;
+      } while (el !== null && el.nodeType === 1);
+      return null;
+    };
+  }
 })();
 (function () {
   // Create a safe reference to the Underscore object for use below.
@@ -769,8 +781,10 @@
           that.useStepByStep === "buttons"
         )
           scrollIt(trs[i + 1], 300, "easeOutQuad");
-        var openInput = trs[i + 1].querySelector(".inputopen");
-        if (openInput) openInput.value = "";
+        var openInputs = trs[i + 1].querySelectorAll(".inputopen");
+        for (let i = 0; i < openInputs.length; i++) {
+          openInputs[i].value = "";
+        }
         break;
       }
     }
@@ -1772,7 +1786,8 @@
   }
 
   function checkStep(inputOpen) {
-    inputOpen.value = inputOpen.value == "" ? " " : inputOpen.value;
+    if (!inputOpen.closest("tr").classList.contains("firstbodyrow"))
+      inputOpen.value = inputOpen.value == "" ? " " : inputOpen.value;
   }
 
   /**
@@ -1996,7 +2011,7 @@
 
     // Input event on open ended
     for (var k1 = 0; k1 < inputOpens.length; k1++) {
-      if (this.stepByStep & (k1 > 0)) checkStep(inputOpens[k1]);
+      if (this.stepByStep) checkStep(inputOpens[k1]);
       addEvent(
         inputOpens[k1],
         "input",
