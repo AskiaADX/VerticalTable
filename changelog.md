@@ -38,3 +38,5 @@
 - Fixed a table glitch
 #### v3.1.2 
 - Open with DK issue fixed
+#### v3.1.3
+- Added a property to change 1st column name of the table-header
