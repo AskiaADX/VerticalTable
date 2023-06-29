@@ -65,7 +65,7 @@ Dim firstColumnText = CurrentADC.PropValue("firstColumnText")
     <table cellspacing="0">
       <thead>
         <tr>
-            <th {%:= rowspan %}><span hidden>Table header</span>{%:= firstColumnText %}</th>
+            <th {%:= rowspan %}><span>{%:= firstColumnText %}</span></th>
 
           {% For i2 = 1 To columnNumber
     	      column = CurrentADC.PropQuestion("questionCol" + i2)
