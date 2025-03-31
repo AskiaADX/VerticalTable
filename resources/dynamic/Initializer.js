@@ -16,7 +16,7 @@ Dim ranking
 Dim selectbox
 Dim numericCount = 0
 Dim columnNumber = 1
-For i1 = 2 To 8
+For i1 = 1 To 8
     columnQuestion = CurrentADC.PropQuestion("questionCol" + i1)
     If columnQuestion.Id <> DK Then
         columnNumber = i1

@@ -40,3 +40,5 @@
 - Open with DK issue fixed
 #### v3.1.3
 - Added a property to change 1st column name of the table-header
+#### v3.1.4
+- Fixed sum calculation on initialization
