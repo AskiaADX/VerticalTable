@@ -7,8 +7,8 @@
   <info>
     <name>VerticalTable</name>
     <guid>c4acbd4e-3246-457c-9f9a-3a2dc9871dcc</guid>
-    <version>3.1.3</version>
-    <date>2023-06-29</date>
+    <version>3.1.4</version>
+    <date>2025-03-17</date>
     <description><![CDATA[Vertical table ADC]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>, Clément Salomon <clement@askia.com>]]></author>
@@ -73,7 +73,7 @@
       </property>
       <property xsi:type="standardProperty" id="firstColumnText" name="First column text" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[First column text]]></description>
-        <value><![CDATA[]]></value>
+        <value></value>
       </property>
       <property xsi:type="standardProperty" id="firstColumnWidth" name="First column width" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[The size in percentage of the first column of the table]]></description>
