@@ -1017,7 +1017,7 @@
       inputTimeText.removeAttribute("readonly");
       var event2 = document.createEvent("HTMLEvents");
       event2.initEvent("input", true, false);
-      inputDateText.dispatchEvent(event2);
+      inputTimeText.dispatchEvent(event2);
     }
     if (dk) {
       if (inputDk) inputDk.checked = false;
@@ -1173,6 +1173,7 @@
       } else if (!el.checked) {
         removeClass(el.parentNode, "selected");
       }
+      if (that.tableDKChanging) return;
       manageExclusive(el);
       if (el.className !== "dkbutton") {
         var shortcut =
@@ -1185,6 +1186,73 @@
         var debounceAutoSubmitForm = debounce(autoSubmitForm, 300);
         if (that.autoSubmit) debounceAutoSubmitForm(that);
       }
+    }
+  }
+
+  /**
+   * Enable or disable the entire table through the single table DK control.
+   * Selecting table DK clears the table's current answers, marks every
+   * DK-enabled iteration as DK, and disables the visible response controls.
+   *
+   * @param {Object} event Click event of the table DK button
+   * @param {Object} that VerticalTable object, same as options
+   */
+  function onTableDK(event, that) {
+    var button = event.target || event.srcElement;
+    if (button.nodeName !== "BUTTON") button = button.closest("button");
+    if (!button) return;
+
+    var root = document.getElementById("adc_" + that.instanceId);
+    var activate = !hasClass(root, "table-dk-active");
+    var tableDKTargets = root.querySelectorAll(".table-dk-target");
+    var controls = root.querySelectorAll(
+      "table input:not([type=hidden]), table select, table textarea, .plusbutton input[type=button]"
+    );
+
+    if (activate) {
+      that.tableDKChanging = true;
+
+      // Clear all existing cell answers using the same routines as row removal.
+      var rows = root.querySelectorAll("tbody > tr");
+      for (var i = 0; i < rows.length; i++) clearDataTr(rows[i]);
+
+      // Dedicated hidden DK markers remain enabled so Askia receives DK.
+      for (var j = 0; j < tableDKTargets.length; j++) {
+        tableDKTargets[j].checked = true;
+      }
+
+      // Disable every visible response control, including individual DK controls.
+      for (var k = 0; k < controls.length; k++) {
+        controls[k].setAttribute("disabled", "disabled");
+      }
+
+      addClass(root, "table-dk-active");
+      addClass(button, "selected");
+      button.setAttribute("aria-pressed", "true");
+      that.tableDKChanging = false;
+    } else {
+      for (var l = 0; l < tableDKTargets.length; l++) {
+        tableDKTargets[l].checked = false;
+      }
+
+      // The table was cleared when DK was selected, so all ordinary controls
+      // can return to their normal empty/editable state.
+      for (var m = 0; m < controls.length; m++) {
+        controls[m].removeAttribute("disabled");
+      }
+
+      // Date picker text boxes are intentionally readonly even when enabled.
+      var dateInputs = root.querySelectorAll('.RLDatePicker input[type="text"]');
+      for (var n = 0; n < dateInputs.length; n++) {
+        dateInputs[n].setAttribute("readonly", "true");
+      }
+
+      removeClass(root, "table-dk-active");
+      removeClass(button, "selected");
+      button.setAttribute("aria-pressed", "false");
+
+      // Restore step-by-step button availability after returning to an empty table.
+      if (that.stepByStep) stepByStepRows(that);
     }
   }
 
@@ -1416,6 +1484,7 @@
         }
       }
     }
+    if (that.tableDKChanging) return;
     triggerRouting(shortcut);
     var debounceStepByStep = debounce(stepByStepRows, 300);
     debounceStepByStep(that);
@@ -1431,6 +1500,7 @@
    */
   function onInputOpens(event, that) {
     var el = event.target || event.srcElement;
+    if (that.tableDKChanging) return;
     var split = el.className.split("_");
     var shortcut =
       that.questions[
@@ -1451,6 +1521,7 @@
    */
   function onSelects(event, that) {
     var el = event.target || event.srcElement;
+    if (that.tableDKChanging) return;
     var shortcut =
       that.questions[
         parseInt(el.getAttribute("data-class").split("_")[1], 10) - 1
@@ -1470,6 +1541,7 @@
    */
   function onInputDates(event, that) {
     var el = event.target || event.srcElement;
+    if (that.tableDKChanging) return;
     var split = el.className.split("_");
     var shortcut =
       that.questions[
@@ -1816,6 +1888,7 @@
     this.arrInputCodesHiddenQuestions = [];
     this.selectBox = options.selectBox || [];
     this.numericQuestionCount = options.numericQuestionCount || 1;
+    this.tableDKChanging = false;
 
     addEvent(
       document,
@@ -1884,6 +1957,9 @@
     var dateInputDK = document.querySelectorAll(
       "#adc_" + this.instanceId + ' .date .DK input[type="checkbox"]'
     );
+    var tableDKButton = document.querySelector(
+      "#adc_" + this.instanceId + " .table-dk-button"
+    );
 
     // Change event on input radio
     for (var i = 0; i < radios.length; i++) {
@@ -1945,6 +2021,19 @@
         (function (passedInElement) {
           return function (e) {
             onDateInputDK(e, passedInElement);
+          };
+        })(this)
+      );
+    }
+
+    // Click event on the single whole-table DK control.
+    if (tableDKButton) {
+      addEvent(
+        tableDKButton,
+        "click",
+        (function (passedInElement) {
+          return function (e) {
+            onTableDK(e, passedInElement);
           };
         })(this)
       );

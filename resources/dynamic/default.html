@@ -204,14 +204,13 @@ Dim firstColumnText = CurrentADC.PropValue("firstColumnText")
                   {%= CurrentADC.PropValue("numBoxSuffix" + j2) %}</span>
               </div>
                 {% If (CurrentADC.PropValue("numDkButton") = "1" and column.IsAllowDK ) Then %}
-              <label class="DK">
+              <div class="DK numeric-dk-button">
                   <input type="hidden" name="B{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputCode %}">
                   <input type="checkbox" id="askia-input-number_{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputCode %}_-1" data-class="shortcut_{%= j2 %}" class="dkbutton" name="M{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputCode %} -1" {%:= attrChecked %}>
-                  <label for="askia-input-number_{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputCode %}_-1" class="askia-checkbox"><span hidden>Checkbox</span></label>
-                  <label for="askia-input-number_{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputCode %}_-1" class="askia-response-label">
+                  <label for="askia-input-number_{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputCode %}_-1" class="askia-response-label dk-select-button">
                       <span class="caption">{%:= CurrentADC.PropValue("numDkCaption") %}</span>
                   </label>
-              </label>
+              </div>
               {% EndIf %}
               <div class="sum-container sum">
                 <span class="caption_{%= CurrentADC.InstanceId %}_{%= j2 %}">{%= totalCaption %}</span>
@@ -383,6 +382,27 @@ Dim firstColumnText = CurrentADC.PropValue("firstColumnText")
         </tr>
       </tfoot>
     </table>
+    {% If (CurrentADC.PropValue("tableDkButton") = "1") Then %}
+    <div class="table-dk-targets" hidden>
+      {% For j1 = 1 To loopQuestion.AvailableAnswers.Count
+          For j2 = 1 To columnNumber
+            column = CurrentADC.PropQuestion("questionCol" + j2)
+            If ((column.Id = DK) and (j2 = 1)) Then
+              column = CurrentQuestion
+            EndIf
+            If (column.IsAllowDK) Then %}
+      <input type="hidden" name="B{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputCode %}">
+      <input type="checkbox" class="table-dk-target" name="M{%= column.Iteration(loopQuestion.AvailableAnswers[j1].Index).InputCode %} -1">
+      {%      EndIf
+          Next j2
+        Next j1 %}
+    </div>
+    <div class="table-dk-container">
+      <button type="button" class="table-dk-button" aria-pressed="false">
+        <span class="caption">{%:= CurrentADC.PropValue("tableDkCaption") %}</span>
+      </button>
+    </div>
+    {% EndIf %}
     {%  If ((stepByStep = "yes") and (useStepByStep = "buttons")) Then %}
     <br />
     <div class="plusbutton">

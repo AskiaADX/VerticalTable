@@ -1,4 +1,4 @@
-{%
+﻿{%
 Dim i1
 Dim columnQuestion
 Dim columnNumber = 1
@@ -455,6 +455,53 @@ EndIf %}
   }
 #adc_{%= CurrentADC.InstanceId %} .numeric .DK {
       align-self: stretch;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.35em;
+  }
+/* Keep the native checkbox for Askia response handling, but make the DK caption the visible control. */
+#adc_{%= CurrentADC.InstanceId %} .numeric .DK > .dkbutton {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      margin: -1px !important;
+      padding: 0 !important;
+      border: 0 !important;
+      overflow: hidden !important;
+      clip: rect(0 0 0 0) !important;
+      clip-path: inset(50%) !important;
+      white-space: nowrap !important;
+  }
+#adc_{%= CurrentADC.InstanceId %} .numeric .DK > .dk-select-button {
+      position: static !important;
+      float: none !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      box-sizing: border-box;
+      min-height: 2.15em;
+      padding: 0.4em 0.85em;
+      margin: 0;
+      border: {%= Theme.BorderWidth %} solid rgba({%= Theme.NeutralColor %});
+      border-radius: {%= Theme.BorderRadius %};
+      background-color: rgba({%= Theme.WhiteColor %});
+      color: rgba({%= Theme.BlackColor %});
+      cursor: pointer;
+      user-select: none;
+  }
+#adc_{%= CurrentADC.InstanceId %} .numeric .DK > .dk-select-button:hover {
+      border-color: rgba({%= Theme.NeutralDarkColor %});
+  }
+#adc_{%= CurrentADC.InstanceId %} .numeric .DK > .dkbutton:focus + .dk-select-button {
+      outline: 2px solid rgba({%= Theme.SecondaryColor %});
+      outline-offset: 2px;
+  }
+#adc_{%= CurrentADC.InstanceId %} .numeric .DK > .dkbutton:checked + .dk-select-button {
+      background-color: rgba({%= CurrentADC.PropValue("selectedBgPrimaryColor").ToRGBA() %});
+      border-color: rgba({%= CurrentADC.PropValue("selectedBgPrimaryColor").ToRGBA() %});
+      color: rgb({%= CurrentADC.PropValue("selectedFontColor").ToRGB() %});
   }
 #adc_{%= CurrentADC.InstanceId %} input[readonly=readonly],
 #adc_{%= CurrentADC.InstanceId %} textarea[readonly=readonly],
@@ -464,6 +511,52 @@ EndIf %}
 #adc_{%= CurrentADC.InstanceId %} input[readonly=readonly] + .imperial {
     background-color: rgba({%= Theme.BlackColor.ToRGB() %},0.05);
 }
+/* Whole-table Don't Know control. */
+#adc_{%= CurrentADC.InstanceId %} .table-dk-targets {
+    display: none !important;
+}
+#adc_{%= CurrentADC.InstanceId %} .table-dk-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0.65em;
+}
+#adc_{%= CurrentADC.InstanceId %} .table-dk-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: 2.15em;
+    padding: 0.4em 0.85em;
+    margin: 0;
+    border: {%= Theme.BorderWidth %} solid rgba({%= Theme.NeutralColor %});
+    border-radius: {%= Theme.BorderRadius %};
+    background-color: rgba({%= Theme.WhiteColor %});
+    color: rgba({%= Theme.BlackColor %});
+    font: inherit;
+    cursor: pointer;
+}
+#adc_{%= CurrentADC.InstanceId %} .table-dk-button:hover {
+    border-color: rgba({%= Theme.NeutralDarkColor %});
+}
+#adc_{%= CurrentADC.InstanceId %} .table-dk-button:focus {
+    outline: 2px solid rgba({%= Theme.SecondaryColor %});
+    outline-offset: 2px;
+}
+#adc_{%= CurrentADC.InstanceId %} .table-dk-button.selected {
+    background-color: rgba({%= CurrentADC.PropValue("selectedBgPrimaryColor").ToRGBA() %});
+    border-color: rgba({%= CurrentADC.PropValue("selectedBgPrimaryColor").ToRGBA() %});
+    color: rgb({%= CurrentADC.PropValue("selectedFontColor").ToRGB() %});
+}
+#adc_{%= CurrentADC.InstanceId %}.table-dk-active table,
+#adc_{%= CurrentADC.InstanceId %}.table-dk-active .plusbutton {
+    opacity: 0.55;
+}
+#adc_{%= CurrentADC.InstanceId %}.table-dk-active table {
+    pointer-events: none;
+}
+
 {% If (CurrentADC.PropValue("forceImagesWidth") = "1") Then %}
 #adc_{%= CurrentADC.InstanceId %} .header-response-container img,
 #adc_{%= CurrentADC.InstanceId %} .closed .response-container img {
