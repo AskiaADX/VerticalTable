@@ -42,3 +42,6 @@
 - Added a property to change 1st column name of the table-header
 #### v3.1.4
 - Fixed sum calculation on initialization
+#### v3.1.5
+- Fixed numeric DK float styling
+- "total DK" option prototype 

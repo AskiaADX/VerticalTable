@@ -7,8 +7,8 @@
   <info>
     <name>VerticalTable</name>
     <guid>c4acbd4e-3246-457c-9f9a-3a2dc9871dcc</guid>
-    <version>3.1.4</version>
-    <date>2025-03-17</date>
+    <version>3.1.5</version>
+    <date>2026-09-21</date>
     <description><![CDATA[Vertical table ADC]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>, Clément Salomon <clement@askia.com>]]></author>
@@ -222,6 +222,18 @@
       <property xsi:type="standardProperty" id="removeButton" name="Remove button caption" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[Remove button caption]]></description>
         <value><![CDATA[-]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="tableDkButton" name="Table DK" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Add a single don't know button below the table that applies to the whole table]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="tableDkCaption" name="Table DK caption" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[The caption of the table don't know button]]></description>
+        <value><![CDATA[Don't know]]></value>
       </property>
       <property xsi:type="standardProperty" id="autoSubmit" name="Auto submit" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Auto submit]]></description>
